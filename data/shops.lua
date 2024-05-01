@@ -7,6 +7,8 @@ return {
 			{ name = 'burger', price = 10 },
 			{ name = 'water', price = 10 },
 			{ name = 'cola', price = 10 },
+			{ name = 'notepad', price = 100, metadata = { registered = true }},
+			{ name = 'camera', price = 100, metadata = { registered = true }},
 		}, locations = {
 			vec3(25.7, -1347.3, 29.49),
 			vec3(-3038.71, 585.9, 7.9),

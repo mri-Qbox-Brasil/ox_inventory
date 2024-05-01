@@ -760,7 +760,7 @@ return {
 					`COMPONENT_AT_AR_SUPP`,
 					`COMPONENT_AT_AR_SUPP_02`,
 					`COMPONENT_AT_SR_SUPP`,
-					`COMPONENT_AT_SR_SUPP_03`,
+					`COMPONENT_AT_SR_SUPP_03`
 				},
 				usetime = 2500
 			}

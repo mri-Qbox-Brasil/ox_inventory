@@ -119,3 +119,4 @@ end
 function server.getOwnedVehicleId(entityId)
     return NDCore.getVehicle(entityId)?.id
 end
+

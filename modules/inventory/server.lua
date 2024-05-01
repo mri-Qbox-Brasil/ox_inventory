@@ -2296,7 +2296,7 @@ local function saveInventories(clearInventories)
     if total[5] > 0 then
         isSaving = true
         local ok, err = pcall(db.saveInventories, parameters[1], parameters[2], parameters[3], parameters[4], total)
-        isSaving = false
+		isSaving = false
 
         if not ok and err then return lib.print.error(err) end
     end

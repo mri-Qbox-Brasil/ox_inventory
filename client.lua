@@ -506,9 +506,9 @@ local function useSlot(slot, noAnim)
             GiveWeaponToPed(playerPed, data.hash, 0, false, true)
             SetCurrentPedWeapon(playerPed, data.hash, false)
 
-            if data.hash ~= GetSelectedPedWeapon(playerPed) then
-                return lib.notify({ type = 'error', description = locale('cannot_use', data.label) })
-            end
+            -- if data.hash ~= GetSelectedPedWeapon(playerPed) then
+            --     return lib.notify({ type = 'error', description = locale('cannot_use', data.label) })
+            -- end
 
             RemoveWeaponFromPed(cache.ped, data.hash)
 
@@ -720,7 +720,7 @@ local function registerCommands()
 	end
 
 	local primary = lib.addKeybind({
-		name = 'inv',
+		name = 'mri_Qinv',
 		description = locale('open_player_inventory'),
 		defaultKey = client.keys[1],
 		onPressed = function()
@@ -747,7 +747,7 @@ local function registerCommands()
 	})
 
 	lib.addKeybind({
-		name = 'inv2',
+		name = 'mri_Qinv2',
 		description = locale('open_secondary_inventory'),
 		defaultKey = client.keys[2],
 		onPressed = function(self)
@@ -811,7 +811,7 @@ local function registerCommands()
 	})
 
 	lib.addKeybind({
-		name = 'hotbar',
+		name = 'mri_Qhotbar',
 		description = locale('disable_hotbar'),
 		defaultKey = client.keys[3],
 		onPressed = function()
