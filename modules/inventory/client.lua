@@ -84,17 +84,17 @@ function Inventory.OpenTrunk(entity)
     end
 end
 
---- externei pra não fazer um script só pra isso (.mur4i)
-exports.ox_target:addGlobalVehicle({
-	icon = 'fas fa-truck-ramp-box',
-	label = locale('open_label', locale('storage')),
-	distance = 1.5,
-	canInteract = Inventory.CanAccessTrunk,
-	onSelect = function(data)
-		return Inventory.OpenTrunk(data.entity)
-	end
-})
----- o certo é apenas o debaixo
+-- --- externei pra não fazer um script só pra isso (.mur4i)
+-- exports.ox_target:addGlobalVehicle({
+-- 	icon = 'fas fa-truck-ramp-box',
+-- 	label = locale('open_label', locale('storage')),
+-- 	distance = 1.5,
+-- 	canInteract = Inventory.CanAccessTrunk,
+-- 	onSelect = function(data)
+-- 		return Inventory.OpenTrunk(data.entity)
+-- 	end
+-- })
+-- ---- o certo é apenas o debaixo
 if shared.target then
 	exports.ox_target:addModel(Inventory.Dumpsters, {
         icon = 'fas fa-dumpster',
@@ -126,7 +126,7 @@ end
 ---@param item table | string
 ---@param metadata? table | string
 function Inventory.Search(search, item, metadata)
-	if not PlayerData.loaded then
+	if not PlayerData.CanAccessTrunk then
 		if not coroutine.running() then
 			error('player inventory has not yet loaded.')
 		end

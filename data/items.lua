@@ -1700,17 +1700,6 @@ return {
 			export = 'ars_ambulancejob.openDistressCalls'
 		}
 	},
-	
-	-- wasabi_backpack
-	['backpack'] = {
-		label = 'Mochila',
-		weight = 220,
-		stack = false,
-		consume = 0,
-		client = {
-			export = 'wasabi_backpack.openBackpack'
-		}
-	},
 
 	--ars_hunting
 	['animal_tracker'] = {
@@ -1779,7 +1768,7 @@ return {
 		}
 	},
 
-	-- Manter bolsas
+	-- Alguns exemplos de mochila
 	["backpack1"] = {
 		label = "Mochila 1",
 		weight = 15,
@@ -2714,4 +2703,1053 @@ return {
 	
 	['tuna'] = { label = 'Atum', weight = 10000 },
 	
+	-- cw-driftchip
+	["driftchip"] = {
+		label = "Drift Chip",
+		weight = 300,
+		degade = 21000,
+		stack = true,
+		close = true,
+		allowArmed = true,
+		description = "Use isso para ajustar a ECU para ativar ou desativar o modo de drift",
+	},
+	["driftchipbox"] = {
+		label = "Drift Chip Box",
+		weight = 350,
+		stack = true,
+		close = true,
+		allowArmed = true,
+		description = "Contém um chip de drift",
+	},
+
+	-- lation sprays
+	["recyclablematerial"] = {
+		label = "Recycle Box",
+		weight = 100,
+		stack = true,
+		close = false,
+		description = "A box of Recyclable Materials",
+		client = {
+			image = "recyclablematerial.png",
+		}
+	},
+
+	["blue_green_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Blue Green Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_monika"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Monika",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_hsw"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta HSW",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["red_rainbo_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Red Rainbow Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_green"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Green",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_wine"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Wine",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_bubblegum"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Bubblegum",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["coppe_purp_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Copper Purple Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["darkbluepearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Dark Blue Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["white_holo"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "White Holographic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["green_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Green Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["green_brow_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Green Brown Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["green_red_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Green Red Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["pink_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Pink Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["orang_purp_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Orange Purple Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["white_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "White Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["oil_slic_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Oil Slick Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["purp_red_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Purple Red Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["yellow_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Yellow Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["green_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Green Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_copper"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Copper",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_four_seaso"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Four Seasons",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["blue_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Blue Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["lit_blue_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Luminous Blue Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_sunsets"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Sunsets",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_vice_city"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Vice City",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_red"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Red",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["darkpurpprisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Dark Purple Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["green_purp_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Green Purple Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["lit_green_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Luminous Green Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_lime"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Lime",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_temperatur"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Temperature",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["blue_pink_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Blue Pink Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_blue"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Blue",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_the_seven"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta The Seven",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["hot_pink_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Hot Pink Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["orang_blue_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Orange Blue Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["blu_rainbo_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Blue Rainbow Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["darkblueprisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Dark Blue Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_electro"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Electro",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_verlierer2"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Verlierer II",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["green_blue_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Green Blue Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_sprunk_ex"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Sprunk Ex",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["magen_oran_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Magenta Orange Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["magen_gree_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Magenta Green Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["graphite_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Graphite Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["turq_red_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Turquoise Red Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["red_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Red Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_nite_day"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Nite & Day",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["oil_slick_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Oil Slick Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["teal_purp_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Teal Purple Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["magen_cyan_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Magenta Cyan Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["white_purp_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "White Purple Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_fubuki"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Fubuki",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_bronze"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Bronze",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_kamenrider"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Kamen Rider",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["burg_green_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Burgundy Green Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["cream_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Cream Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["cyan_purp_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Cyan Purple Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["darkpurplepearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Dark Purple Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_christmas"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Christmas",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["purp_green_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Purple Green Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["red_orangeflip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Red Orange Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["turq_purp_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Turquoise Purple Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["green_turq_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Green Turquoise Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_full_rbow"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Full Rainbow",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_m9_throwba"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta M9 Throwback",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_synthwave"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Synthwave",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_chromabera"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta ChromaBera",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["black_holo"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Black Holographic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["magen_yell_flip"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Magenta Yellow Flip",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_gold"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Gold",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["ykta_monochrome"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Ykta Monochrome",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["rainbow_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Rainbow Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_champagne"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Champagne",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["black_prisma"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Black Prismatic",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["anod_purple"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Anod Purple",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["darktealpearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Dark Teal Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["lit_purp_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Luminous Purple Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["darkgreenpearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Dark Green Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	["lit_pink_pearl"] = {
+		label = "Exotic Spray can",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Luminous Pink Pearl",
+		client = {
+			image = "exoticspray.png",
+		}
+	},
+
+	-- kloud-farmjob
+	['trowel'] = {
+		label = 'Trowel',
+		weight = 500,
+		decay = true,
+		stack = false,
+		close = false,
+		description = 'Diggy Diggy Diggy?',
+	},
+	
+	['shovel'] = {
+		label = 'Shovel',
+		weight = 1000,
+		decay = true,
+		stack = false,
+		close = false,
+		description = 'Diggy Diggy Diggy?',
+	},
+	
+	['dirty_potato'] = {
+		label = 'Dirty Potato',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'Potato potato but dirty dirty?',
+	},
+	
+	['potato'] = {
+		label = 'Potato',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'Potato potato?',
+	},
+	
+	['dirty_cabbage'] = {
+		label = 'Dirty Cabbage',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'Cabby cabby but dirty dirty?',
+	},
+	
+	['cabbage'] = {
+		label = 'Cabbage',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'Cabby cabby?',
+	},
+	
+	['dirty_tomato'] = {
+		label = 'Dirty Tomato',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'To-ma-to but dirty',
+	},
+	
+	['tomato'] = {
+		label = 'Tomato',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'To-ma-to',
+	},
+	
+	['dirty_orange'] = {
+		label = 'Dirty Orange',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'It talks!!!!',
+	},
+	
+	['orange'] = {
+		label = 'Orange',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'It talks!!!!',
+	},
+	
+	['dirty_coffee_beans'] = {
+		label = 'Dirty Coffee Beans',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'Ohh wakey wakey but dirty',
+	},
+	
+	['coffee_beans'] = {
+		label = 'Coffee Beans',
+		weight = 250,
+		degrade = 7160,
+		decay = true,
+		stack = true,
+		close = false,
+		description = 'Ohh wakey wakey but dirty',
+	},
+
+	--- kto-guidebook
+	["guide"] = {
+		label = "Guidebook",
+		weight = 475,
+		stack = true,
+		close = true,
+		description = 'Want to know the ins and outs of our server? Read our guidebook!',
+	},	
 }
