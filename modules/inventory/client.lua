@@ -49,10 +49,6 @@ function Inventory.CanAccessTrunk(entity)
     offset = GetOffsetFromEntityInWorldCoords(entity, offset.x, offset.y, offset.z)
 
     if #(GetEntityCoords(cache.ped) - offset) < 1.5 then
-        local coords = GetEntityCoords(entity)
-
-        TaskTurnPedToFaceCoord(cache.ped, coords.x, coords.y, coords.z, 0)
-
         return doorId
     end
 end
@@ -62,10 +58,6 @@ function Inventory.OpenTrunk(entity)
     local door = Inventory.CanAccessTrunk(entity)
 
     if not door then return end
-
-    if GetVehicleDoorLockStatus(entity) > 1 then
-        return lib.notify({ id = 'vehicle_locked', type = 'error', description = locale('vehicle_locked') })
-    end
 
     local plate = GetVehicleNumberPlateText(entity)
     local invId = 'trunk'..plate
@@ -84,17 +76,6 @@ function Inventory.OpenTrunk(entity)
     end
 end
 
--- --- externei pra não fazer um script só pra isso (.mur4i)
--- exports.ox_target:addGlobalVehicle({
--- 	icon = 'fas fa-truck-ramp-box',
--- 	label = locale('open_label', locale('storage')),
--- 	distance = 1.5,
--- 	canInteract = Inventory.CanAccessTrunk,
--- 	onSelect = function(data)
--- 		return Inventory.OpenTrunk(data.entity)
--- 	end
--- })
--- ---- o certo é apenas o debaixo
 if shared.target then
 	exports.ox_target:addModel(Inventory.Dumpsters, {
         icon = 'fas fa-dumpster',
@@ -126,7 +107,7 @@ end
 ---@param item table | string
 ---@param metadata? table | string
 function Inventory.Search(search, item, metadata)
-	if not PlayerData.CanAccessTrunk then
+	if not PlayerData.loaded then
 		if not coroutine.running() then
 			error('player inventory has not yet loaded.')
 		end

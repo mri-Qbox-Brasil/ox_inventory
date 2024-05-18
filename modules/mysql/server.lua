@@ -3,7 +3,8 @@ if not lib then return end
 local Query = {
     SELECT_STASH = 'SELECT data FROM ox_inventory WHERE owner = ? AND name = ?',
     UPDATE_STASH = 'UPDATE ox_inventory SET data = ? WHERE owner = ? AND name = ?',
-    UPSERT_STASH = 'INSERT INTO ox_inventory (data, owner, name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE data = VALUES(data)',
+    UPSERT_STASH =
+    'INSERT INTO ox_inventory (data, owner, name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE data = VALUES(data)',
     INSERT_STASH = 'INSERT INTO ox_inventory (owner, name) VALUES (?, ?)',
     SELECT_GLOVEBOX = 'SELECT plate, glovebox FROM `{vehicle_table}` WHERE `{vehicle_column}` = ?',
     SELECT_TRUNK = 'SELECT plate, trunk FROM `{vehicle_table}` WHERE `{vehicle_column}` = ?',
@@ -32,10 +33,10 @@ Citizen.CreateThreadNow(function()
         vehicleTable = 'player_vehicles'
         vehicleColumn = 'plate'
     elseif shared.framework == 'nd' then
-		playerTable = 'nd_characters'
-		playerColumn = 'charid'
-		vehicleTable = 'nd_vehicles'
-		vehicleColumn = 'id'
+        playerTable = 'nd_characters'
+        playerColumn = 'charid'
+        vehicleTable = 'nd_vehicles'
+        vehicleColumn = 'id'
     end
 
     for k, v in pairs(Query) do
@@ -112,9 +113,9 @@ Citizen.CreateThreadNow(function()
 
     local clearStashes = GetConvar('inventory:clearstashes', '6 MONTH')
 
-	if clearStashes ~= '' then
-		pcall(MySQL.query.await, ('DELETE FROM ox_inventory WHERE lastupdated < (NOW() - INTERVAL %s)'):format(clearStashes))
-	end
+    if clearStashes ~= '' then
+        pcall(MySQL.query.await, ('DELETE FROM ox_inventory WHERE lastupdated < (NOW() - INTERVAL %s)'):format(clearStashes))
+    end
 end)
 
 db = {}
@@ -238,13 +239,13 @@ function db.saveInventories(players, trunks, gloveboxes, stashes, total)
                 pending -= 1
 
                 if resp then
-                local affectedRows = resp.affectedRows
+                    local affectedRows = resp.affectedRows
 
-                if total[4] == 1 then
-                    if affectedRows == 2 then affectedRows = 1 end
-                else
-                    affectedRows -= tonumber(resp.info:match('Duplicates: (%d+)'), 10) or 0
-                end
+                    if total[4] == 1 then
+                        if affectedRows == 2 then affectedRows = 1 end
+                    else
+                        affectedRows -= tonumber(resp.info:match('Duplicates: (%d+)'), 10) or 0
+                    end
 
                     shared.info(saveStr:format(affectedRows, total[4], 'stashes', (os.nanotime() - start) / 1e6))
                 end
@@ -255,15 +256,15 @@ function db.saveInventories(players, trunks, gloveboxes, stashes, total)
                 pending -= 1
 
                 if resp then
-                local affectedRows = 0
+                    local affectedRows = 0
 
-                if table.type(resp) == 'hash' then
-                    if resp.affectedRows > 0 then affectedRows = 1 end
-                else
-                    for i = 1, #resp do
-                        if resp[i].affectedRows > 0 then affectedRows += 1 end
+                    if table.type(resp) == 'hash' then
+                        if resp.affectedRows > 0 then affectedRows = 1 end
+                    else
+                        for i = 1, #resp do
+                            if resp[i].affectedRows > 0 then affectedRows += 1 end
+                        end
                     end
-                end
 
                     shared.info(saveStr:format('stashes', affectedRows, total[4], (os.nanotime() - start) / 1e6))
                 end

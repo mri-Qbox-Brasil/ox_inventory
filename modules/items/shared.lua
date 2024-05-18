@@ -58,15 +58,15 @@ local function newItem(data)
         if not clientData then goto continue end
 
         if clientData.export then
-			data.export = useExport(string.strsplit('.', clientData.export))
-		end
+            data.export = useExport(string.strsplit('.', clientData.export))
+        end
 
         clientData.image = setImagePath(clientData.image)
 
         if clientData.propTwo then
             clientData.prop = clientData.prop and { clientData.prop, clientData.propTwo } or clientData.propTwo
             clientData.propTwo = nil
-		end
+        end
 	end
 
     ::continue::
