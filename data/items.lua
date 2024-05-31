@@ -3752,4 +3752,135 @@ return {
 		close = true,
 		description = 'Want to know the ins and outs of our server? Read our guidebook!',
 	},	
+
+	    -- ================ Keep-companion ================
+		['keepcompanionhusky'] = {
+			label = 'Husky',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "Also the nickname everyone calls you behind your back."
+		},
+		['keepcompanionpoodle'] = {
+			label = 'Poodle',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "This dog's haircut is more expensive than your car."
+		},
+		['keepcompanionrottweiler'] = {
+			label = 'Rottweiler',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "A butcher's best friend."
+		},
+		['keepcompanionwesty'] = {
+			label = 'Westie',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "A great breed for hunting rats, and wearing cute sweaters."
+		},
+		['keepcompanioncat'] = {
+			label = 'Cat',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "What's new pussycat?"
+		},
+		['keepcompanionpug'] = {
+			label = 'Pug',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "The snorting haunts you in your sleep."
+		},
+		['keepcompanionretriever'] = {
+			label = 'Retriever',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "America's favorite dog."
+		},
+		['keepcompanionshepherd'] = {
+			label = 'Border Collie',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "Useful to heard your flock of sheep."
+		},
+		['keepcompanionrabbit'] = {
+			label = 'Rabbit',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "Boing boing boing boing."
+		},
+		['keepcompanionhen'] = {
+			label = 'Hen',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "A best friend AND lunch. Two for one!"
+		},
+		['keepcompanionrat'] = {
+			label = 'Rat',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "Snitches get stiches, but rats get scritches."
+		},
+		['keepcompanionk9unit'] = {
+			label = 'K9 Unit Malinois',
+			weight = 5000,
+			stack = false,
+			close = true,
+			description = "LSPD exclusive K9."
+		},
+	
+		---
+	  --- pet items ----
+		['petfood'] = {
+			label = 'Pet Food',
+			weight = 500,
+			stack = true,
+			close = true,
+			description = "Nom nom for your pom pom."
+		},
+		['collarpet'] = {
+			label = 'Pet Collar',
+			weight = 500,
+			stack = false,
+			close = true,
+			description = "Rename your pet."
+		},
+		['firstaidforpet'] = {
+			label = 'Pet First-aid Kit',
+			weight = 500,
+			stack = true,
+			close = true,
+			description = "Bring your pet back from the dead again and again."
+		},
+		['petnametag'] = {
+			label = 'Pet Name Tag',
+			weight = 500,
+			stack = true,
+			close = true,
+			description = "rename your pet."
+		},
+		['petwaterbottleportable'] = {
+			label = 'Pet Water Bottle',
+			weight = 500,
+			stack = false,
+			close = true,
+			description = "Water for your pet. Stop trying to drink this."
+		},
+		['petgroomingkit'] = {
+			label = 'Pet Grooming Kit',
+			weight = 500,
+			stack = false,
+			close = true,
+			description = "Now your pet can pass a wave check."
+		},
 }
