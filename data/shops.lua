@@ -200,7 +200,7 @@ return {
             { name = 'keepcompanionrabbit',     price = 25000, count = 20, },
         },
         locations = {
-			vec3(562.3, 2741.49, 42.87),
+			vec3(405.84, 317.99, 103.13),
         },
         targets = {
 
@@ -214,7 +214,7 @@ return {
             { name = 'keepcompanioncoyote',  price = 75000, count = 5, currency = 'black_money', },
         },
         locations = {
-			vector3(4803.68, -4601.88, 17.31),
+			vec3(409.57, 329.04, 103.13),
         },
         targets = {
 
