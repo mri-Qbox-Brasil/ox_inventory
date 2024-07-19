@@ -53,16 +53,16 @@ return {
 		consume = 0.3
 	},
 
-	['bandage'] = {
-		label = 'Bandagem',
-		weight = 115,
-		client = {
-			anim = { dict = 'missheistdockssetup1clipboard@idle_a', clip = 'idle_a', flag = 49 },
-			prop = { model = `prop_rolled_sock_02`, pos = vec3(-0.14, -0.14, -0.08), rot = vec3(-50.0, -50.0, 0.0) },
-			disable = { move = true, car = true, combat = true },
-			usetime = 2500,
-		}
-	},
+	-- ['bandage'] = {
+	-- 	label = 'Bandagem',
+	-- 	weight = 115,
+	-- 	client = {
+	-- 		anim = { dict = 'missheistdockssetup1clipboard@idle_a', clip = 'idle_a', flag = 49 },
+	-- 		prop = { model = `prop_rolled_sock_02`, pos = vec3(-0.14, -0.14, -0.08), rot = vec3(-50.0, -50.0, 0.0) },
+	-- 		disable = { move = true, car = true, combat = true },
+	-- 		usetime = 2500,
+	-- 	}
+	-- },
 
 	['black_money'] = {
 		label = 'Dinheiro Sujo',
@@ -92,7 +92,7 @@ return {
 		}
 	},
 
-		['sprunk'] = {
+	['sprunk'] = {
 		label = 'Sprite',
 		weight = 350,
 		client = {
@@ -182,7 +182,7 @@ return {
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
 			prop = { model = `prop_food_mustard`, pos = vec3(0.01, 0.0, -0.07), rot = vec3(1.0, 1.0, -1.5) },
 			usetime = 2500,
-			notification = 'You.. drank mustard'
+			notification = 'Você .. bebeu mostarda'
 		}
 	},
 
@@ -195,24 +195,24 @@ return {
 			prop = { model = `prop_ld_flow_bottle`, pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
 			usetime = 2500,
 			cancel = true,
-			notification = 'You drank some refreshing water'
+			notification = 'Você bebeu um pouco de água para se hidratar.'
 		}
 	},
 
 	['water_contaminat'] = {
-        label = 'Água Contaminada',
-        weight = 500,
-        stack = true,
-        close = true,
-        cancel = true,
-        description = 'Água contaminada, não beba isso!',
+		label = 'Água Contaminada',
+		weight = 500,
+		stack = true,
+		close = true,
+		cancel = true,
+		description = 'Água contaminada, não beba isso!',
 
-        client = {
-            status = { thirst = -15 },
-            anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
-            prop = { model = 'prop_ld_flow_bottle', pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -2.5) },
-            image = 'np_water_contaminat.png',
-            usetime = 2500,
+		client = {
+			status = { thirst = -15 },
+			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
+			prop = { model = 'prop_ld_flow_bottle', pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -2.5) },
+			image = 'np_water_contaminat.png',
+			usetime = 2500,
 			remove = function()
 				lib.notify({
 					title = 'Hidratação',
@@ -221,8 +221,8 @@ return {
 					iconColor = '#5C940D'
 				})
 			end
-        },
-    },
+		},
+	},
 
 	['radio'] = {
 		label = 'Rádio',
@@ -320,7 +320,7 @@ return {
 		weight = 100,
 		stack = true,
 		close = false,
-		description = "RECYCLE! - Greta Thunberg 2019",
+		description = "Reciclável",
 		client = {
 			image = "plastic.png",
 		}
@@ -402,7 +402,7 @@ return {
 			image = "firstaid.png",
 		}
 	},
-	
+
 	["weed_skunk_seed"] = {
 		label = "Semente de Skunk",
 		weight = 0,
@@ -413,7 +413,7 @@ return {
 			image = "weed_seed.png",
 		}
 	},
-	
+
 	["diving_gear"] = {
 		label = "Equipamento de Mergulho",
 		weight = 30000,
@@ -424,7 +424,7 @@ return {
 			image = "diving_gear.png",
 		}
 	},
-	
+
 	["id_card"] = {
 		label = "Cartão de Identificação",
 		weight = 0,
@@ -435,7 +435,7 @@ return {
 			image = "id_card.png",
 		}
 	},
-	
+
 	["rubber"] = {
 		label = "Borracha",
 		weight = 100,
@@ -446,7 +446,7 @@ return {
 			image = "rubber.png",
 		}
 	},
-	
+
 	["binoculars"] = {
 		label = "Binóculos",
 		weight = 600,
@@ -457,7 +457,7 @@ return {
 			image = "binoculars.png",
 		}
 	},
-	
+
 	["casinochips"] = {
 		label = "Fichas de Cassino",
 		weight = 0,
@@ -468,7 +468,7 @@ return {
 			image = "casinochips.png",
 		}
 	},
-	
+
 	["metalscrap"] = {
 		label = "Sucata de Metal",
 		weight = 100,
@@ -479,7 +479,7 @@ return {
 			image = "metalscrap.png",
 		}
 	},
-	
+
 	["empty_weed_bag"] = {
 		label = "Saco Vazio para Maconha",
 		weight = 0,
@@ -490,7 +490,7 @@ return {
 			image = "weed_baggy_empty.png",
 		}
 	},
-	
+
 	["wine"] = {
 		label = "Vinho",
 		weight = 300,
@@ -501,7 +501,7 @@ return {
 			image = "wine.png",
 		}
 	},
-	
+
 	["cleaningkit"] = {
 		label = "Kit de Limpeza",
 		weight = 250,
@@ -512,18 +512,18 @@ return {
 			image = "cleaningkit.png",
 		}
 	},
-	
+
 	["harness"] = {
-		label = "Arnês de Corrida",
+		label = "Cinto de Corrida",
 		weight = 1000,
 		stack = false,
 		close = true,
-		description = "Arnês de corrida para que você permaneça no carro independentemente.",
+		description = "Cinto de corrida para que você permaneça no carro independentemente.",
 		client = {
 			image = "harness.png",
 		}
 	},
-	
+
 	["weaponlicense"] = {
 		label = "Licença de Arma",
 		weight = 0,
@@ -534,7 +534,7 @@ return {
 			image = "weapon_license.png",
 		}
 	},
-	
+
 	["tosti"] = {
 		label = "Sanduíche de Queijo Grelhado",
 		weight = 200,
@@ -545,7 +545,7 @@ return {
 			image = "tosti.png",
 		}
 	},
-	
+
 	["10kgoldchain"] = {
 		label = "Corrente de Ouro 10k",
 		weight = 2000,
@@ -555,7 +555,7 @@ return {
 		client = {
 			image = "10kgoldchain.png",
 		}
-	},	
+	},
 
 	["weed_nutrition"] = {
 		label = "Adubo para Plantas",
@@ -567,7 +567,7 @@ return {
 			image = "weed_nutrition.png",
 		}
 	},
-	
+
 	["driver_license"] = {
 		label = "Carteira de Motorista",
 		weight = 0,
@@ -578,7 +578,7 @@ return {
 			image = "driver_license.png",
 		}
 	},
-	
+
 	["weed_amnesia"] = {
 		label = "Amnésia 2g",
 		weight = 200,
@@ -589,7 +589,7 @@ return {
 			image = "weed_baggy.png",
 		}
 	},
-	
+
 	["grapejuice"] = {
 		label = "Suco de Uva",
 		weight = 200,
@@ -600,7 +600,7 @@ return {
 			image = "grapejuice.png",
 		}
 	},
-	
+
 	["copper"] = {
 		label = "Cobre",
 		weight = 100,
@@ -611,7 +611,7 @@ return {
 			image = "copper.png",
 		}
 	},
-	
+
 	["markedbills"] = {
 		label = "Dinheiro Marcado",
 		weight = 1000,
@@ -622,7 +622,7 @@ return {
 			image = "markedbills.png",
 		}
 	},
-	
+
 	["beer"] = {
 		label = "Cerveja",
 		weight = 500,
@@ -633,7 +633,7 @@ return {
 			image = "beer.png",
 		}
 	},
-	
+
 	["goldbar"] = {
 		label = "Barra de Ouro",
 		weight = 7000,
@@ -644,7 +644,7 @@ return {
 			image = "goldbar.png",
 		}
 	},
-	
+
 	["walkstick"] = {
 		label = "Bengala",
 		weight = 1000,
@@ -655,7 +655,7 @@ return {
 			image = "walkstick.png",
 		}
 	},
-	
+
 	["weed_skunk"] = {
 		label = "Skunk 2g",
 		weight = 200,
@@ -666,7 +666,7 @@ return {
 			image = "weed_baggy.png",
 		}
 	},
-	
+
 	["microwave"] = {
 		label = "Micro-ondas",
 		weight = 46000,
@@ -677,7 +677,7 @@ return {
 			image = "placeholder.png",
 		}
 	},
-	
+
 	["weed_purple-haze_seed"] = {
 		label = "Semente de Purple Haze",
 		weight = 0,
@@ -688,7 +688,7 @@ return {
 			image = "weed_seed.png",
 		}
 	},
-	
+
 	["empty_evidence_bag"] = {
 		label = "Saco de Evidências Vazio",
 		weight = 0,
@@ -699,7 +699,7 @@ return {
 			image = "evidence.png",
 		}
 	},
-	
+
 	["lighter"] = {
 		label = "Isqueiro",
 		weight = 0,
@@ -710,7 +710,7 @@ return {
 			image = "lighter.png",
 		}
 	},
-	
+
 	["goldchain"] = {
 		label = "Corrente de Ouro",
 		weight = 1500,
@@ -721,7 +721,7 @@ return {
 			image = "goldchain.png",
 		}
 	},
-	
+
 	["weed_brick"] = {
 		label = "Tijolo de Maconha",
 		weight = 1000,
@@ -732,7 +732,7 @@ return {
 			image = "weed_brick.png",
 		}
 	},
-	
+
 	["small_tv"] = {
 		label = "TV Pequena",
 		weight = 30000,
@@ -743,7 +743,7 @@ return {
 			image = "placeholder.png",
 		}
 	},
-	
+
 	["jerry_can"] = {
 		label = "Galão 20L",
 		weight = 20000,
@@ -753,7 +753,7 @@ return {
 		client = {
 			image = "jerry_can.png",
 		}
-	},	
+	},
 
 	["dendrogyra_coral"] = {
 		label = "Dendrogyra",
@@ -765,7 +765,7 @@ return {
 			image = "dendrogyra_coral.png",
 		}
 	},
-	
+
 	["weed_amnesia_seed"] = {
 		label = "Semente de Amnésia",
 		weight = 0,
@@ -776,7 +776,7 @@ return {
 			image = "weed_seed.png",
 		}
 	},
-	
+
 	["weed_og-kush"] = {
 		label = "OG Kush 2g",
 		weight = 200,
@@ -787,7 +787,7 @@ return {
 			image = "weed_baggy.png",
 		}
 	},
-	
+
 	["gatecrack"] = {
 		label = "Gatecrack",
 		weight = 0,
@@ -798,7 +798,7 @@ return {
 			image = "usb_device.png",
 		}
 	},
-	
+
 	["weed_white-widow_seed"] = {
 		label = "Semente de White Widow",
 		weight = 0,
@@ -809,7 +809,7 @@ return {
 			image = "weed_seed.png",
 		}
 	},
-	
+
 	["ironoxide"] = {
 		label = "Pó de Ferro",
 		weight = 100,
@@ -820,7 +820,7 @@ return {
 			image = "ironoxide.png",
 		}
 	},
-	
+
 	["iron"] = {
 		label = "Ferro",
 		weight = 100,
@@ -831,7 +831,7 @@ return {
 			image = "iron.png",
 		}
 	},
-	
+
 	["meth"] = {
 		label = "Metanfetamina",
 		weight = 100,
@@ -842,7 +842,7 @@ return {
 			image = "meth_baggy.png",
 		}
 	},
-	
+
 	["security_card_02"] = {
 		label = "Cartão de Segurança B",
 		weight = 0,
@@ -853,7 +853,7 @@ return {
 			image = "security_card_02.png",
 		}
 	},
-	
+
 	["handcuffs"] = {
 		label = "Algemas",
 		weight = 100,
@@ -864,7 +864,7 @@ return {
 			image = "handcuffs.png",
 		}
 	},
-	
+
 	["crack_baggy"] = {
 		label = "Saco de Crack",
 		weight = 0,
@@ -875,7 +875,7 @@ return {
 			image = "crack_baggy.png",
 		}
 	},
-	
+
 	["moneybag"] = {
 		label = "Saco de Dinheiro",
 		weight = 0,
@@ -886,7 +886,7 @@ return {
 			image = "moneybag.png",
 		}
 	},
-	
+
 	["xtcbaggy"] = {
 		label = "Saco de Ecstasy",
 		weight = 0,
@@ -897,7 +897,7 @@ return {
 			image = "xtc_baggy.png",
 		}
 	},
-	
+
 	["sandwich"] = {
 		label = "Sanduíche",
 		weight = 200,
@@ -908,7 +908,7 @@ return {
 			image = "sandwich.png",
 		}
 	},
-	
+
 	["aluminumoxide"] = {
 		label = "Pó de Alumínio",
 		weight = 100,
@@ -919,7 +919,7 @@ return {
 			image = "aluminumoxide.png",
 		}
 	},
-	
+
 	["radioscanner"] = {
 		label = "Scanner de Rádio",
 		weight = 1000,
@@ -930,7 +930,7 @@ return {
 			image = "radioscanner.png",
 		}
 	},
-	
+
 	["steel"] = {
 		label = "Aço",
 		weight = 100,
@@ -941,7 +941,7 @@ return {
 			image = "steel.png",
 		}
 	},
-	
+
 	["toaster"] = {
 		label = "Torradeira",
 		weight = 18000,
@@ -952,7 +952,7 @@ return {
 			image = "placeholder.png",
 		}
 	},
-	
+
 	["cryptostick"] = {
 		label = "Crypto Stick",
 		weight = 200,
@@ -963,7 +963,7 @@ return {
 			image = "cryptostick.png",
 		}
 	},
-	
+
 	["weed_purple-haze"] = {
 		label = "Purple Haze 2g",
 		weight = 200,
@@ -974,7 +974,7 @@ return {
 			image = "weed_baggy.png",
 		}
 	},
-	
+
 	["vodka"] = {
 		label = "Vodka",
 		weight = 500,
@@ -985,7 +985,7 @@ return {
 			image = "vodka.png",
 		}
 	},
-	
+
 	["diamond_ring"] = {
 		label = "Anel de Diamante",
 		weight = 1500,
@@ -996,7 +996,7 @@ return {
 			image = "diamond_ring.png",
 		}
 	},
-	
+
 	["twerks_candy"] = {
 		label = "Twerks",
 		weight = 100,
@@ -1006,7 +1006,7 @@ return {
 		client = {
 			image = "twerks_candy.png",
 		}
-	},	
+	},
 
 	["cokebaggy"] = {
 		label = "Saco de Cocaína",
@@ -1018,7 +1018,7 @@ return {
 			image = "cocaine_baggy.png",
 		}
 	},
-	
+
 	["coke_brick"] = {
 		label = "Tijolo de Cocaína",
 		weight = 1000,
@@ -1029,18 +1029,19 @@ return {
 			image = "coke_brick.png",
 		}
 	},
-	
+
 	["advancedlockpick"] = {
 		label = "Lockpick Avançado",
 		weight = 500,
 		stack = true,
 		close = true,
-		description = "Se você perde suas chaves com frequência, isso é muito útil... Também útil para abrir suas cervejas",
+		description =
+		"Se você perde suas chaves com frequência, isso é muito útil... Também útil para abrir suas cervejas",
 		client = {
 			image = "advancedlockpick.png",
 		}
 	},
-	
+
 	["heavyarmor"] = {
 		label = "Armadura Pesada",
 		weight = 5000,
@@ -1051,7 +1052,7 @@ return {
 			image = "armor.png",
 		}
 	},
-	
+
 	["joint"] = {
 		label = "Cigarro de Maconha",
 		weight = 0,
@@ -1062,7 +1063,7 @@ return {
 			image = "joint.png",
 		}
 	},
-	
+
 	["advancedrepairkit"] = {
 		label = "Kit de Reparo Avançado",
 		weight = 4000,
@@ -1073,7 +1074,7 @@ return {
 			image = "advancedkit.png",
 		}
 	},
-	
+
 	["police_stormram"] = {
 		label = "Aríete de Choque",
 		weight = 18000,
@@ -1084,7 +1085,7 @@ return {
 			image = "police_stormram.png",
 		}
 	},
-	
+
 	["kurkakola"] = {
 		label = "Cola",
 		weight = 500,
@@ -1095,7 +1096,7 @@ return {
 			image = "cola.png",
 		}
 	},
-	
+
 	["labkey"] = {
 		label = "Chave",
 		weight = 500,
@@ -1106,7 +1107,7 @@ return {
 			image = "labkey.png",
 		}
 	},
-	
+
 	["water_bottle"] = {
 		label = "Garrafa de Água",
 		weight = 500,
@@ -1117,7 +1118,7 @@ return {
 			image = "water_bottle.png",
 		}
 	},
-	
+
 	["trojan_usb"] = {
 		label = "USB Trojan",
 		weight = 0,
@@ -1128,7 +1129,7 @@ return {
 			image = "usb_device.png",
 		}
 	},
-	
+
 	["weed_white-widow"] = {
 		label = "White Widow 2g",
 		weight = 200,
@@ -1139,7 +1140,7 @@ return {
 			image = "weed_baggy.png",
 		}
 	},
-	
+
 	["laptop"] = {
 		label = "Laptop",
 		weight = 4000,
@@ -1150,7 +1151,7 @@ return {
 			image = "laptop.png",
 		}
 	},
-	
+
 	["ifaks"] = {
 		label = "Kit de Primeiros Socorros",
 		weight = 200,
@@ -1161,7 +1162,7 @@ return {
 			image = "ifaks.png",
 		}
 	},
-	
+
 	["pinger"] = {
 		label = "Localizador",
 		weight = 1000,
@@ -1172,7 +1173,7 @@ return {
 			image = "pinger.png",
 		}
 	},
-	
+
 	["aluminum"] = {
 		label = "Alumínio",
 		weight = 100,
@@ -1183,7 +1184,7 @@ return {
 			image = "aluminum.png",
 		}
 	},
-	
+
 	["tablet"] = {
 		label = "Tablet",
 		weight = 2000,
@@ -1194,7 +1195,7 @@ return {
 			image = "tablet.png",
 		}
 	},
-	
+
 	["painkillers"] = {
 		label = "Analgésicos",
 		weight = 0,
@@ -1205,7 +1206,7 @@ return {
 			image = "painkillers.png",
 		}
 	},
-	
+
 	["thermite"] = {
 		label = "Termite",
 		weight = 1000,
@@ -1216,7 +1217,7 @@ return {
 			image = "thermite.png",
 		}
 	},
-	
+
 	["glass"] = {
 		label = "Vidro",
 		weight = 100,
@@ -1227,7 +1228,7 @@ return {
 			image = "glass.png",
 		}
 	},
-	
+
 	["drill"] = {
 		label = "Furadeira",
 		weight = 20000,
@@ -1238,7 +1239,7 @@ return {
 			image = "drill.png",
 		}
 	},
-	
+
 	["security_card_01"] = {
 		label = "Cartão de Segurança A",
 		weight = 0,
@@ -1249,7 +1250,7 @@ return {
 			image = "security_card_01.png",
 		}
 	},
-	
+
 	["armor"] = {
 		label = "Armadura",
 		weight = 5000,
@@ -1260,7 +1261,7 @@ return {
 			image = "armor.png",
 		}
 	},
-	
+
 	["oxy"] = {
 		label = "Oxy com Prescrição",
 		weight = 0,
@@ -1271,7 +1272,7 @@ return {
 			image = "oxy.png",
 		}
 	},
-	
+
 	["rolex"] = {
 		label = "Relógio Dourado",
 		weight = 1500,
@@ -1282,7 +1283,7 @@ return {
 			image = "rolex.png",
 		}
 	},
-	
+
 	["weed_ak47"] = {
 		label = "AK47 2g",
 		weight = 200,
@@ -1293,7 +1294,7 @@ return {
 			image = "weed_baggy.png",
 		}
 	},
-	
+
 	["screwdriverset"] = {
 		label = "Kit de Ferramentas",
 		weight = 1000,
@@ -1304,7 +1305,7 @@ return {
 			image = "screwdriverset.png",
 		}
 	},
-	
+
 	["whiskey"] = {
 		label = "Whiskey",
 		weight = 500,
@@ -1315,7 +1316,7 @@ return {
 			image = "whiskey.png",
 		}
 	},
-	
+
 	["grape"] = {
 		label = "Uva",
 		weight = 100,
@@ -1326,7 +1327,7 @@ return {
 			image = "grape.png",
 		}
 	},
-	
+
 	["nitrous"] = {
 		label = "Óxido Nitroso",
 		weight = 1000,
@@ -1337,7 +1338,7 @@ return {
 			image = "nitrous.png",
 		}
 	},
-	
+
 	["firework1"] = {
 		label = "2 Irmãos",
 		weight = 1000,
@@ -1348,7 +1349,7 @@ return {
 			image = "firework1.png",
 		}
 	},
-	
+
 	["repairkit"] = {
 		label = "Kit de Reparo",
 		weight = 2500,
@@ -1359,7 +1360,7 @@ return {
 			image = "repairkit.png",
 		}
 	},
-	
+
 	["firework3"] = {
 		label = "Apaga Tudo",
 		weight = 1000,
@@ -1370,7 +1371,7 @@ return {
 			image = "firework3.png",
 		}
 	},
-	
+
 	["firework2"] = {
 		label = "Estaladores",
 		weight = 1000,
@@ -1381,7 +1382,7 @@ return {
 			image = "firework2.png",
 		}
 	},
-	
+
 	["iphone"] = {
 		label = "iPhone",
 		weight = 1000,
@@ -1392,7 +1393,7 @@ return {
 			image = "iphone.png",
 		}
 	},
-	
+
 	["antipatharia_coral"] = {
 		label = "Antipatharia",
 		weight = 1000,
@@ -1402,19 +1403,20 @@ return {
 		client = {
 			image = "antipatharia_coral.png",
 		}
-	},	
+	},
 
 	["electronickit"] = {
 		label = "Kit Eletrônico",
 		weight = 100,
 		stack = true,
 		close = true,
-		description = "Se você sempre quis construir um robô, talvez possa começar por aqui. Quem sabe você se torne o novo Elon Musk?",
+		description =
+		"Se você sempre quis construir um robô, talvez possa começar por aqui. Quem sabe você se torne o novo Elon Musk?",
 		client = {
 			image = "electronickit.png",
 		}
 	},
-	
+
 	["coffee"] = {
 		label = "Café",
 		weight = 200,
@@ -1425,7 +1427,7 @@ return {
 			image = "coffee.png",
 		}
 	},
-	
+
 	["diving_fill"] = {
 		label = "Tubo de Mergulho",
 		weight = 3000,
@@ -1435,7 +1437,7 @@ return {
 			image = "diving_tube.png",
 		}
 	},
-	
+
 	["certificate"] = {
 		label = "Certificado",
 		weight = 0,
@@ -1446,7 +1448,7 @@ return {
 			image = "certificate.png",
 		}
 	},
-	
+
 	["filled_evidence_bag"] = {
 		label = "Saco de Evidências",
 		weight = 200,
@@ -1457,7 +1459,7 @@ return {
 			image = "evidence.png",
 		}
 	},
-	
+
 	["coke_small_brick"] = {
 		label = "Pacote de Cocaína",
 		weight = 350,
@@ -1468,7 +1470,7 @@ return {
 			image = "coke_small_brick.png",
 		}
 	},
-	
+
 	["notepad"] = {
 		label = "Bloco de Notas",
 		weight = 0,
@@ -1480,14 +1482,14 @@ return {
 			export = 'mri_Qnotes.notepad',
 		},
 	},
-	
+
 	["tornnote"] = {
 		label = "Anotação",
 		weight = 0,
 		stack = false,
 		close = false,
 	},
-	
+
 	['camera'] = {
 		label = 'Câmera',
 		weight = 1500,
@@ -1495,7 +1497,7 @@ return {
 		close = true,
 		description = "Uma câmera profissional para tirar uma foto discreta da esposa do seu vizinho!"
 	},
-	
+
 	['photo'] = {
 		label = 'Foto',
 		weight = 100,
@@ -1517,7 +1519,7 @@ return {
 		},
 		description = "Uma foto tirada com uma câmera."
 	},
-	
+
 	['wood'] = {
 		label = 'Madeira',
 		weight = 1,
@@ -1525,7 +1527,7 @@ return {
 		close = true,
 		description = nil
 	},
-	
+
 	['metal'] = {
 		label = 'Metal',
 		weight = 1,
@@ -1533,7 +1535,7 @@ return {
 		close = true,
 		description = nil
 	},
-	
+
 	['rope'] = {
 		label = 'Corda',
 		weight = 1,
@@ -1541,15 +1543,15 @@ return {
 		close = true,
 		description = nil
 	},
-	
-	['shovel'] = {
-		label = 'Pá',
-		weight = 1,
-		stack = true,
-		close = true,
-		description = nil
-	},
-	
+
+	-- ['shovel'] = {
+	-- 	label = 'Pá',
+	-- 	weight = 1,
+	-- 	stack = true,
+	-- 	close = true,
+	-- 	description = nil
+	-- },
+
 	["bag"] = {
 		label = "Bolsa",
 		weight = 1000,
@@ -1559,7 +1561,7 @@ return {
 		client = {
 			image = "bag.png",
 		}
-	},	
+	},
 
 	-- ND_Police
 	["shield"] = {
@@ -1627,14 +1629,14 @@ return {
 	["projectile"] = {
 		label = "Projétil"
 	},
-	
+
 	-- lunar_garages
 	['contract'] = {
 		label = 'Contrato',
 		weight = 100,
 		stack = true
 	},
-	
+
 	-- ars_ambulancejob
 	['medicalbag'] = {
 		label = 'Bolsa de Primeiros Socorros',
@@ -1642,56 +1644,56 @@ return {
 		stack = true,
 		description = "Um kit médico abrangente para tratar ferimentos e doenças.",
 	},
-	
+
 	['bandage'] = {
 		label = 'Bandagem',
 		weight = 100,
 		stack = true,
 		description = "Uma simples bandagem usada para cobrir e proteger ferimentos.",
 	},
-	
+
 	['defibrillator'] = {
 		label = 'Desfibrilador',
 		weight = 100,
 		stack = true,
 		description = "Usado para reviver pacientes.",
 	},
-	
+
 	['tweezers'] = {
 		label = 'Pinças',
 		weight = 100,
 		stack = true,
 		description = "Pinças de precisão para remover objetos estranhos, como balas, de ferimentos com segurança.",
 	},
-	
+
 	['burncream'] = {
 		label = 'Creme para Queimaduras',
 		weight = 100,
 		stack = true,
 		description = "Creme especializado para tratar e aliviar queimaduras leves e irritações na pele.",
 	},
-	
+
 	['suturekit'] = {
 		label = 'Kit de Sutura',
 		weight = 100,
 		stack = true,
 		description = "Um kit contendo ferramentas cirúrgicas e materiais para suturar e fechar ferimentos.",
 	},
-	
+
 	['icepack'] = {
 		label = 'Pacote de Gelo',
 		weight = 200,
 		stack = true,
 		description = "Um pacote de gelo usado para reduzir o inchaço e fornecer alívio da dor e inflamação.",
 	},
-	
+
 	['stretcher'] = {
 		label = 'Maca',
 		weight = 200,
 		stack = true,
 		description = "Um maca usada para mover pacientes que precisam de cuidados médicos.",
 	},
-	
+
 	['emstablet'] = {
 		label = 'Tablet de EMS',
 		weight = 200,
@@ -1714,13 +1716,13 @@ return {
 		allowArmed = true,
 		stack = false,
 	},
-	
+
 	['huntingbait'] = {
 		label = 'Isca de Caça',
 		weight = 100,
 		allowArmed = true,
 	},
-	
+
 	['cooked_meat'] = {
 		label = 'Carne Cozida',
 		weight = 200,
@@ -1729,7 +1731,7 @@ return {
 		label = 'Carne Crua',
 		weight = 200,
 	},
-	
+
 	['skin_deer_ruined'] = {
 		label = 'Pele de Veado Rasgada',
 		weight = 200,
@@ -1751,12 +1753,12 @@ return {
 		label = 'Pele de Veado Impecável',
 		weight = 200,
 	},
-	
+
 	['deer_horn'] = {
 		label = 'Chifre de Veado',
 		weight = 1000,
 	},
-	
+
 	["racing_gps"] = {
 		label = "GPS de Corrida",
 		weight = 500,
@@ -1795,28 +1797,32 @@ return {
 		weight = 10,
 		stack = false,
 		close = true,
-		description = "Um estojo retangular portátil usado para transportar documentos importantes, arquivos ou outros pertences pessoais."
+		description =
+		"Um estojo retangular portátil usado para transportar documentos importantes, arquivos ou outros pertences pessoais."
 	},
 	["paramedicbag"] = {
 		label = "Bolsa de Paramédico",
 		weight = 5,
 		stack = false,
 		close = true,
-		description = "Uma bolsa médica usada por paramédicos, contendo suprimentos essenciais para atendimento de emergência."
+		description =
+		"Uma bolsa médica usada por paramédicos, contendo suprimentos essenciais para atendimento de emergência."
 	},
 	["policepouches"] = {
 		label = "Bolsa da Polícia",
 		weight = 5,
 		stack = false,
 		close = true,
-		description = "Uma bolsa usada por policiais para armazenar e transportar suprimentos essenciais, como algemas, spray de pimenta e outros equipamentos táticos."
+		description =
+		"Uma bolsa usada por policiais para armazenar e transportar suprimentos essenciais, como algemas, spray de pimenta e outros equipamentos táticos."
 	},
 	["policepouches1"] = {
 		label = "Bolsa da Polícia",
 		weight = 5,
 		stack = false,
 		close = true,
-		description = "Uma versão maior da bolsa da polícia usada para armazenar equipamentos e materiais táticos adicionais."
+		description =
+		"Uma versão maior da bolsa da polícia usada para armazenar equipamentos e materiais táticos adicionais."
 	},
 
 	["briefcaselockpicker"] = {
@@ -1837,7 +1843,7 @@ return {
 			image = "syphoningkit.png",
 		}
 	},
-	
+
 	["jerrycan"] = {
 		label = "Lata Jerry",
 		weight = 15000,
@@ -1848,7 +1854,7 @@ return {
 			image = "jerrycan.png",
 		}
 	},
-	
+
 	["notebook"] = {
 		label = "Diário",
 		weight = 15000,
@@ -1859,9 +1865,9 @@ return {
 			image = "notebook.png",
 		}
 	},
-	
+
 	-- jim_mining
-	
+
 	["silverearring"] = {
 		label = "Brincos de Prata",
 		weight = 200,
@@ -1872,7 +1878,7 @@ return {
 			image = "silver_earring.png",
 		}
 	},
-	
+
 	["mininglaser"] = {
 		label = "Laser de Mineração",
 		weight = 900,
@@ -1883,7 +1889,7 @@ return {
 			image = "mininglaser.png",
 		}
 	},
-	
+
 	["stone"] = {
 		label = "Pedra",
 		weight = 2000,
@@ -1894,7 +1900,7 @@ return {
 			image = "stone.png",
 		}
 	},
-	
+
 	["diamond_necklace"] = {
 		label = "Colar de Diamante",
 		weight = 200,
@@ -1905,7 +1911,7 @@ return {
 			image = "diamond_necklace.png",
 		}
 	},
-	
+
 	["drillbit"] = {
 		label = "Broca",
 		weight = 10,
@@ -1916,7 +1922,7 @@ return {
 			image = "drillbit.png",
 		}
 	},
-	
+
 	["silveringot"] = {
 		label = "Lingote de Prata",
 		weight = 1000,
@@ -1927,7 +1933,7 @@ return {
 			image = "silveringot.png",
 		}
 	},
-	
+
 	["emerald_ring"] = {
 		label = "Anel de Esmeralda",
 		weight = 200,
@@ -1938,7 +1944,7 @@ return {
 			image = "emerald_ring.png",
 		}
 	},
-	
+
 	["emerald_necklace_silver"] = {
 		label = "Colar de Esmeralda Prata",
 		weight = 200,
@@ -1949,7 +1955,7 @@ return {
 			image = "emerald_necklace_silver.png",
 		}
 	},
-	
+
 	["ruby_ring_silver"] = {
 		label = "Anel de Rubi Prata",
 		weight = 200,
@@ -1960,7 +1966,7 @@ return {
 			image = "ruby_ring_silver.png",
 		}
 	},
-	
+
 	["sapphire_necklace_silver"] = {
 		label = "Colar de Safira Prata",
 		weight = 200,
@@ -1971,7 +1977,7 @@ return {
 			image = "sapphire_necklace_silver.png",
 		}
 	},
-	
+
 	["emerald_earring_silver"] = {
 		label = "Brincos de Esmeralda Prata",
 		weight = 200,
@@ -1982,7 +1988,7 @@ return {
 			image = "emerald_earring_silver.png",
 		}
 	},
-	
+
 	["ruby"] = {
 		label = "Rubi",
 		weight = 100,
@@ -1993,7 +1999,7 @@ return {
 			image = "ruby.png",
 		}
 	},
-	
+
 	["ruby_ring"] = {
 		label = "Anel de Rubi",
 		weight = 200,
@@ -2004,7 +2010,7 @@ return {
 			image = "ruby_ring.png",
 		}
 	},
-	
+
 	["miningdrill"] = {
 		label = "Broca de Mineração",
 		weight = 1000,
@@ -2015,7 +2021,7 @@ return {
 			image = "miningdrill.png",
 		}
 	},
-	
+
 	["emerald"] = {
 		label = "Esmeralda",
 		weight = 100,
@@ -2026,7 +2032,7 @@ return {
 			image = "emerald.png",
 		}
 	},
-	
+
 	["sapphire_earring_silver"] = {
 		label = "Brincos de Safira Prata",
 		weight = 200,
@@ -2037,7 +2043,7 @@ return {
 			image = "sapphire_earring_silver.png",
 		}
 	},
-	
+
 	["ruby_necklace_silver"] = {
 		label = "Colar de Rubi Prata",
 		weight = 200,
@@ -2048,7 +2054,7 @@ return {
 			image = "ruby_necklace_silver.png",
 		}
 	},
-	
+
 	["uncut_sapphire"] = {
 		label = "Safira Bruta",
 		weight = 100,
@@ -2059,7 +2065,7 @@ return {
 			image = "uncut_sapphire.png",
 		}
 	},
-	
+
 	["can"] = {
 		label = "Lata Vazia",
 		weight = 10,
@@ -2070,7 +2076,7 @@ return {
 			image = "can.png",
 		}
 	},
-	
+
 	["ruby_earring_silver"] = {
 		label = "Brincos de Rubi Prata",
 		weight = 200,
@@ -2081,7 +2087,7 @@ return {
 			image = "ruby_earring_silver.png",
 		}
 	},
-	
+
 	["uncut_ruby"] = {
 		label = "Rubi Bruto",
 		weight = 100,
@@ -2092,7 +2098,7 @@ return {
 			image = "uncut_ruby.png",
 		}
 	},
-	
+
 	["ruby_earring"] = {
 		label = "Brincos de Rubi",
 		weight = 200,
@@ -2103,7 +2109,7 @@ return {
 			image = "ruby_earring.png",
 		}
 	},
-	
+
 	["goldpan"] = {
 		label = "Bandeja de Garimpagem de Ouro",
 		weight = 10,
@@ -2114,7 +2120,7 @@ return {
 			image = "goldpan.png",
 		}
 	},
-	
+
 	["emerald_ring_silver"] = {
 		label = "Anel de Esmeralda Prata",
 		weight = 200,
@@ -2125,7 +2131,7 @@ return {
 			image = "emerald_ring_silver.png",
 		}
 	},
-	
+
 	["ruby_necklace"] = {
 		label = "Colar de Rubi",
 		weight = 200,
@@ -2136,7 +2142,7 @@ return {
 			image = "ruby_necklace.png",
 		}
 	},
-	
+
 	["diamond_earring_silver"] = {
 		label = "Brincos de Diamante Prata",
 		weight = 200,
@@ -2147,7 +2153,7 @@ return {
 			image = "diamond_earring_silver.png",
 		}
 	},
-	
+
 	["diamond_necklace_silver"] = {
 		label = "Colar de Diamante Prata",
 		weight = 200,
@@ -2158,7 +2164,7 @@ return {
 			image = "diamond_necklace_silver.png",
 		}
 	},
-	
+
 	["emerald_necklace"] = {
 		label = "Colar de Esmeralda",
 		weight = 200,
@@ -2169,7 +2175,7 @@ return {
 			image = "emerald_necklace.png",
 		}
 	},
-	
+
 	["ironore"] = {
 		label = "Minério de Ferro",
 		weight = 1000,
@@ -2180,7 +2186,7 @@ return {
 			image = "ironore.png",
 		}
 	},
-	
+
 	["sapphire_earring"] = {
 		label = "Brincos de Safira",
 		weight = 200,
@@ -2191,7 +2197,7 @@ return {
 			image = "sapphire_earring.png",
 		}
 	},
-	
+
 	["pickaxe"] = {
 		label = "Picareta",
 		weight = 1000,
@@ -2202,7 +2208,7 @@ return {
 			image = "pickaxe.png",
 		}
 	},
-	
+
 	["diamond_earring"] = {
 		label = "Brincos de Diamante",
 		weight = 200,
@@ -2213,7 +2219,7 @@ return {
 			image = "diamond_earring.png",
 		}
 	},
-	
+
 	["goldingot"] = {
 		label = "Lingote de Ouro",
 		weight = 1000,
@@ -2224,7 +2230,7 @@ return {
 			image = "goldingot.png",
 		}
 	},
-	
+
 	["goldearring"] = {
 		label = "Brincos de Ouro",
 		weight = 200,
@@ -2235,7 +2241,7 @@ return {
 			image = "gold_earring.png",
 		}
 	},
-	
+
 	["emerald_earring"] = {
 		label = "Brincos de Esmeralda",
 		weight = 200,
@@ -2246,7 +2252,7 @@ return {
 			image = "emerald_earring.png",
 		}
 	},
-	
+
 	["carbon"] = {
 		label = "Carbono",
 		weight = 1000,
@@ -2256,7 +2262,7 @@ return {
 		client = {
 			image = "carbon.png",
 		}
-	},	
+	},
 
 	["sapphire_necklace"] = {
 		label = "Colar de Safira",
@@ -2268,7 +2274,7 @@ return {
 			image = "sapphire_necklace.png",
 		}
 	},
-	
+
 	["bottle"] = {
 		label = "Garrafa Vazia",
 		weight = 10,
@@ -2279,7 +2285,7 @@ return {
 			image = "bottle.png",
 		}
 	},
-	
+
 	["uncut_diamond"] = {
 		label = "Diamante Bruto",
 		weight = 100,
@@ -2290,7 +2296,7 @@ return {
 			image = "uncut_diamond.png",
 		}
 	},
-	
+
 	["goldore"] = {
 		label = "Minério de Ouro",
 		weight = 1000,
@@ -2301,7 +2307,7 @@ return {
 			image = "goldore.png",
 		}
 	},
-	
+
 	["silver_ring"] = {
 		label = "Anel de Prata",
 		weight = 200,
@@ -2312,7 +2318,7 @@ return {
 			image = "silver_ring.png",
 		}
 	},
-	
+
 	["sapphire_ring_silver"] = {
 		label = "Anel de Safira Prata",
 		weight = 200,
@@ -2323,7 +2329,7 @@ return {
 			image = "sapphire_ring_silver.png",
 		}
 	},
-	
+
 	["sapphire_ring"] = {
 		label = "Anel de Safira",
 		weight = 200,
@@ -2334,7 +2340,7 @@ return {
 			image = "sapphire_ring.png",
 		}
 	},
-	
+
 	["gold_ring"] = {
 		label = "Anel de Ouro",
 		weight = 200,
@@ -2345,7 +2351,7 @@ return {
 			image = "gold_ring.png",
 		}
 	},
-	
+
 	["silverore"] = {
 		label = "Minério de Prata",
 		weight = 1000,
@@ -2356,7 +2362,7 @@ return {
 			image = "silverore.png",
 		}
 	},
-	
+
 	["uncut_emerald"] = {
 		label = "Esmeralda Bruta",
 		weight = 100,
@@ -2367,7 +2373,7 @@ return {
 			image = "uncut_emerald.png",
 		}
 	},
-	
+
 	["silverchain"] = {
 		label = "Corrente de Prata",
 		weight = 200,
@@ -2378,7 +2384,7 @@ return {
 			image = "silverchain.png",
 		}
 	},
-	
+
 	["copperore"] = {
 		label = "Minério de Cobre",
 		weight = 1000,
@@ -2389,7 +2395,7 @@ return {
 			image = "copperore.png",
 		}
 	},
-	
+
 	["sapphire"] = {
 		label = "Safira",
 		weight = 100,
@@ -2400,7 +2406,7 @@ return {
 			image = "sapphire.png",
 		}
 	},
-	
+
 	["diamond_ring_silver"] = {
 		label = "Anel de Diamante Prata",
 		weight = 200,
@@ -2420,7 +2426,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce milho."
 	},
-	
+
 	['corn_raw'] = {
 		label = 'Milho Cru',
 		weight = 1,
@@ -2428,14 +2434,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['corn'] = {
 		label = 'Milho',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['tomato_seed'] = {
 		label = 'Semente de Tomate',
 		weight = 1,
@@ -2443,7 +2449,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce tomate."
 	},
-	
+
 	['tomato_raw'] = {
 		label = 'Tomate Cru',
 		weight = 1,
@@ -2451,14 +2457,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['tomato'] = {
 		label = 'Tomate',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['wheat_seed'] = {
 		label = 'Semente de Trigo',
 		weight = 1,
@@ -2466,7 +2472,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce trigo."
 	},
-	
+
 	['wheat_raw'] = {
 		label = 'Trigo Cru',
 		weight = 1,
@@ -2474,14 +2480,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['wheat'] = {
 		label = 'Trigo',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['broccoli_seed'] = {
 		label = 'Semente de Brócolis',
 		weight = 1,
@@ -2489,7 +2495,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce brócolis."
 	},
-	
+
 	['broccoli_raw'] = {
 		label = 'Brócolis Cru',
 		weight = 1,
@@ -2497,14 +2503,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['broccoli'] = {
 		label = 'Brócolis',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['carrot_seed'] = {
 		label = 'Semente de Cenoura',
 		weight = 1,
@@ -2512,7 +2518,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce cenoura."
 	},
-	
+
 	['carrot_raw'] = {
 		label = 'Cenoura Crua',
 		weight = 1,
@@ -2520,14 +2526,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['carrot'] = {
 		label = 'Cenoura',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['potato_seed'] = {
 		label = 'Semente de Batata',
 		weight = 1,
@@ -2535,7 +2541,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce batata."
 	},
-	
+
 	['potato_raw'] = {
 		label = 'Batata Crua',
 		weight = 1,
@@ -2543,14 +2549,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['potato'] = {
 		label = 'Batata',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['pickle_seed'] = {
 		label = 'Semente de Picles',
 		weight = 1,
@@ -2558,7 +2564,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce picles."
 	},
-	
+
 	['pickle_raw'] = {
 		label = 'Picles Cru',
 		weight = 1,
@@ -2566,14 +2572,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['pickle'] = {
 		label = 'Picles',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['weed_seed'] = {
 		label = 'Semente de Erva Daninha',
 		weight = 1,
@@ -2581,7 +2587,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce erva daninha."
 	},
-	
+
 	['weed_raw'] = {
 		label = 'Erva Daninha Crua',
 		weight = 1,
@@ -2589,14 +2595,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['weed'] = {
 		label = 'Erva Daninha',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['cocaine_seed'] = {
 		label = 'Semente de Cocaína',
 		weight = 1,
@@ -2604,7 +2610,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce cocaína."
 	},
-	
+
 	['cocaine_raw'] = {
 		label = 'Cocaína Crua',
 		weight = 1,
@@ -2612,14 +2618,14 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['cocaine'] = {
 		label = 'Cocaína',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['heroin_seed'] = {
 		label = 'Semente de Heroína',
 		weight = 1,
@@ -2627,7 +2633,7 @@ return {
 		close = true,
 		description = "Esta é uma semente que cresce heroína."
 	},
-	
+
 	['heroin_raw'] = {
 		label = 'Heroína Crua',
 		weight = 1,
@@ -2635,27 +2641,27 @@ return {
 		close = true,
 		description = "Você precisará processar isso."
 	},
-	
+
 	['heroin'] = {
 		label = 'Heroína',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['garden_pitcher'] = {
 		label = 'Jarra de Jardim',
 		weight = 1,
 		stack = true,
 		close = true,
 	},
-	
+
 	['garden_shovel'] = {
 		label = 'Pá de Jardim',
 		weight = 1,
 		stack = true,
 		close = true,
-	},	
+	},
 
 	---- mm_carkeys
 	["vehiclekey"] = {
@@ -2664,7 +2670,7 @@ return {
 		weight = 10,
 		stack = false
 	},
-	
+
 	["keybag"] = {
 		label = "Bolsa de Chaves",
 		description = 'Esta é uma bolsa de chaves, você pode armazenar todas as suas chaves',
@@ -2676,33 +2682,33 @@ return {
 	['basic_rod'] = { label = 'Vara de pesca', stack = false, weight = 250 },
 
 	['graphite_rod'] = { label = 'Vara de grafite', stack = false, weight = 350 },
-	
+
 	['titanium_rod'] = { label = 'Vara de titânio', stack = false, weight = 450 },
-	
+
 	['worms'] = { label = 'Minhocas', weight = 10 },
-	
+
 	['artificial_bait'] = { label = 'Isca artificial', weight = 30 },
-	
+
 	['anchovy'] = { label = 'Anchova', weight = 20 },
-	
+
 	['grouper'] = { label = 'Garoupa', weight = 3500 },
-	
+
 	['haddock'] = { label = 'Haddock', weight = 500 },
-	
+
 	['mahi_mahi'] = { label = 'Dourado', weight = 3500 },
-	
+
 	['piranha'] = { label = 'Pirarucu', weight = 1500 },
-	
+
 	['red_snapper'] = { label = 'Pargo-vermelho', weight = 2500 },
-	
+
 	['salmon'] = { label = 'Salmão', weight = 1000 },
-	
+
 	['shark'] = { label = 'Tubarão', weight = 7500 },
-	
+
 	['trout'] = { label = 'Truta', weight = 750 },
-	
+
 	['tuna'] = { label = 'Atum', weight = 10000 },
-	
+
 	-- cw-driftchip
 	["driftchip"] = {
 		label = "Drift Chip",
@@ -2735,7 +2741,7 @@ return {
 	},
 
 	["blue_green_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2746,7 +2752,7 @@ return {
 	},
 
 	["ykta_monika"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2757,7 +2763,7 @@ return {
 	},
 
 	["ykta_hsw"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2768,7 +2774,7 @@ return {
 	},
 
 	["red_rainbo_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2779,7 +2785,7 @@ return {
 	},
 
 	["anod_green"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2790,7 +2796,7 @@ return {
 	},
 
 	["anod_wine"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2801,7 +2807,7 @@ return {
 	},
 
 	["ykta_bubblegum"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2812,7 +2818,7 @@ return {
 	},
 
 	["coppe_purp_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2823,7 +2829,7 @@ return {
 	},
 
 	["darkbluepearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2834,7 +2840,7 @@ return {
 	},
 
 	["white_holo"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2845,7 +2851,7 @@ return {
 	},
 
 	["green_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2856,7 +2862,7 @@ return {
 	},
 
 	["green_brow_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2867,7 +2873,7 @@ return {
 	},
 
 	["green_red_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2878,7 +2884,7 @@ return {
 	},
 
 	["pink_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2889,7 +2895,7 @@ return {
 	},
 
 	["orang_purp_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2900,7 +2906,7 @@ return {
 	},
 
 	["white_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2911,7 +2917,7 @@ return {
 	},
 
 	["oil_slic_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2922,7 +2928,7 @@ return {
 	},
 
 	["purp_red_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2933,7 +2939,7 @@ return {
 	},
 
 	["yellow_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2944,7 +2950,7 @@ return {
 	},
 
 	["green_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2955,7 +2961,7 @@ return {
 	},
 
 	["anod_copper"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2966,7 +2972,7 @@ return {
 	},
 
 	["ykta_four_seaso"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2977,7 +2983,7 @@ return {
 	},
 
 	["blue_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2988,7 +2994,7 @@ return {
 	},
 
 	["lit_blue_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -2999,7 +3005,7 @@ return {
 	},
 
 	["ykta_sunsets"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3010,7 +3016,7 @@ return {
 	},
 
 	["ykta_vice_city"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3021,7 +3027,7 @@ return {
 	},
 
 	["anod_red"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3032,7 +3038,7 @@ return {
 	},
 
 	["darkpurpprisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3043,7 +3049,7 @@ return {
 	},
 
 	["green_purp_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3054,7 +3060,7 @@ return {
 	},
 
 	["lit_green_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3065,7 +3071,7 @@ return {
 	},
 
 	["anod_lime"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3076,7 +3082,7 @@ return {
 	},
 
 	["ykta_temperatur"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3087,7 +3093,7 @@ return {
 	},
 
 	["blue_pink_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3098,7 +3104,7 @@ return {
 	},
 
 	["anod_blue"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3109,7 +3115,7 @@ return {
 	},
 
 	["ykta_the_seven"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3120,7 +3126,7 @@ return {
 	},
 
 	["hot_pink_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3131,7 +3137,7 @@ return {
 	},
 
 	["orang_blue_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3142,7 +3148,7 @@ return {
 	},
 
 	["blu_rainbo_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3153,7 +3159,7 @@ return {
 	},
 
 	["darkblueprisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3164,7 +3170,7 @@ return {
 	},
 
 	["ykta_electro"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3175,7 +3181,7 @@ return {
 	},
 
 	["ykta_verlierer2"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3186,7 +3192,7 @@ return {
 	},
 
 	["green_blue_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3197,7 +3203,7 @@ return {
 	},
 
 	["ykta_sprunk_ex"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3208,7 +3214,7 @@ return {
 	},
 
 	["magen_oran_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3219,7 +3225,7 @@ return {
 	},
 
 	["magen_gree_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3230,7 +3236,7 @@ return {
 	},
 
 	["graphite_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3241,7 +3247,7 @@ return {
 	},
 
 	["turq_red_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3252,7 +3258,7 @@ return {
 	},
 
 	["red_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3263,7 +3269,7 @@ return {
 	},
 
 	["ykta_nite_day"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3274,7 +3280,7 @@ return {
 	},
 
 	["oil_slick_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3285,7 +3291,7 @@ return {
 	},
 
 	["teal_purp_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3296,7 +3302,7 @@ return {
 	},
 
 	["magen_cyan_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3307,7 +3313,7 @@ return {
 	},
 
 	["white_purp_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3318,7 +3324,7 @@ return {
 	},
 
 	["ykta_fubuki"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3329,7 +3335,7 @@ return {
 	},
 
 	["anod_bronze"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3340,7 +3346,7 @@ return {
 	},
 
 	["ykta_kamenrider"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3351,7 +3357,7 @@ return {
 	},
 
 	["burg_green_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3362,7 +3368,7 @@ return {
 	},
 
 	["cream_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3373,7 +3379,7 @@ return {
 	},
 
 	["cyan_purp_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3384,7 +3390,7 @@ return {
 	},
 
 	["darkpurplepearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3395,7 +3401,7 @@ return {
 	},
 
 	["ykta_christmas"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3406,7 +3412,7 @@ return {
 	},
 
 	["purp_green_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3417,7 +3423,7 @@ return {
 	},
 
 	["red_orangeflip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3428,7 +3434,7 @@ return {
 	},
 
 	["turq_purp_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3439,7 +3445,7 @@ return {
 	},
 
 	["green_turq_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3450,7 +3456,7 @@ return {
 	},
 
 	["ykta_full_rbow"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3461,7 +3467,7 @@ return {
 	},
 
 	["ykta_m9_throwba"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3472,7 +3478,7 @@ return {
 	},
 
 	["ykta_synthwave"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3483,7 +3489,7 @@ return {
 	},
 
 	["ykta_chromabera"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3494,7 +3500,7 @@ return {
 	},
 
 	["black_holo"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3505,7 +3511,7 @@ return {
 	},
 
 	["magen_yell_flip"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3516,7 +3522,7 @@ return {
 	},
 
 	["anod_gold"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3527,7 +3533,7 @@ return {
 	},
 
 	["ykta_monochrome"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3538,7 +3544,7 @@ return {
 	},
 
 	["rainbow_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3549,7 +3555,7 @@ return {
 	},
 
 	["anod_champagne"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3560,7 +3566,7 @@ return {
 	},
 
 	["black_prisma"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3571,7 +3577,7 @@ return {
 	},
 
 	["anod_purple"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3582,7 +3588,7 @@ return {
 	},
 
 	["darktealpearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3593,7 +3599,7 @@ return {
 	},
 
 	["lit_purp_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3604,7 +3610,7 @@ return {
 	},
 
 	["darkgreenpearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3615,7 +3621,7 @@ return {
 	},
 
 	["lit_pink_pearl"] = {
-		label = "Exotic Spray can",
+		label = "Spray Exótico",
 		weight = 200,
 		stack = true,
 		close = true,
@@ -3627,25 +3633,25 @@ return {
 
 	-- kloud-farmjob
 	['trowel'] = {
-		label = 'Trowel',
+		label = 'Espátula',
 		weight = 500,
 		decay = true,
 		stack = false,
 		close = false,
 		description = 'Diggy Diggy Diggy?',
 	},
-	
+
 	['shovel'] = {
-		label = 'Shovel',
+		label = 'Pá',
 		weight = 1000,
 		decay = true,
 		stack = false,
 		close = false,
 		description = 'Diggy Diggy Diggy?',
 	},
-	
+
 	['dirty_potato'] = {
-		label = 'Dirty Potato',
+		label = 'Batata suja',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3653,9 +3659,9 @@ return {
 		close = false,
 		description = 'Potato potato but dirty dirty?',
 	},
-	
+
 	['potato'] = {
-		label = 'Potato',
+		label = 'Batata',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3663,9 +3669,9 @@ return {
 		close = false,
 		description = 'Potato potato?',
 	},
-	
+
 	['dirty_cabbage'] = {
-		label = 'Dirty Cabbage',
+		label = 'Repolho sujo',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3673,9 +3679,9 @@ return {
 		close = false,
 		description = 'Cabby cabby but dirty dirty?',
 	},
-	
+
 	['cabbage'] = {
-		label = 'Cabbage',
+		label = 'Repolho',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3683,9 +3689,9 @@ return {
 		close = false,
 		description = 'Cabby cabby?',
 	},
-	
+
 	['dirty_tomato'] = {
-		label = 'Dirty Tomato',
+		label = 'Tomate sujo',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3693,9 +3699,9 @@ return {
 		close = false,
 		description = 'To-ma-to but dirty',
 	},
-	
+
 	['tomato'] = {
-		label = 'Tomato',
+		label = 'Tomate',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3703,9 +3709,9 @@ return {
 		close = false,
 		description = 'To-ma-to',
 	},
-	
+
 	['dirty_orange'] = {
-		label = 'Dirty Orange',
+		label = 'Laranja suja',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3713,9 +3719,9 @@ return {
 		close = false,
 		description = 'It talks!!!!',
 	},
-	
+
 	['orange'] = {
-		label = 'Orange',
+		label = 'Laranja',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3723,9 +3729,9 @@ return {
 		close = false,
 		description = 'It talks!!!!',
 	},
-	
+
 	['dirty_coffee_beans'] = {
-		label = 'Dirty Coffee Beans',
+		label = 'Grãos de café sujos',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3733,9 +3739,9 @@ return {
 		close = false,
 		description = 'Ohh wakey wakey but dirty',
 	},
-	
+
 	['coffee_beans'] = {
-		label = 'Coffee Beans',
+		label = 'Grãos de café',
 		weight = 250,
 		degrade = 7160,
 		decay = true,
@@ -3746,141 +3752,252 @@ return {
 
 	--- kto-guidebook
 	["guide"] = {
-		label = "Guidebook",
+		label = "Guia Iniciante",
 		weight = 475,
 		stack = true,
 		close = true,
-		description = 'Want to know the ins and outs of our server? Read our guidebook!',
-	},	
+		description = 'É novato em nosso servidor? Leia nosso guia!',
+	},
 
-	    -- ================ Keep-companion ================
-		['keepcompanionhusky'] = {
-			label = 'Husky',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "Also the nickname everyone calls you behind your back."
-		},
-		['keepcompanionpoodle'] = {
-			label = 'Poodle',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "This dog's haircut is more expensive than your car."
-		},
-		['keepcompanionrottweiler'] = {
-			label = 'Rottweiler',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "A butcher's best friend."
-		},
-		['keepcompanionwesty'] = {
-			label = 'Westie',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "A great breed for hunting rats, and wearing cute sweaters."
-		},
-		['keepcompanioncat'] = {
-			label = 'Cat',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "What's new pussycat?"
-		},
-		['keepcompanionpug'] = {
-			label = 'Pug',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "The snorting haunts you in your sleep."
-		},
-		['keepcompanionretriever'] = {
-			label = 'Retriever',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "America's favorite dog."
-		},
-		['keepcompanionshepherd'] = {
-			label = 'Border Collie',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "Useful to heard your flock of sheep."
-		},
-		['keepcompanionrabbit'] = {
-			label = 'Rabbit',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "Boing boing boing boing."
-		},
-		['keepcompanionhen'] = {
-			label = 'Hen',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "A best friend AND lunch. Two for one!"
-		},
-		['keepcompanionrat'] = {
-			label = 'Rat',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "Snitches get stiches, but rats get scritches."
-		},
-		['keepcompanionk9unit'] = {
-			label = 'K9 Unit Malinois',
-			weight = 5000,
-			stack = false,
-			close = true,
-			description = "LSPD exclusive K9."
-		},
-	
-		---
-	  --- pet items ----
-		['petfood'] = {
-			label = 'Pet Food',
-			weight = 500,
-			stack = true,
-			close = true,
-			description = "Nom nom for your pom pom."
-		},
-		['collarpet'] = {
-			label = 'Pet Collar',
-			weight = 500,
-			stack = false,
-			close = true,
-			description = "Rename your pet."
-		},
-		['firstaidforpet'] = {
-			label = 'Pet First-aid Kit',
-			weight = 500,
-			stack = true,
-			close = true,
-			description = "Bring your pet back from the dead again and again."
-		},
-		['petnametag'] = {
-			label = 'Pet Name Tag',
-			weight = 500,
-			stack = true,
-			close = true,
-			description = "rename your pet."
-		},
-		['petwaterbottleportable'] = {
-			label = 'Pet Water Bottle',
-			weight = 500,
-			stack = false,
-			close = true,
-			description = "Water for your pet. Stop trying to drink this."
-		},
-		['petgroomingkit'] = {
-			label = 'Pet Grooming Kit',
-			weight = 500,
-			stack = false,
-			close = true,
-			description = "Now your pet can pass a wave check."
-		},
+	-- ================ Keep-companion ================
+	['keepcompanionhusky'] = {
+		label = 'Husky',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Um cachorro que dizem ser mais inteligente que você."
+	},
+	['keepcompanionpoodle'] = {
+		label = 'Poodle',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "O corte de cabelo desse doguinho é mais caro que o seu carro."
+	},
+	['keepcompanionrottweiler'] = {
+		label = 'Rottweiler',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "O melhor amigo de um açougueiro."
+	},
+	['keepcompanionwesty'] = {
+		label = 'Westie',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Uma ótima raça para caçar ratos e usar suéteres fofos."
+	},
+	['keepcompanioncat'] = {
+		label = 'Gato',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Um gato ou uma gata? Muito difícil saber."
+	},
+	['keepcompanionpug'] = {
+		label = 'Pug',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "O ronco dele assombra você durante o sono."
+	},
+	['keepcompanionretriever'] = {
+		label = 'Retriever',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Cachorro favorito da América."
+	},
+	['keepcompanionshepherd'] = {
+		label = 'Border Collie',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Útil para ouvir seu bando de ovelhas."
+	},
+	['keepcompanionrabbit'] = {
+		label = 'Coelho',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Parece ser fofinho mas é só um rato grande."
+	},
+	['keepcompanionhen'] = {
+		label = 'Galinha',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Um melhor amigo e almoço. Dois por um!"
+	},
+	['keepcompanionrat'] = {
+		label = 'Rato',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Pode ser o maior cozinheiro do mundo ou um rato mesmo."
+	},
+	['keepcompanionk9unit'] = {
+		label = 'K9 Unidade Malinois',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "O melhor amigo viciado de um policial."
+	},
+
+	---
+	--- pet items ----
+	['petfood'] = {
+		label = 'Ração de Pet',
+		weight = 500,
+		stack = true,
+		close = true,
+		description = "Comidinha para seu pet."
+	},
+	['collarpet'] = {
+		label = 'Coleira de Pet',
+		weight = 500,
+		stack = false,
+		close = true,
+		description = "Renomeie seu animal de estimação."
+	},
+	['firstaidforpet'] = {
+		label = 'Kit Veterinário',
+		weight = 500,
+		stack = true,
+		close = true,
+		description = "Traga seu animal de estimação de volta dos mortos de novo e de novo."
+	},
+	['petnametag'] = {
+		label = 'Tag de Pet',
+		weight = 500,
+		stack = true,
+		close = true,
+		description = "Renomeie seu animal de estimação."
+	},
+	['petwaterbottleportable'] = {
+		label = 'Água para Pet',
+		weight = 500,
+		stack = false,
+		close = true,
+		description = "Água para seu animal de estimação. Pare de tentar beber isso."
+	},
+	['petgroomingkit'] = {
+		label = 'Kit de preparação para animais de estimação',
+		weight = 500,
+		stack = false,
+		close = true,
+		description = "Agora seu animal de estimação pode passar uma verificação de ondas."
+	},
+
+	-- it drugs
+	["watering_can"] = {
+		label = "Regador",
+		weight = 500,
+		stack = false,
+		close = false,
+		description = "Um simples regador",
+		client = {
+			image = "watering_can.png",
+		}
+	},
+
+	["fertilizer"] = {
+		label = "Fertilizante",
+		weight = 500,
+		stack = false,
+		close = false,
+		description = "Fertilizante simples.",
+		client = {
+			image = "fertilizer.png",
+		}
+	},
+
+	["advanced_fertilizer"] = {
+		label = "Fertilizante avançado",
+		weight = 500,
+		stack = false,
+		close = false,
+		description = "Fertilizante com muitos nutrientes.",
+		client = {
+			image = "advanced_fertilizer.png",
+		}
+	},
+
+	["liquid_fertilizer"] = {
+		label = "Fertilizante líquido",
+		weight = 200,
+		stack = false,
+		close = false,
+		description = "Basicamente água com nutrientes, o mais barato.",
+		client = {
+			image = "liquid_fertilizer.png",
+		}
+	},
+
+	["weed_lemonhaze_seed"] = {
+		label = "Semente de Lemonhaze",
+		weight = 20,
+		stack = true,
+		close = true,
+		description = "Lemonhaze",
+		client = {
+			image = "weed_lemonhaze_seed.png",
+		}
+	},
+
+	["weed_lemonhaze"] = {
+		label = "Maconha",
+		weight = 20,
+		stack = true,
+		close = false,
+		description = "Lemonhaze",
+		client = {
+			image = "weed_lemonhaze.png",
+		}
+	},
+
+	["coca_seed"] = {
+		label = "Semente de Coca",
+		weight = 20,
+		stack = true,
+		close = true,
+		description = "Coca",
+		client = {
+			image = "coca_seed.png",
+		}
+	},
+
+	["coca"] = {
+		label = "Cocaína",
+		weight = 20,
+		stack = true,
+		close = false,
+		description = "Coca",
+		client = {
+			image = "coca.png",
+		}
+	},
+
+	["weed_processing_table"] = {
+		label = "Mesa de Produção",
+		weight = 1000,
+		stack = false,
+		close = true,
+		description = "Fazer as dolinhas.",
+		client = {
+			image = "weed_processing_table.png",
+		}
+	},
+
+	["cocaine_processing_table"] = {
+		label = "Mesa de Produção",
+		weight = 1000,
+		stack = false,
+		close = true,
+		description = "Encher os ziplocks.",
+		client = {
+			image = "cocaine_processing_table.png",
+		}
+	},
 }
