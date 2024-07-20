@@ -4000,4 +4000,13 @@ return {
 			image = "cocaine_processing_table.png",
 		}
 	},
+
+	-- mri_Qboombox
+	["speaker"] = {
+		label = "Caixa de Som",
+		weight = 475,
+		stack = true,
+		close = true,
+		description = 'Põe um som pra tocar DJ!',
+	},
 }
