@@ -4009,4 +4009,13 @@ return {
 		close = true,
 		description = 'Põe um som pra tocar DJ!',
 	},
+
+	-- mm_radio
+	["battery"] = {
+		label = "Bateria de Rádio",
+		weight = 100,
+		stack = false,
+		close = false,
+		description = 'Precisando de uma carga?',
+	},
 }
