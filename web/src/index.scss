@@ -3,14 +3,14 @@
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
 
-$mainColor: #22232c;
+$mainColor: rgba(0, 0, 0, 0.8);
 $textColor: #c1c2c5;
 $mainFont: 'Saira', sans-serif;
 
 $primaryColor: 'red-500';
 
 $secondaryColor: rgba(12, 12, 12, 0.4);
-$secondaryColorHighlight: #33343F;
+$secondaryColorHighlight: rgba(255, 255, 255, 0.2);
 $secondaryColorLight: rgba(0, 0, 0, 0.5);
 $secondaryColorDark: rgba(12, 12, 12, 0.8);
 
@@ -189,13 +189,13 @@ button:active {
   transition: 200ms !important;
   border: none;
   color: rgb(255, 255, 255);
-  width: 52px;
-  height: 52px;
+  width: 36px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
   fill: white;
-  border-radius: 5% !important;
+  border-radius: 10% !important;
   background-color: $secondaryColor !important;
   &:hover {
     background-color: $secondaryColorDark !important;
@@ -287,6 +287,7 @@ button:active {
     @apply text-xl;
   }
 }
+
 .hotbar-slot-number {
   position: absolute;
   top: 50%;
@@ -298,7 +299,7 @@ button:active {
   width: 100%;
   height: 100%;
   font-size: 3.5rem;
-  color: rgba(209, 213, 219, 0.2); /* Valor equivalente a text-gray-50/20 */
+  color: rgba(255, 255, 255, 0.2); /* Valor equivalente a text-gray-50/20 */
   pointer-events: none; /* Para garantir que a numeração não bloqueie interações com a imagem */
 }
 
@@ -334,12 +335,12 @@ button:active {
 
   &--amount {
     // @apply $primaryColor;
-    background-color: $primaryColor;
+    background-color: green;
   }
 
   &--money {
     // @apply $primaryColor;
-    background-color: $primaryColor;
+    background-color: green;
   }
 }
 

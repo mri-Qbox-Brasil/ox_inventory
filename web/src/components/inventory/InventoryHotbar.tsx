@@ -7,6 +7,7 @@ import { useAppSelector } from '../../store';
 import { selectLeftInventory } from '../../store/inventory';
 import { SlotWithItem } from '../../typings';
 import SlideUp from '../utils/transitions/SlideUp';
+import { maincolor } from '../../store/maincolor';
 
 const InventoryHotbar: React.FC = () => {
   const [hotbarVisible, setHotbarVisible] = useState(false);
@@ -28,6 +29,7 @@ const InventoryHotbar: React.FC = () => {
     <SlideUp in={hotbarVisible}>
       <div className="hotbar-container">
         {items.map((item) => (
+          
           <div
             className="hotbar-item-slot"
             style={{
@@ -35,15 +37,26 @@ const InventoryHotbar: React.FC = () => {
             }}
             key={`hotbar-${item.slot}`}
           >
+          
+          {!isSlotWithItem(item) && (
+            <div className="hotbar-slot-number">{item.slot}</div>
+          )}
+
             {isSlotWithItem(item) && (
               <div className="item-slot-wrapper">
-                <div className="hotbar-slot-number">{item.slot}</div>
                 <div className="hotbar-slot-header-wrapper">
                   <div className="inventory-slot-number"></div>
-                  
+
                   {item.count && (
-                    <div className={`inventory-weight ${item.name == 'money' ? 'inventory-weight--money' : 'inventory-weight--amount'}`}>
-                      {item.count.toLocaleString('en-us') + ` ${item.name == 'money' ? '$' : 'x'}`}
+                    <div
+                      style={{
+                        backgroundColor: maincolor,
+                      }}
+                      className={`inventory-weight ${
+                        item.name == 'money' ? 'inventory-weight--money' : 'inventory-weight--amount'
+                      }`}
+                    >
+                      {item.count.toLocaleString('en-us') + ` ${item.name == 'money' ? 'R$' : 'x'}`}
                     </div>
                   )}
                 </div>

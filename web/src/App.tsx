@@ -64,7 +64,7 @@ debugData([
         id: 'shop',
         type: 'ground',
         slots: 5000,
-        label: 'Chão',
+        label: null,
         weight: null,
         maxWeight: null,
         items: [

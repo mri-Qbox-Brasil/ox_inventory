@@ -15,6 +15,7 @@ import { ItemsPayload } from '../../reducers/refreshSlots';
 import { closeTooltip, openTooltip } from '../../store/tooltip';
 import { openContextMenu } from '../../store/contextMenu';
 import { useMergeRefs } from '@floating-ui/react';
+import { maincolor } from '../../store/maincolor';
 
 interface SlotProps {
   inventoryId: Inventory['id'];
@@ -132,9 +133,14 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
             : undefined,
         opacity: isDragging ? 0.4 : 1.0,
         backgroundImage: `url(${item?.name ? getItemUrl(item as SlotWithItem) : 'none'}`,
-        border: isOver ? '1px solid rgba(34, 197, 94,0.4)' : '',
+        border: isOver ? `1px solid ${maincolor}` : '',
       }}
     >
+    
+    {!isSlotWithItem(item) && item.slot <= 5 && inventoryType == 'player' && (
+      <div className="hotbar-slot-number">{item.slot}</div>
+    )}
+
       {isSlotWithItem(item) && (
         <div
           className="item-slot-wrapper"
@@ -204,6 +210,9 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
 
               {item.count && (
                 <span
+                  style={{
+                    backgroundColor: maincolor,
+                  }}
                   className={`inventory-weight ${
                     item.name == 'money' ? 'inventory-weight--money' : 'inventory-weight--amount'
                   }`}

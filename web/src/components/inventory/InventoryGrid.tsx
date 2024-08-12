@@ -11,6 +11,7 @@ import ToolsIcon from '../utils/icons/TooltsIcon';
 import BoxIcon from '../utils/icons/BoxIcon';
 import VehicleIcon from '../utils/icons/VehicleIcon';
 import GroundIcon from '../utils/icons/GroundIcon';
+import { maincolor } from '../../store/maincolor';
 
 
 const PAGE_SIZE = 30;
@@ -39,8 +40,10 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
         return <VehicleIcon />;
       case 'ground':
         return <GroundIcon />;
+      case null:
+        return <GroundIcon />;
       default:
-        return <BoxIcon />;
+        return <GroundIcon />;
     }
   }, [inventory.type]);
 
@@ -57,10 +60,11 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
   return (
     <>
       <div className="inventory-grid-wrapper col-span-3" style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
-        <div className={`flex items-center ${inventory.label ? 'justify-between' : 'justify-end'}`}>
+        <div className={`flex items-center ${inventory.label ? 'justify-between' : 'justify-between'}`}>
           <div className="flex items-center space-x-1 pl-2 pr-4 py-2">
             <div className="">{inventoryIcon}</div>
             {inventory.type && inventory.label && <span>{inventory.label}</span>}
+            {inventory.type && !inventory.label && <span>Chão</span>}
           </div>
 
           {inventory.maxWeight && (
