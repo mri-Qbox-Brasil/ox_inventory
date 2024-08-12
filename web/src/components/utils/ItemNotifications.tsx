@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
 import { TransitionGroup } from 'react-transition-group';
 import useNuiEvent from '../../hooks/useNuiEvent';
@@ -19,7 +19,7 @@ export const ItemNotificationsContext = React.createContext<{
 } | null>(null);
 
 export const useItemNotifications = () => {
-  const itemNotificationsContext = useContext(ItemNotificationsContext);
+  const itemNotificationsContext = React.useContext(ItemNotificationsContext);
   if (!itemNotificationsContext) throw new Error(`ItemNotificationsContext undefined`);
   return itemNotificationsContext;
 };
@@ -39,7 +39,7 @@ const ItemNotification = React.forwardRef(
       >
         <div className="item-slot-wrapper">
           <div className="item-notification-action-box">
-            <p>{props.item.text}</p>
+            <p className='text-gray-100'>{props.item.text}</p>
           </div>
           <div className="inventory-slot-label-box">
             <div className="inventory-slot-label-text">{slotItem.metadata?.label || Items[slotItem.name]?.label}</div>

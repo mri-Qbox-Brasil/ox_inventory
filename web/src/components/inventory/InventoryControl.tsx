@@ -37,33 +37,16 @@ const InventoryControl: React.FC = () => {
 
   return (
     <>
-      <UsefulControls infoVisible={infoVisible} setInfoVisible={setInfoVisible} />
-      <div className="inventory-control">
-        <div className="inventory-control-wrapper">
+      <div className="inventory-control flex items-start justify-center px-3">
+        <div className="grid grid-cols-1 gap-2.5">
           <input
-            className="inventory-control-input"
+            className="w-50 2k:w-50 4k:w-100 px-1 py-2.5 2k:py-4 4k:py-6 2k:text-xl 4k:text-3xl bg-dark bg-opacity-40 rounded-md text-center mb-8 focus:outline-none hover:border-gray-400/20 border border-transparent focus:border-gray-400 transition-colors duration-300"
             type="number"
             defaultValue={itemAmount}
             onChange={inputHandler}
-            min={0}
           />
-          <button className="inventory-control-button" ref={use}>
-            {Locale.ui_use || 'Use'}
-          </button>
-          <button className="inventory-control-button" ref={give}>
-            {Locale.ui_give || 'Give'}
-          </button>
-          <button className="inventory-control-button" onClick={() => fetchNui('exit')}>
-            {Locale.ui_close || 'Close'}
-          </button>
         </div>
       </div>
-
-      <button className="useful-controls-button" onClick={() => setInfoVisible(true)}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 524 524">
-          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
-        </svg>
-      </button>
     </>
   );
 };

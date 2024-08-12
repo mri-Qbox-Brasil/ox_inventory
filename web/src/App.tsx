@@ -3,6 +3,7 @@ import useNuiEvent from './hooks/useNuiEvent';
 import { Items } from './store/items';
 import { Locale } from './store/locale';
 import { setImagePath } from './store/imagepath';
+import { setMainColor } from './store/maincolor';
 import { setupInventory } from './store/inventory';
 import { Inventory } from './typings';
 import { useAppDispatch } from './store';
@@ -61,11 +62,11 @@ debugData([
       },
       rightInventory: {
         id: 'shop',
-        type: 'crafting',
+        type: 'ground',
         slots: 5000,
-        label: 'Bob Smith',
-        weight: 3000,
-        maxWeight: 5000,
+        label: 'Chão',
+        weight: null,
+        maxWeight: null,
         items: [
           {
             slot: 1,
@@ -96,11 +97,13 @@ const App: React.FC = () => {
     items: typeof Items;
     leftInventory: Inventory;
     imagepath: string;
-  }>('init', ({ locale, items, leftInventory, imagepath }) => {
+    maincolor: string;
+  }>('init', ({ locale, items, leftInventory, imagepath, maincolor }) => {
     for (const name in locale) Locale[name] = locale[name];
     for (const name in items) Items[name] = items[name];
 
     setImagePath(imagepath);
+    setMainColor(maincolor);
     dispatch(setupInventory({ leftInventory }));
   });
 

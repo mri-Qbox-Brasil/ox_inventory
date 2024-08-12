@@ -1,6 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap');
+
 $mainColor: #22232c;
 $textColor: #c1c2c5;
-$mainFont: Roboto;
+$mainFont: 'Saira', sans-serif;
+
+$primaryColor: 'red-500';
 
 $secondaryColor: rgba(12, 12, 12, 0.4);
 $secondaryColorHighlight: #33343F;
@@ -9,37 +16,36 @@ $secondaryColorDark: rgba(12, 12, 12, 0.8);
 
 $gridCols: 5;
 $gridRows: 5;
-$gridSize: 10.2vh;
+$gridSize: 11.5vh;
 $gridGap: 2px;
 $containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+  @apply m-0 h-screen bg-none overflow-hidden #{!important};
+
+  font-family: Saira, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
     'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100vh;
-  background: none !important;
-  overflow: hidden !important;
   user-select: none;
 }
 
 #root {
-  height: 100%;
+  @apply h-full;
+  --primaryColor: 22, 163, 74; /* Define como RGB */
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: Saira, source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  @apply hidden;
 }
 
 p {
-  margin: 0;
-  padding: 0;
+  @apply m-0 p-0;
+
   font-family: $mainFont;
 }
 
@@ -51,50 +57,36 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .app-wrapper {
-  height: 100%;
-  width: 100%;
-  color: white;
+  @apply h-full w-full text-white;
 }
 
 .context-menu-list {
-  min-width: 200px;
-  background-color: $mainColor;
+  @apply bg-dark/90 border border-zinc-800 p-2 outline-none flex flex-col rounded-md;
+
+  min-width: 130px;
   color: $textColor;
-  padding: 4px;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
-  border-radius: 4px;
-  outline: none;
-  display: flex;
-  flex-direction: column;
+  font-size: 0.9rem;
 }
 
 .context-menu-item  {
-  padding: 8px;
-  border-radius: 4px;
-  background-color: transparent;
-  outline: none;
-  border: none;
+  @apply px-4 py-2 rounded-md bg-transparent outline-none flex justify-between items-center transition-colors duration-150;
   color: $textColor;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
   &:active {
     transform: none;
   }
+
   &:hover {
-    background-color: $secondaryColorHighlight;
-    cursor: pointer;
+    @apply cursor-pointer bg-white/5 text-gray-300;
   }
 }
 
 .tooltip-description {
-  padding-top: 5px;
+  @apply pt-1;
 }
 
 .tooltip-markdown > p {
-  margin: 0;
+  @apply m-0;
 }
 
 button:active {
@@ -116,58 +108,24 @@ button:active {
 }
 
 .inventory-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  @apply grid grid-cols-7 gap-5 items-center justify-center h-full mx-0;
 
-  gap: 20px;
+  @screen lg {
+    @apply mx-8;
+  }
+
+  @screen k {
+    @apply mx-48;
+  }
+
+  @screen 4k {
+    @apply mx-80;
+  }
 }
 
 .inventory-control {
-  display: flex;
-
-  .inventory-control-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .inventory-control-input {
-    transition: 200ms;
-    padding: 16px 8px;
-    border-radius: 2.5%;
-    font-family: $mainFont;
-    font-size: 16px;
-    text-align: center;
-    outline: none;
-    border: none;
-    color: #fff;
-    background-color: $secondaryColor;
-    &:focus-within {
-      background-color: $secondaryColorDark;
-    }
-  }
-
-  .inventory-control-button {
-    font-size: 14px;
-    color: #fff;
-    background-color: $secondaryColor;
-    transition: 200ms;
-    padding: 12px 8px;
-    border-radius: 2.5%;
-    border: none;
-    text-transform: uppercase;
-    font-family: $mainFont;
-    width: 100%;
-    font-weight: 500;
-    &:hover {
-      background-color: $secondaryColorDark;
-    }
-  }
+  @apply mt-14 rounded flex;
+  height: $containerSize;
 }
 
 .useful-controls-dialog {
@@ -230,7 +188,7 @@ button:active {
   right: 25px;
   transition: 200ms !important;
   border: none;
-  color: white;
+  color: rgb(255, 255, 255);
   width: 52px;
   height: 52px;
   display: flex;
@@ -260,7 +218,7 @@ button:active {
 .inventory-grid-wrapper {
   display: flex;
   flex-direction: column;
-  gap: calc($gridGap * 2);
+  gap: calc($gridGap * 4);
 }
 .inventory-grid-header-wrapper {
   display: flex;
@@ -272,60 +230,122 @@ button:active {
 }
 
 .inventory-grid-container {
-  display: grid;
+  @apply grid grid-cols-5 gap-1;
+
   height: $containerSize;
-  grid-template-columns: repeat($gridCols, $gridSize);
-  grid-auto-rows: $gridSize + 0.22vh;
-  gap: $gridGap;
+  grid-auto-rows: $gridSize + 1.22vh;
   overflow-y: scroll;
 }
 
 // inventory slots
 .inventory-slot {
-  background-color: $secondaryColor;
+  @apply bg-dark bg-opacity-50 rounded border border-transparent transition-colors duration-150;
+
+  &:hover {
+    @apply bg-opacity-40 border-gray-400/20;
+  }
+
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 2.5%;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
-  background-size: 7vh;
+  background-size: 6.5vh;
   color: $textColor;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
+}
+
+.inventory-slot--empty {
+  @apply bg-opacity-5;
+
+  &:hover {
+    @apply border-gray-300/10;
+  }
 }
 
 .inventory-slot-label-box {
-  background-color: $mainColor;
+  @apply inline-flex max-w-full bg-dark/0 bg-opacity-50 px-2 py-1 rounded-md;
+
   color: $textColor;
-  text-align: center;
-  border-bottom-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  border-top-color: rgba(0, 0, 0, 0.2);
-  border-top-style: inset;
-  border-top-width: 1px;
 }
 
 .inventory-slot-label-text {
-  text-transform: uppercase;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 2px 3px;
+  @apply capitalize text-gray-50;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
   font-weight: 400;
   font-family: $mainFont;
-  font-size: 12px;
+  font-size: 14px;
+  line-height: 11px;
+
+  @screen 2k {
+    @apply text-sm;
+  }
+
+  @screen 4k {
+    @apply text-xl;
+  }
+}
+.hotbar-slot-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 3.5rem;
+  color: rgba(209, 213, 219, 0.2); /* Valor equivalente a text-gray-50/20 */
+  pointer-events: none; /* Para garantir que a numeração não bloqueie interações com a imagem */
 }
 
+
+
+
 .inventory-slot-number {
-  background-color: white;
-  color: black;
-  height: 12px;
-  border-top-left-radius: 0.25vh;
-  border-bottom-right-radius: 0.25vh;
-  padding: 3px;
-  font-size: 12px;
+  @apply h-5 px-1.5 inline-flex items-center justify-center rounded-md text-xs text-gray-50;
+
+  @screen 2k {
+    @apply text-sm;
+  }
+
+  @screen 4k {
+    @apply text-xl h-8 px-2.5;
+  }
+
   font-family: $mainFont;
+}
+
+.inventory-weight {
+  @apply h-3 px-0.5 inline-flex items-center justify-center rounded-sm text-xs text-gray-50;
+
+  @screen 2k {
+    @apply text-sm;
+  }
+
+  @screen 4k {
+    @apply text-xl h-8 px-2.5;
+  }
+
+  font-family: $mainFont;
+
+  &--amount {
+    // @apply $primaryColor;
+    background-color: $primaryColor;
+  }
+
+  &--money {
+    // @apply $primaryColor;
+    background-color: $primaryColor;
+  }
+}
+
+.inventory-background {
+  @apply absolute h-screen w-full top-0 left-0;
+  background: linear-gradient(to left, rgba(var(--primaryColor), 1), rgba(0, 0, 0, 0.3));
 }
 
 .item-slot-wrapper {
@@ -333,31 +353,29 @@ button:active {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+
   p {
     font-size: 12px;
+
+    @screen 4k {
+      @apply text-2xl;
+    }
   }
 }
 
 .item-slot-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+  @apply flex flex-row justify-end;
 }
 
 .item-hotslot-header-wrapper {
+  @apply pl-1 py-1;
+
   @extend .item-slot-header-wrapper;
   justify-content: space-between !important;
 }
 
 .item-slot-info-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-self: flex-end;
-  padding: 3px;
-  gap: 3px;
-  p {
-    font-size: 12px;
-  }
+  @apply inline-flex items-center justify-between;
 }
 
 .item-slot-currency-wrapper {
@@ -373,33 +391,24 @@ button:active {
 }
 
 .item-slot-price-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  padding-right: 3px;
-  p {
-    font-size: 14px;
-    text-shadow: 0.1vh 0.1vh 0 rgba(0, 0, 0, 0.7);
+  @apply flex flex-row justify-end text-xs bg-dark/0 px-1 rounded-md;
+
+  @screen 2k {
+    @apply text-sm;
   }
 }
 
-
 .tooltip-wrapper {
-  pointer-events: none;
-  display: flex;
-  background-color: $mainColor;
+  @apply flex flex-col bg-dark border border-zinc-700 rounded-md pointer-events-none z-30;
+
   width: 200px;
   padding: 8px;
-  flex-direction: column;
   min-width: 200px;
   color: $textColor;
   font-family: $mainFont;
-  border-radius: 4px;
-  border-color: rgba(0, 0, 0, 0.2);
-  border-style: inset;
-  border-width: 1px;
+
   p {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
   }
 }
@@ -445,25 +454,24 @@ button:active {
 
 // hotbar
 .hotbar-container {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  justify-content: center;
-  width: 100%;
-  position: absolute;
-  bottom: 2vh;
+  @apply flex items-center justify-center gap-1 w-full absolute bottom-4;
 }
 
 .hotbar-item-slot {
   @extend .inventory-slot;
+  @apply bg-zinc-800 bg-opacity-70;
+
+  &:hover {
+    @apply bg-opacity-60;
+  }
+
   width: $gridSize;
   height: $gridSize;
+  z-index: 2;
 }
 
 .hotbar-slot-header-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  @apply flex flex-row justify-between p-0.5;
 }
 
 // item notifications
@@ -499,6 +507,12 @@ button:active {
 
 .item-notification-item-box {
   @extend .inventory-slot;
+  @apply bg-dark bg-opacity-50 py-1;
+
+  &:hover {
+    @apply bg-opacity-40;
+  }
+
   height: $gridSize;
   width: $gridSize;
 }
@@ -551,4 +565,50 @@ button:active {
 .transition-slide-up-exit-active {
   transform: translateY(200px);
   transition: all 200ms;
+}
+
+.inventory-control__button {
+  @apply w-28 h-14 inline-flex items-center justify-center text-sm rounded-md bg-dark text-center transition-colors duration-150 border border-transparent;
+
+  @screen 2k {
+    @apply w-32 h-20;
+  }
+
+  @screen 4k {
+    @apply w-40 h-32;
+  }
+
+  &:hover {
+    @apply bg-zinc-900/50 border-gray-400/50;
+  }
+
+  svg {
+    @apply h-6 w-6 text-gray-400;
+  }
+
+  &--close {
+    svg {
+      @apply text-red-500;
+    }
+
+    &:hover {
+      @apply border-red-500;
+    }
+  }
+
+  &--use {
+    svg {
+      @apply text-gray-400;
+    }
+
+    &:hover {
+      @apply border-gray-400;
+    }
+  }
+}
+
+.bar-icon {
+  svg {
+    @apply h-5 w-5 text-gray-800;
+  }
 }

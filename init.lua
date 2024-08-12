@@ -86,6 +86,7 @@ else
         itemnotify = GetConvarInt('inventory:itemnotify', 1) == 1,
         weaponnotify = GetConvarInt('inventory:weaponnotify', 1) == 1,
         imagepath = GetConvar('inventory:imagepath', 'nui://ox_inventory/web/images'),
+        maincolor = GetConvar('inventory:color', '#40c05780'),
         dropprops = GetConvarInt('inventory:dropprops', 0) == 1,
         dropmodel = joaat(GetConvar('inventory:dropmodel', 'prop_med_bag_01b')),
         weaponmismatch = GetConvarInt('inventory:weaponmismatch', 1) == 1,
