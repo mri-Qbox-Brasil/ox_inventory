@@ -392,17 +392,6 @@ return {
 		}
 	},
 
-	["firstaid"] = {
-		label = "Primeiros Socorros",
-		weight = 2500,
-		stack = true,
-		close = true,
-		description = "Você pode usar este kit de primeiros socorros para levantar as pessoas de volta.",
-		client = {
-			image = "firstaid.png",
-		}
-	},
-
 	["weed_skunk_seed"] = {
 		label = "Semente de Skunk",
 		weight = 0,
