@@ -86,7 +86,7 @@ return {
 		client = {
 			status = { thirst = 200000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
-			prop = { model = `prop_ecola_can`, pos = vec3(0.01, 0.01, 0.06), rot = vec3(5.0, 5.0, -180.5) },
+			prop = { model = 'prop_ecola_can', pos = vec3(0.01, 0.01, 0.06), rot = vec3(5.0, 5.0, -180.5) },
 			usetime = 2500,
 			notification = 'Você matou sua sede com uma cola'
 		}
@@ -98,7 +98,7 @@ return {
 		client = {
 			status = { thirst = 200000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
-			prop = { model = `prop_ld_can_01`, pos = vec3(0.01, 0.01, 0.06), rot = vec3(5.0, 5.0, -180.5) },
+			prop = { model = 'prop_ld_can_01', pos = vec3(0.01, 0.01, 0.06), rot = vec3(5.0, 5.0, -180.5) },
 			usetime = 2500,
 			notification = 'Você matou sua sede com uma sprite'
 		}
@@ -140,7 +140,7 @@ return {
 		client = {
 			status = { thirst = -100000, stress = -25000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
-			prop = { model = `prop_cs_panties_02`, pos = vec3(0.03, 0.0, 0.02), rot = vec3(0.0, -13.5, -1.5) },
+			prop = { model = 'prop_cs_panties_02', pos = vec3(0.03, 0.0, 0.02), rot = vec3(0.0, -13.5, -1.5) },
 			usetime = 2500,
 		}
 	},
@@ -180,7 +180,7 @@ return {
 		client = {
 			status = { hunger = 25000, thirst = 25000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
-			prop = { model = `prop_food_mustard`, pos = vec3(0.01, 0.0, -0.07), rot = vec3(1.0, 1.0, -1.5) },
+			prop = { model = 'prop_food_mustard', pos = vec3(0.01, 0.0, -0.07), rot = vec3(1.0, 1.0, -1.5) },
 			usetime = 2500,
 			notification = 'Você .. bebeu mostarda'
 		}
@@ -192,7 +192,7 @@ return {
 		client = {
 			status = { thirst = 200000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
-			prop = { model = `prop_ld_flow_bottle`, pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
+			prop = { model = 'prop_ld_flow_bottle', pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
 			usetime = 2500,
 			cancel = true,
 			notification = 'Você bebeu um pouco de água para se hidratar.'
@@ -253,11 +253,6 @@ return {
 		client = {
 			image = 'card_bank.png'
 		}
-	},
-
-	['scrapmetal'] = {
-		label = 'Sucata',
-		weight = 80,
 	},
 
 	["weed_ak47_seed"] = {
@@ -1468,7 +1463,7 @@ return {
 		consume = 0,
 		description = "Algumas vezes você precisa se lembrar de algo importante :)",
 		server = {
-			export = 'mri_Qnotes.notepad',
+			export = 'randol_notes.notepad',
 		},
 	},
 
@@ -2447,13 +2442,6 @@ return {
 		description = "Você precisará processar isso."
 	},
 
-	['tomato'] = {
-		label = 'Tomate',
-		weight = 1,
-		stack = true,
-		close = true,
-	},
-
 	['wheat_seed'] = {
 		label = 'Semente de Trigo',
 		weight = 1,
@@ -2537,13 +2525,6 @@ return {
 		stack = true,
 		close = true,
 		description = "Você precisará processar isso."
-	},
-
-	['potato'] = {
-		label = 'Batata',
-		weight = 1,
-		stack = true,
-		close = true,
 	},
 
 	['pickle_seed'] = {
@@ -3749,6 +3730,27 @@ return {
 	},
 
 	-- ================ Keep-companion ================
+	['keepcompanionmtlion'] = {
+		label = 'Leão',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Lion is your royal companion!"
+	},
+	['keepcompanionmtlion2'] = {
+		label = 'Pantera',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Panter is your royal companion!"
+	},
+	['keepcompanioncoyote'] = {
+		label = 'Coiote',
+		weight = 5000,
+		stack = false,
+		close = true,
+		description = "Coyote is your royal companion!"
+	},
 	['keepcompanionhusky'] = {
 		label = 'Husky',
 		weight = 5000,
@@ -4000,11 +4002,723 @@ return {
 	},
 
 	-- mm_radio
-	["battery"] = {
+	["radiocell"] = {
 		label = "Bateria de Rádio",
 		weight = 100,
 		stack = false,
 		close = false,
 		description = 'Precisando de uma carga?',
+	},
+	
+	-- mri_Qtowing
+	['tow_rope'] = {
+		label = 'Corda de Reboque',
+		weight = 9000,
+		stack = true,
+		close = true,
+		description = 'Pra carregar o coitado encalhado...',
+		consume = 0,
+		server = {
+			export = 'mri_Qtowing.useRope'
+		}
+	},
+
+	-- itemcollection
+	['prop_cone_small'] = {
+		label = 'Traffic cone',
+		description = "Small traffic cone",
+		prop = {`prop_mp_cone_02`, `prop_mp_cone_03`, `prop_roadcone02a`, `prop_roadcone02b`, `prop_roadcone02c`},
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},
+	['prop_cone_large'] = {
+		label = 'Traffic cone',
+		description = "Large traffic cone",
+		prop = {`prop_mp_cone_01`, `prop_roadcone01a`, `prop_roadcone01b`, `prop_roadcone01c`},
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},
+	["prop_police_barrier"] = {
+		label = 'Police barrier',
+		description = "DO NOT CROSS POLICE DEPT.",
+		prop = `prop_barrier_work05`,
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},
+	["prop_barrier_small"] = {
+		label = 'Work barrier',
+		description = "Small work barrier",
+		prop = `prop_barrier_work01a`,
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},
+	["prop_barrier_medium"] = {
+		label = 'Work barrier',
+		description = "Medium work barrier",
+		prop = `prop_barrier_work06a`,
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},
+	["prop_barrier_large"] = {
+		label = 'Work barrier',
+		description = "Large work barrier",
+		prop = `prop_mp_barrier_02b`,
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},
+	["prop_worklight_large"] = {
+		label = 'Worklight',
+		description = "Large worklight",
+		prop = `prop_worklight_03b`,
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},
+	["prop_worklight_small"] = {
+		label = 'Worklight',
+		description = "Small worklight",
+		prop = `prop_worklight_02a`,
+		vehiclesWillAvoid = true,
+		weight = 1800,
+		stack = true,
+		close = true,
+		allowArmed = false,
+		client = {
+			anim = { dict = "anim@mp_snowball", clip = "pickup_snowball" },
+			disable = { move = true, car = true, combat = true },
+			usetime = 900,
+			cancel = true,
+		},
+		server = {
+			export = 'mri_Qbox.itemPlace'
+		}
+	},	
+
+	-- renzu_tuners
+	-- ox_inventory
+	-- this does not include other variant upgrades. default item will be used for metadata. eg. engine_camshaft -> racing_camshaft
+
+	['repairparts'] = {
+		label = 'Repair Engine Parts',
+		weight = 250,
+		stack = false,
+		close = true,
+	},
+
+	['street_tires'] = {
+		label = 'Street Tires',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+	['sports_tires'] = {
+		label = 'Sports Tires',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+	['racing_tires'] = {
+		label = 'Racing Tires',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+	['drag_tires'] = {
+		label = 'Drag Tires',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['transmition_clutch'] = {
+		label = 'OEM Transmission Clutch',
+		weight = 100,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_flywheel'] = {
+		label = 'OEM Flywheel',
+		weight = 100,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_oil'] = {
+		label = 'OEM Engine Oil',
+		weight = 100,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_sparkplug'] = {
+		label = 'Sparkplugs Kit',
+		weight = 50,
+		stack = true,
+		client = {
+			--status = { hunger = -10000, thirst = -10000, stress = -100000 },
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_gasket'] = {
+		label = 'OEM Head Gasket Kit',
+		weight = 50,
+		stack = true,
+		client = {
+			--status = { hunger = -10000, thirst = -10000, stress = -100000 },
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_airfilter'] = {
+		label = 'OEM Intake Air Filter',
+		weight = 50,
+		stack = true,
+		client = {
+			--status = { hunger = -20000, thirst = -30000, stress = -100000 },
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_fuelinjector'] = {
+		label = 'OEM Fuel Injectors',
+		weight = 150,
+		stack = true,
+		client = {
+			--status = { hunger = -20000, thirst = -30000, stress = -100000 },
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+	['engine_pistons'] = {
+		label = 'OEM Pistons Kit',
+		weight = 350,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_connectingrods'] = {
+		label = 'OEM Connecting Rods Kit',
+		weight = 350,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_valves'] = {
+		label = 'OEM Head Valves Kit',
+		weight = 350,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_block'] = {
+		label = 'OEM Block',
+		weight = 350,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+
+		}
+	},
+
+	['engine_crankshaft'] = {
+		label = 'OEM CrankShaft',
+		weight = 350,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['engine_camshaft'] = {
+		label = 'OEM Camshaft',
+		weight = 350,
+		stack = true,
+		client = {
+			
+			anim = { dict = 'mini@repair', clip = 'fixing_a_ped' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+
+
+	
+
+	['ecu'] = {
+		label = 'ecu',
+		weight = 20,
+		stack = true,
+		close = true,
+		description = nil,
+	},
+
+	['drift_tires'] = {
+		label = 'Drift Tires',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+
+	['lsdf'] = {
+		label = 'Limited Slip Differential (Front)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['lsdr'] = {
+		label = 'Limited Slip Differential (Rear)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['tcs'] = {
+		label = 'Traction Control System (TCS)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['esc'] = {
+		label = 'Stability Control System (ESC)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['closerationgears'] = {
+		label = 'Close Ratio Gears',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['cvttranny'] = {
+		label = 'CVT Transmission',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['abs'] = {
+		label = 'Anti-lock braking System',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['axletorsionfront'] = {
+		label = 'Axle Torsion (Front)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['axletorsionrear'] = {
+		label = 'Axle Torsion (Rear)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['axlesolidfront'] = {
+		label = 'Axle Solid (Front)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['axlesolidrear'] = {
+		label = 'Axle Solid (Rear)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['kers'] = {
+		label = 'Kinetic Energy Recovery System (KERS)',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['offroadtune1'] = {
+		label = 'Offroad Tune 1',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['offroadtune2'] = {
+		label = 'Offroad Tune 2',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['stanced'] = {
+		label = 'Stanced Tune',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['frontwheeldrive'] = {
+		label = 'Front Wheel Drivetrain',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['allwheeldrive'] = {
+		label = 'All Wheel Drivetrain',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['rearwheeldrive'] = {
+		label = 'Rear Wheel Drivetrain',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['oem_brakes'] = {
+		label = 'OEM Brakes',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['oem_suspension'] = {
+		label = 'OEM Suspension',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+
+	['oem_gearbox'] = {
+		label = 'OEM Gear Box',
+		weight = 250,
+		stack = true,
+		close = true,
+		client = {
+			anim = { dict = 'mini@repair', clip = 'fixing_a_player' },
+			usetime = 5500,
+			export = 'renzu_tuners.useItem'
+		}
+	},
+	['sulfur'] = {
+		label = 'Sulfur',
+		weight = 20,
+		stack = true,
+		close = true,
+		description = nil,
+	},
+	['polyester'] = {
+		label = 'Polyester',
+		weight = 20,
+		stack = true,
+		close = true,
+		description = nil,
+	},
+	['methane'] = {
+		label = 'Methane',
+		weight = 20,
+		stack = true,
+		close = true,
+		description = nil,
+	},
+	['chip'] = {
+		label = 'Chip',
+		weight = 20,
+		stack = true,
+		close = true,
+		description = nil,
+	},
+	['board'] = {
+		label = 'Board',
+		weight = 20,
+		stack = true,
+		close = true,
+		description = nil,
+	},
+
+	["firstaid"] = {
+		label = "First Aid",
+		weight = 2500,
+		stack = true,
+		close = true,
+		description = "You can use this First Aid kit to get people back on their feet",
+		client = {
+			image = "firstaid.png",
+		}
 	},
 }

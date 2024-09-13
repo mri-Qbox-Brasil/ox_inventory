@@ -8,8 +8,8 @@ return {
 			{ name = 'burger', price = 10 },
 			{ name = 'water', price = 10 },
 			{ name = 'cola', price = 10 },
-			{ name = 'notepad', price = 100, metadata = { registered = true }},
-			{ name = 'camera', price = 100, metadata = { registered = true }},
+			--{ name = 'notepad', price = 100, metadata = { registered = true }},
+			--{ name = 'camera', price = 100, metadata = { registered = true }},
 		}, locations = {
 			vec3(25.7, -1347.3, 29.49),
 			vec3(-3038.71, 585.9, 7.9),
@@ -21,22 +21,25 @@ return {
 			vec3(2679.25, 3280.12, 55.24),
 			vec3(2557.94, 382.05, 108.62),
 			vec3(373.55, 325.56, 103.56),
+			vec3(1164.9, -323.65, 69.21),
 		}, targets = {
-			{ loc = vec3(25.06, -1347.32, 29.5), length = 0.7, width = 0.5, heading = 0.0, minZ = 29.5, maxZ = 29.9, distance = 1.5 },
-			{ loc = vec3(-3039.18, 585.13, 7.91), length = 0.6, width = 0.5, heading = 15.0, minZ = 7.91, maxZ = 8.31, distance = 1.5 },
-			{ loc = vec3(-3242.2, 1000.58, 12.83), length = 0.6, width = 0.6, heading = 175.0, minZ = 12.83, maxZ = 13.23, distance = 1.5 },
-			{ loc = vec3(1728.39, 6414.95, 35.04), length = 0.6, width = 0.6, heading = 65.0, minZ = 35.04, maxZ = 35.44, distance = 1.5 },
-			{ loc = vec3(1698.37, 4923.43, 42.06), length = 0.5, width = 0.5, heading = 235.0, minZ = 42.06, maxZ = 42.46, distance = 1.5 },
-			{ loc = vec3(1960.54, 3740.28, 32.34), length = 0.6, width = 0.5, heading = 120.0, minZ = 32.34, maxZ = 32.74, distance = 1.5 },
-			{ loc = vec3(548.5, 2671.25, 42.16), length = 0.6, width = 0.5, heading = 10.0, minZ = 42.16, maxZ = 42.56, distance = 1.5 },
-			{ loc = vec3(2678.29, 3279.94, 55.24), length = 0.6, width = 0.5, heading = 330.0, minZ = 55.24, maxZ = 55.64, distance = 1.5 },
-			{ loc = vec3(2557.19, 381.4, 108.62), length = 0.6, width = 0.5, heading = 0.0, minZ = 108.62, maxZ = 109.02, distance = 1.5 },
-			{ loc = vec3(373.13, 326.29, 103.57), length = 0.6, width = 0.5, heading = 345.0, minZ = 103.57, maxZ = 103.97, distance = 1.5 },
+		name = 'Loja de Conveniência',
+			{ loc = vec3(24.45, -1345.93, 28.5), heading = 264.73, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(-3040.27, 584.15, 6.91), heading = 12.33, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(-3243.47, 1000.04, 11.83), heading = 354.74, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(1728.37, 6416.31, 34.04), heading = 239.19, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(1697.29, 4923.46, 41.06), heading = 317.79, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(1959.47, 3741.07, 31.34), heading = 296.46, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(549.22, 2670.09, 41.16), heading = 88.62, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(2676.79, 3279.96, 54.24), heading = 327.13, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(2555.95, 380.81, 107.62), heading = 347.61, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(372.89, 327.66, 102.57), heading = 252.27, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
+			{ loc = vec3(1164.9, -323.65, 68.21), heading = 97.05, ped = `mp_m_shopkeep_01`, scenario = 'WORLD_HUMAN_WINDOW_SHOP_BROWSE' },
 		}
 	},
 
 	Liquor = {
-		name = 'Liquor Store',
+		name = 'Loja de Bebidas',
 		-- blip = {
 		-- 	id = 93, colour = 69, scale = 0.8
 		-- }, 
@@ -53,17 +56,17 @@ return {
 			vec3(1392.562, 3604.684, 34.980),
 			vec3(-1393.409, -606.624, 30.319)
 		}, targets = {
-			{ loc = vec3(1134.9, -982.34, 46.41), length = 0.5, width = 0.5, heading = 96.0, minZ = 46.4, maxZ = 46.8, distance = 1.5 },
-			{ loc = vec3(-1222.33, -907.82, 12.43), length = 0.6, width = 0.5, heading = 32.7, minZ = 12.3, maxZ = 12.7, distance = 1.5 },
-			{ loc = vec3(-1486.67, -378.46, 40.26), length = 0.6, width = 0.5, heading = 133.77, minZ = 40.1, maxZ = 40.5, distance = 1.5 },
-			{ loc = vec3(-2967.0, 390.9, 15.14), length = 0.7, width = 0.5, heading = 85.23, minZ = 15.0, maxZ = 15.4, distance = 1.5 },
-			{ loc = vec3(1165.95, 2710.20, 38.26), length = 0.6, width = 0.5, heading = 178.84, minZ = 38.1, maxZ = 38.5, distance = 1.5 },
-			{ loc = vec3(1393.0, 3605.95, 35.11), length = 0.6, width = 0.6, heading = 200.0, minZ = 35.0, maxZ = 35.4, distance = 1.5 }
+			{ loc = vec3(1134.2, -981.95, 45.42), heading = 271.46, ped = `a_m_m_genfat_02`, scenario = 'WORLD_HUMAN_DRINKING' },
+			{ loc = vec3(-1222.61, -908.73, 11.33), heading = 30.93, ped = `a_m_m_genfat_02`, scenario = 'WORLD_HUMAN_DRINKING' },
+			{ loc = vec3(-1485.74, -378.51, 39.16), heading = 126.89, ped = `a_m_m_genfat_02`, scenario = 'WORLD_HUMAN_DRINKING' },
+			{ loc = vec3(-2966.52, 390.17, 14.04), heading = 83.17, ped = `a_m_m_genfat_02`, scenario = 'WORLD_HUMAN_DRINKING' },
+			{ loc = vec3(1166.61, 2710.89, 38.16), heading = 176.06, ped = `a_m_m_genfat_02`, scenario = 'WORLD_HUMAN_DRINKING' },
+			{ loc = vec3(1391.97, 3606.06, 33.98), heading = 192.75, ped = `a_m_m_genfat_02`, scenario = 'WORLD_HUMAN_DRINKING' },
 		}
 	},
 
 	-- YouTool = {
-	-- 	name = 'YouTool',
+	-- 	name = 'Loja de Ferramentas',
 	-- 	-- blip = {
 	-- 	-- 	id = 402, colour = 69, scale = 0.8
 	-- 	-- }, 
@@ -78,7 +81,7 @@ return {
 	-- },
 
 	Ammunation = {
-		name = 'Ammunation',
+		name = 'Loja de Armas',
 		-- blip = {
 		-- 	id = 110, colour = 69, scale = 0.8
 		-- }, 
@@ -98,9 +101,9 @@ return {
 			vec3(-1117.58, 2698.61, 18.55),
 			vec3(842.44, -1033.42, 28.19)
 		}, targets = {
-			{ loc = vec3(-660.92, -934.10, 21.94), length = 0.6, width = 0.5, heading = 180.0, minZ = 21.8, maxZ = 22.2, distance = 2.0 },
-			{ loc = vec3(808.86, -2158.50, 29.73), length = 0.6, width = 0.5, heading = 360.0, minZ = 29.6, maxZ = 30.0, distance = 2.0 },
-			{ loc = vec3(1693.57, 3761.60, 34.82), length = 0.6, width = 0.5, heading = 227.39, minZ = 34.7, maxZ = 35.1, distance = 2.0 },
+			{ loc = vec3(-662.1, -933.54, 20.83), heading = 175.42, ped = `cs_terry`, scenario = 'WORLD_HUMAN_DRINKING' },
+			{ loc = vec3(810.26, -2159.07, 28.62), heading = 355.69, ped = `cs_terry`, scenario = 'WORLD_HUMAN_DRINKING' },
+			{ loc = vec3(1691.98, 3760.95, 33.71), heading = 228.58, ped = `cs_terry`, scenario = 'WORLD_HUMAN_DRINKING' },
 			{ loc = vec3(-330.29, 6085.54, 31.57), length = 0.6, width = 0.5, heading = 225.0, minZ = 31.4, maxZ = 31.8, distance = 2.0 },
 			{ loc = vec3(252.85, -51.62, 70.0), length = 0.6, width = 0.5, heading = 70.0, minZ = 69.9, maxZ = 70.3, distance = 2.0 },
 			{ loc = vec3(23.68, -1106.46, 29.91), length = 0.6, width = 0.5, heading = 160.0, minZ = 29.8, maxZ = 30.2, distance = 2.0 },
@@ -109,6 +112,7 @@ return {
 			{ loc = vec3(841.05, -1034.76, 28.31), length = 0.6, width = 0.5, heading = 360.0, minZ = 28.2, maxZ = 28.6, distance = 2.0 }
 		}
 	},
+
 
 	-- PoliceArmoury = {
 	-- 	name = 'Police Armoury',
@@ -164,14 +168,33 @@ return {
 	-- 	}
 	-- },
 
-	VendingMachineDrinks = {
-		name = 'Vending Machine',
+	VendingMachineSoda = {
+		name = 'Máquina de Refrigerante',
 		inventory = {
-			{ name = 'water', price = 10 },
-			{ name = 'cola', price = 10 },
+			{ name = 'cola', price = 8 },
 		},
 		model = {
-			`prop_vend_soda_02`, `prop_vend_fridge01`, `prop_vend_water_01`, `prop_vend_soda_01`
+			`prop_vend_soda_02`, `prop_vend_fridge01`, `prop_vend_soda_01`
+		}
+	},
+
+	VendingMachineCoffee = {
+		name = 'Máquina de Café',
+		inventory = {
+			{ name = 'coffee', price = 5 },
+		},
+		model = {
+			'prop_vend_coffe_01'
+		}
+	},
+
+	VendingMachineWater = {
+		name = 'Máquina de Água',
+		inventory = {
+			{ name = 'water', price = 4 },
+		},
+		model = {
+			'prop_vend_water_01'
 		}
 	},
 
@@ -203,10 +226,10 @@ return {
 			vec3(405.84, 317.99, 103.13),
         },
         targets = {
-
+			{ loc = vec3(404.57, 318.28, 102.13), heading = 255, ped = `a_m_y_epsilon_02`, scenario = 'CODE_HUMAN_COWER'},
         }
     },
-    Poacher = {
+	Poacher = {
         name = 'Poacher',
         inventory = {
             { name = 'keepcompanionmtlion',  price = 75000, count = 5, currency = 'black_money', },
