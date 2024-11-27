@@ -1,7 +1,7 @@
 return {
 -- ilegal
 	["black_money"] = {
-		label = "Dinheiro Sujo",
+		label = "Dinheiro Enrolado",
 	},
 	["markedbills"] = {
 		label = "Dinheiro Marcado",
@@ -128,22 +128,22 @@ return {
 		description = "Um saquinho de metanfetamina",
 	},
 	["crackbaggy"] = {
-		label = "Saco de Crack",
-		weight = 0,
+		label = "Dolinha de Crack",
+		weight = 5,
+		stack = true,
+		close = true,
+		description = "Para virar um super-nóia.",
+	},
+	["xtcbaggy"] = {
+		label = "Saco de Ecstasy",
+		weight = 5,
 		stack = true,
 		close = true,
 		description = "Para ficar feliz mais rápido",
 	},
-	["xtcbaggy"] = {
-		label = "Saco de Ecstasy",
-		weight = 0,
-		stack = true,
-		close = true,
-		description = "Engole essas pílulas, baby",
-	},
 	["weedbaggy"] = {
 		label = "Saco de Maconha",
-		weight = 0,
+		weight = 5,
 		stack = true,
 		close = true,
 		description = "Fuma, fuma, fuma, folha de bananeira...",
@@ -385,20 +385,6 @@ return {
 			notification = "Você comeu um delicioso hambúrguer",
 		},
 	},
-	['sandwich'] = {
-        label = 'Sanduíche',
-        weight = 350,
-        stack = true,
-        close = true,
-        description = "Um sanduíche simples para um dia simples",
-        client = {
-            status = { hunger = 200000 },
-            anim = { dict = 'mp_player_inteat@burger', clip = 'mp_player_int_eat_burger_fp' },
-            prop = { model = 'prop_sandwich_01', 
-            pos = vec3(0.05, -0.02, -0.03), rot = vec3(150.0, 340.0, 170.0) },
-            usetime = 7500,
-        },
-    },
 	["tosti"] = {
 		label = "Sanduíche de Queijo Grelhado",
 		weight = 200,
@@ -409,7 +395,6 @@ return {
 			image = "tosti.png",
 		},
 	},
-
 	["cola"] = {
 		label = "Cola",
 		weight = 350,
@@ -443,27 +428,23 @@ return {
 			notification = "Você .. bebeu mostarda",
 		},
 	},
-	["water"] = {
-		label = "Água",
-		weight = 500,
-		client = {
-			status = { thirst = 200000 },
-			anim = { dict = "mp_player_intdrink", clip = "loop_bottle" },
-			prop = { model = "prop_ld_flow_bottle", pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
-			usetime = 2500,
-			cancel = true,
-			notification = "Você bebeu um pouco de água para se hidratar.",
-		},
-	},
 	["water_bottle"] = {
 		label = "Garrafa de Água",
-		weight = 500,
+		weight = 200,
 		stack = true,
 		close = true,
-		description = "Para todos os sedentos por aí",
+		decay = true,
+		degrade = 120, -- Dura 3 dias (In Game) 1 dia são 40 mins lmao
+		description = "Apenas uma garrafa de água",
 		client = {
 			image = "water_bottle.png",
-		},
+		}
+	},
+	["empty_water_bottle"] = {
+		label = "Garrafa de Água Vazia",
+		weight = 10,
+		stack = true,
+		description = "Garrafa de Água vazia",
 	},
 	["water_contaminat"] = {
 		label = "Água Contaminada",
@@ -487,6 +468,7 @@ return {
 			end,
 		},
 	},
+
 	["beer"] = {
 		label = "Cerveja",
 		weight = 500,
@@ -497,7 +479,16 @@ return {
 			image = "beer.png",
 		},
 	},
-
+	["sandwich"] = {
+		label = "Sanduíche",
+		weight = 200,
+		stack = true,
+		close = true,
+		description = "Bom pão para o seu estômago",
+		client = {
+			image = "sandwich.png",
+		},
+	},
 	["vodka"] = {
 		label = "Vodka",
 		weight = 500,
@@ -539,7 +530,7 @@ return {
 	},
 -- documentação
 	["id_card"] = {
-		label = "Cartão de Identificação",
+		label = "Carteira de Identidade",
 		weight = 0,
 		stack = false,
 		close = false,
@@ -979,13 +970,6 @@ return {
 	},
 -- hospital
 	-- ars_ambulancejob
-	['adrenaline'] = {
-		label = 'Adrenalina',
-		weight = 100,
-		stack = false,
-		close = true,
-		description = 'Acorda até defunto.'
-	},
 	["medicalbag"] = {
 		label = "Bolsa de Primeiros Socorros",
 		weight = 220,
@@ -3003,5 +2987,5 @@ return {
         client = {
             image = "recyclablematerial.png",
         }
-    },
+    },	
 }
