@@ -838,34 +838,56 @@ return {
 			export = "randol_ghosthunting.ghostcam",
 		},
 	},
-	["camera"] = {
-		label = "Câmera",
+	
+	['camera'] = {
+		label = 'Câmera',
 		weight = 1500,
 		stack = false,
 		close = true,
-		description = "Uma câmera profissional para tirar uma foto discreta da esposa do seu vizinho!",
+		client = {
+			event = "y_camera:client:openCamera"
+		},
+		buttons = {
+			{
+				label = 'View photos',
+				action = function(slot)
+				   exports.qbx_camera:ShowScreen(slot)
+				   client.closeInventory()
+				end
+			},
+		},
+		description = "Uma câmera profissional para tirar uma foto discreta da esposa do seu vizinho!"
 	},
-	["photo"] = {
-		label = "Foto",
+	
+	['photo'] = {
+		label = 'Foto',
 		weight = 100,
 		stack = true,
 		close = true,
 		buttons = {
 			{
-				label = "Editar",
+				label = 'Ver',
 				action = function(slot)
-					exports.qbx_camera:EditPicture(slot)
-				end,
+					exports.qbx_camera:ShowPicture(slot)
+					client.closeInventory()
+				end
 			},
 			{
-				label = "Obter Link",
+				label = 'Editar',
+				action = function(slot)
+					exports.qbx_camera:EditPicture(slot)
+				end
+			},
+			{
+				label = 'Obter link',
 				action = function(slot)
 					exports.qbx_camera:CopyURL(slot)
-				end,
-			},
+				end
+			}
 		},
-		description = "Uma foto tirada com uma câmera.",
+		description = "Uma foto tirada com uma câmera."
 	},
+	
 	["guide"] = {
 		label = "Guia Iniciante",
 		weight = 475,
