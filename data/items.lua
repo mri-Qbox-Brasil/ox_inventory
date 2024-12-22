@@ -624,25 +624,26 @@ return {
 		description = "Põe um som pra tocar DJ!",
 	},
 -- materiais
+	["glass"] = {
+		label = "Vidro",
+		weight = 100,
+		stack = true,
+		close = false,
+		description = "Reciclável",
+	},
 	["plastic"] = {
 		label = "Plástico",
 		weight = 100,
 		stack = true,
 		close = false,
 		description = "Reciclável",
-		client = {
-			image = "plastic.png",
-		},
 	},
 	["rubber"] = {
 		label = "Borracha",
 		weight = 100,
 		stack = true,
 		close = false,
-		description = "Borracha, acredito que você possa fazer seu próprio patinho de borracha com ela :D",
-		client = {
-			image = "rubber.png",
-		},
+		description = "Reciclável",
 	},
 	["metalscrap"] = {
 		label = "Sucata de Metal",
@@ -650,9 +651,6 @@ return {
 		stack = true,
 		close = false,
 		description = "Você provavelmente pode fazer algo legal com isso.",
-		client = {
-			image = "metalscrap.png",
-		},
 	},
 	["copper"] = {
 		label = "Cobre",
@@ -660,9 +658,6 @@ return {
 		stack = true,
 		close = false,
 		description = "Belo pedaço de metal que você provavelmente pode usar para algo",
-		client = {
-			image = "copper.png",
-		},
 	},
 	["iron"] = {
 		label = "Ferro",
@@ -670,9 +665,6 @@ return {
 		stack = true,
 		close = false,
 		description = "Peça útil de metal que você provavelmente pode usar para algo",
-		client = {
-			image = "iron.png",
-		},
 	},
 	["steel"] = {
 		label = "Aço",
@@ -680,9 +672,6 @@ return {
 		stack = true,
 		close = false,
 		description = "Bela peça de metal que você provavelmente pode usar para algo",
-		client = {
-			image = "steel.png",
-		},
 	},
 	["aluminum"] = {
 		label = "Alumínio",
@@ -690,16 +679,13 @@ return {
 		stack = true,
 		close = false,
 		description = "Belas peças de metal que você provavelmente pode usar para algo",
-		client = {
-			image = "aluminum.png",
-		},
 	},
 	["wood"] = {
 		label = "Madeira",
 		weight = 1,
 		stack = true,
 		close = true,
-		description = nil,
+		description = "Belo pedaço de madeira para você fazer algo",
 	},
 -- diversos
 	["money"] = {
