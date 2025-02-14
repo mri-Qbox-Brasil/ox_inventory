@@ -65,28 +65,28 @@ return {
 			image = "liquid_fertilizer.png",
 		},
 	},
-	["weed_seed"] = {
+	["weed_lemonhaze_seed"] = {
 		label = "Semente de Maconha",
 		weight = 20,
 		stack = true,
 		close = true,
 		description = "Plante preguiça.",
 	},
-	["weed"] = {
+	["weed_lemonhaze"] = {
 		label = "Maconha",
 		weight = 20,
 		stack = true,
 		close = false,
 		description = "Um verdinho daquele que o Gordela gosta...",
 	},
-	["coke_seed"] = {
+	["coca_seed"] = {
 		label = "Semente de Coca",
 		weight = 20,
 		stack = true,
 		close = true,
 		description = "Plante ansiedade.",
 	},
-	["coke"] = {
+	["coca"] = {
 		label = "Cocaína",
 		weight = 20,
 		stack = true,
@@ -824,7 +824,7 @@ return {
 			export = "randol_ghosthunting.ghostcam",
 		},
 	},
-	
+
 	['camera'] = {
 		label = 'Câmera',
 		weight = 1500,
@@ -844,7 +844,7 @@ return {
 		},
 		description = "Uma câmera profissional para tirar uma foto discreta da esposa do seu vizinho!"
 	},
-	
+
 	['photo'] = {
 		label = 'Foto',
 		weight = 100,
@@ -873,7 +873,7 @@ return {
 		},
 		description = "Uma foto tirada com uma câmera."
 	},
-	
+
 	["guide"] = {
 		label = "Guia Iniciante",
 		weight = 475,
@@ -3002,5 +3002,5 @@ return {
         client = {
             image = "recyclablematerial.png",
         }
-    },	
+    },
 }
