@@ -91,7 +91,6 @@ local function createShop(shopType, id)
         coords = store
     end
 
-	---@type OxShop
 	shop[id] = {
 		label = shop.name,
 		id = shopType..' '..id,
@@ -108,7 +107,7 @@ local function createShop(shopType, id)
 	return shop[id]
 end
 
-for shopType, shopDetails in pairs(lib.load('data.shops')) do
+for shopType, shopDetails in pairs(lib.load('data.shops') or {}) do
 	registerShopType(shopType, shopDetails)
 end
 
