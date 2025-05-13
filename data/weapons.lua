@@ -1,5 +1,5 @@
 return {
-	['Weapons'] = {
+    ['Weapons'] = {
         ['WEAPON_ADVANCEDRIFLE'] = {
             ['label'] = 'Fuzil Avançado',
             ['weight'] = 3100,
