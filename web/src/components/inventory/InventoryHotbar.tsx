@@ -7,6 +7,7 @@ import { useAppSelector } from '../../store';
 import { selectLeftInventory } from '../../store/inventory';
 import { SlotWithItem } from '../../typings';
 import SlideUp from '../utils/transitions/SlideUp';
+import { maincolor } from '../../store/maincolor';
 
 const InventoryHotbar: React.FC = () => {
   const [hotbarVisible, setHotbarVisible] = useState(false);
@@ -28,6 +29,7 @@ const InventoryHotbar: React.FC = () => {
     <SlideUp in={hotbarVisible}>
       <div className="hotbar-container">
         {items.map((item) => (
+          
           <div
             className="hotbar-item-slot"
             style={{
@@ -35,32 +37,37 @@ const InventoryHotbar: React.FC = () => {
             }}
             key={`hotbar-${item.slot}`}
           >
+          
+          {!isSlotWithItem(item) && (
+            <div className="hotbar-slot-number">{item.slot}</div>
+          )}
+
             {isSlotWithItem(item) && (
               <div className="item-slot-wrapper">
                 <div className="hotbar-slot-header-wrapper">
-                  <div className="inventory-slot-number">{item.slot}</div>
-                  <div className="item-slot-info-wrapper">
-                    <p>
-                      {item.weight > 0
-                        ? item.weight >= 1000
-                          ? `${(item.weight / 1000).toLocaleString('en-us', {
-                              minimumFractionDigits: 2,
-                            })}kg `
-                          : `${item.weight.toLocaleString('en-us', {
-                              minimumFractionDigits: 0,
-                            })}g `
-                        : ''}
-                    </p>
-                    <p>{item.count ? item.count.toLocaleString('en-us') + `x` : ''}</p>
-                  </div>
+                  <div className="inventory-slot-number"></div>
+
+                  {item.count && (
+                    <div
+                      style={{
+                        backgroundColor: maincolor,
+                      }}
+                      className={`inventory-weight ${
+                        item.name == 'money' ? 'inventory-weight--money' : 'inventory-weight--amount'
+                      }`}
+                    >
+                      {item.count.toLocaleString('en-us') + ` ${item.name == 'money' ? 'R$' : 'x'}`}
+                    </div>
+                  )}
                 </div>
                 <div>
-                  {item?.durability !== undefined && <WeightBar percent={item.durability} durability />}
-                  <div className="inventory-slot-label-box">
+                  <div className="inventory-slot-label-box mx-0.5 mb-0.5">
                     <div className="inventory-slot-label-text">
                       {item.metadata?.label ? item.metadata.label : Items[item.name]?.label || item.name}
                     </div>
                   </div>
+
+                  {item?.durability !== undefined && <WeightBar percent={item.durability} durability />}
                 </div>
               </div>
             )}

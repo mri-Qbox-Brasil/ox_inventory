@@ -70,7 +70,14 @@ const UsefulControls: React.FC<Props> = ({ infoVisible, setInfoVisible }) => {
                     <br />
                     {Locale.ui_ctrl_shift_lmb}
                   </p>
-                  <div style={{ textAlign: 'right' }}>🐂</div>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontSize: '0.6rem' }}>
+                    <span>by mri Qbox</span>
+                    <img
+                      className="w-6 p-1"
+                      src="https://mri-Qbox-Brasil.github.io/mri_assets/branding/logo96.png"
+                      alt="Logo"
+                    />
+                  </div>
                 </div>
               </div>
             </FloatingFocusManager>

@@ -106,8 +106,8 @@ const SlotTooltip: React.ForwardRefRenderFunction<
                         {count >= 1
                           ? `${count}x ${Items[item]?.label || item}`
                           : count === 0
-                          ? `${Items[item]?.label || item}`
-                          : count < 1 && `${count * 100}% ${Items[item]?.label || item}`}
+                            ? `${Items[item]?.label || item}`
+                            : count < 1 && `${count * 100}% ${Items[item]?.label || item}`}
                       </p>
                     </div>
                   );
