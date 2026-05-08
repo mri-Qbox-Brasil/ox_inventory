@@ -45,6 +45,13 @@ end
 
 for id, data in pairs(lib.load('data.crafting') or {}) do createCraftingBench(data.name or id, data) end
 
+---@param bench table
+---@param index number
+---@return table?
+local function getCraftingGroups(bench, index)
+	return (shared.target and bench.zones) and bench.zones[index].groups or bench.groups
+end
+
 ---falls back to player coords if zones and points are both nil
 ---@param source number
 ---@param bench table
@@ -64,7 +71,7 @@ lib.callback.register('ox_inventory:openCraftingBench', function(source, id, ind
 	if not left then return end
 
 	if bench then
-		local groups = bench.groups
+		local groups = getCraftingGroups(bench, index)
 		local coords = getCraftingCoords(source, bench, index)
 
 		if not coords then return end
@@ -88,6 +95,7 @@ lib.callback.register('ox_inventory:openCraftingBench', function(source, id, ind
 end)
 
 local TriggerEventHooks = require 'modules.hooks.server'
+local GetLocks = require 'modules.locks'
 
 lib.callback.register('ox_inventory:craftItem', function(source, id, index, recipeId, toSlot)
 	local left, bench = Inventory(source), CraftingBenches[id]
@@ -95,7 +103,7 @@ lib.callback.register('ox_inventory:craftItem', function(source, id, index, reci
 	if not left then return end
 
 	if bench then
-		local groups = bench.groups
+		local groups = getCraftingGroups(bench, index)
 		local coords = getCraftingCoords(source, bench, index)
 
 		if groups and not server.hasGroup(left, groups) then return end
@@ -181,6 +189,16 @@ lib.callback.register('ox_inventory:craftItem', function(source, id, index, reci
 					if needs > 0 and i == #slots then return end
 				end
 			end
+
+            local lockIds = {}
+
+            for slot in pairs(tbl) do
+                lockIds[#lockIds + 1] = ('inventory-%s:slot-%s'):format(left.id, slot)
+            end
+
+            local activeSlots <close> = GetLocks(tbl)
+
+            if not activeSlots then return end
 
 			if not TriggerEventHooks('craftItem', {
 				source = source,
