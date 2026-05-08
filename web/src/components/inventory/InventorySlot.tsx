@@ -110,7 +110,7 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     dispatch(closeTooltip());
-    if (timerRef.current) clearTimeout(timerRef.current as NodeJS.Timeout);
+    if (timerRef.current) clearTimeout(timerRef.current);
     if (event.ctrlKey && isSlotWithItem(item) && inventoryType !== 'shop' && inventoryType !== 'crafting') {
       onDrop({ item: item, inventory: inventoryType });
     } else if (event.altKey && isSlotWithItem(item) && inventoryType === 'player') {
@@ -152,7 +152,7 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
           onMouseLeave={() => {
             dispatch(closeTooltip());
             if (timerRef.current) {
-              clearTimeout(timerRef.current as NodeJS.Timeout);
+              clearTimeout(timerRef.current);
               timerRef.current = null;
             }
           }}
