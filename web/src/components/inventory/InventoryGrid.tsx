@@ -62,7 +62,14 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
         <div className={`flex items-center ${inventory.label ? 'justify-between' : 'justify-between'}`}>
           <div className="flex items-center space-x-1 pl-2 pr-4 py-2">
             <div className="">{inventoryIcon}</div>
-            {inventory.type && inventory.label && <span>{inventory.label}</span>}
+            {inventory.type === 'player' && inventory.label && (
+              <span>
+                {inventory.id && <span className="text-gray-400">[{inventory.id}] </span>}
+                {inventory.owner && <span className="text-gray-400">[{inventory.owner}] </span>}
+                {inventory.label}
+              </span>
+            )}
+            {inventory.type && inventory.type !== 'player' && inventory.label && <span>{inventory.label}</span>}
             {inventory.type && !inventory.label && <span>Chão</span>}
           </div>
 
