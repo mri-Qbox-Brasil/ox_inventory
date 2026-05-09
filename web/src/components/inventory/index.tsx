@@ -13,7 +13,6 @@ import { closeTooltip } from '../../store/tooltip';
 import InventoryContext from './InventoryContext';
 import { closeContextMenu } from '../../store/contextMenu';
 import Fade from '../utils/transitions/Fade';
-import { maincolor } from '../../store/maincolor';
 
 const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = React.useState(false);
@@ -45,9 +44,7 @@ const Inventory: React.FC = () => {
     <>
       <Fade in={inventoryVisible}>
         <div className="h-full">
-          <div style={{
-            background: `linear-gradient(to left, ${maincolor}, rgba(0, 0, 0, 0.3))`
-          }} className="inventory-background" />
+          <div className="inventory-background" />
           <div className="inventory-wrapper relative">
             <LeftInventory />
             <InventoryControl />

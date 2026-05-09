@@ -7,12 +7,18 @@ $mainColor: rgba(0, 0, 0, 0.8);
 $textColor: #c1c2c5;
 $mainFont: 'Saira', sans-serif;
 
-$primaryColor: 'red-500';
-
 $secondaryColor: rgba(12, 12, 12, 0.4);
 $secondaryColorHighlight: rgba(255, 255, 255, 0.2);
 $secondaryColorLight: rgba(0, 0, 0, 0.5);
 $secondaryColorDark: rgba(12, 12, 12, 0.8);
+
+// --primaryColor: triplet R, G, B (nao hex/HSL) pra encaixar em
+// `rgba(var(--primaryColor), N)`. Sobrescrito em runtime por
+// applyAccentColor(hex) a partir da convar `mri:color` da suite MRI.
+// Default 0, 230, 153 = #00E699 (verde da marca).
+:root {
+  --primaryColor: 0, 230, 153;
+}
 
 $gridCols: 5;
 $gridRows: 5;
@@ -32,7 +38,6 @@ body {
 
 #root {
   @apply h-full;
-  --primaryColor: 22, 163, 74; /* Define como RGB */
 }
 
 code {
@@ -334,13 +339,11 @@ button:active {
   font-family: $mainFont;
 
   &--amount {
-    // @apply $primaryColor;
-    background-color: green;
+    background-color: rgb(var(--primaryColor));
   }
 
   &--money {
-    // @apply $primaryColor;
-    background-color: green;
+    background-color: rgb(var(--primaryColor));
   }
 }
 

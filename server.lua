@@ -767,3 +767,14 @@ lib.addCommand('viewinv', {
 }, function(source, args)
     Inventory.InspectInventory(source, tonumber(args.invId) or args.invId)
 end)
+
+-- Broadcast em runtime quando a convar `mri:color` muda (admin via painel
+-- mri_Qadmin ou `setr mri:color` no console). Mesmo padrao do
+-- mri_Qmultichar/mri_Qspawn/mri_Qadmin/mri_Qchat/ox_lib — toda a suite MRI
+-- compartilha a mesma cor de destaque.
+AddConvarChangeListener('mri:color', function(name)
+    if name ~= 'mri:color' then return end
+    local color = GetConvar('mri:color', '#00E699')
+    if not color:match('^#%x%x%x%x%x%x$') then return end
+    TriggerClientEvent('ox_inventory:accentColorChanged', -1, color)
+end)

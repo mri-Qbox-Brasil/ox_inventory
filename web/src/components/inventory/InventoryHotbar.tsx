@@ -7,7 +7,6 @@ import { useAppSelector } from '../../store';
 import { selectLeftInventory } from '../../store/inventory';
 import { SlotWithItem } from '../../typings';
 import SlideUp from '../utils/transitions/SlideUp';
-import { maincolor } from '../../store/maincolor';
 
 const InventoryHotbar: React.FC = () => {
   const [hotbarVisible, setHotbarVisible] = useState(false);
@@ -49,9 +48,6 @@ const InventoryHotbar: React.FC = () => {
 
                   {item.count && (
                     <div
-                      style={{
-                        backgroundColor: maincolor,
-                      }}
                       className={`inventory-weight ${
                         item.name == 'money' ? 'inventory-weight--money' : 'inventory-weight--amount'
                       }`}

@@ -1,9 +1,9 @@
+import { useEffect } from 'react';
 import InventoryComponent from './components/inventory';
 import useNuiEvent from './hooks/useNuiEvent';
 import { Items } from './store/items';
 import { Locale } from './store/locale';
 import { setImagePath } from './store/imagepath';
-import { setMainColor } from './store/maincolor';
 import { setupInventory } from './store/inventory';
 import { Inventory } from './typings';
 import { useAppDispatch } from './store';
@@ -12,6 +12,7 @@ import DragPreview from './components/utils/DragPreview';
 import { fetchNui } from './utils/fetchNui';
 import { useDragDropManager } from 'react-dnd';
 import KeyPress from './components/utils/KeyPress';
+import { applyAccentColor, isValidHex } from './lib/accentColor';
 
 debugData([
   {
@@ -97,17 +98,28 @@ const App: React.FC = () => {
     items: typeof Items;
     leftInventory: Inventory;
     imagepath: string;
-    maincolor: string;
-  }>('init', ({ locale, items, leftInventory, imagepath, maincolor }) => {
+  }>('init', ({ locale, items, leftInventory, imagepath }) => {
     for (const name in locale) Locale[name] = locale[name];
     for (const name in items) Items[name] = items[name];
 
     setImagePath(imagepath);
-    setMainColor(maincolor);
     dispatch(setupInventory({ leftInventory }));
   });
 
   fetchNui('uiLoaded', {});
+
+  // Boot: pega cor da convar `mri:color` via getConfig callback Lua e aplica
+  // no --primaryColor. Suite MRI compartilha a mesma cor de destaque.
+  useEffect(() => {
+    fetchNui<{ accentColor?: string }>('getConfig').then((data) => {
+      if (data?.accentColor && isValidHex(data.accentColor)) applyAccentColor(data.accentColor);
+    });
+  }, []);
+
+  // Runtime: server dispara TriggerClientEvent quando admin troca a convar.
+  useNuiEvent<{ accentColor: string }>('updateAccentColor', (data) => {
+    if (data?.accentColor && isValidHex(data.accentColor)) applyAccentColor(data.accentColor);
+  });
 
   useNuiEvent('closeInventory', () => {
     manager.dispatch({ type: 'dnd-core/END_DRAG' });

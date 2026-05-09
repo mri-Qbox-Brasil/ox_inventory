@@ -1340,7 +1340,6 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 				maxWeight = shared.playerweight,
 			},
 			imagepath = client.imagepath,
-			maincolor = client.maincolor
 		}
 	})
 
@@ -1926,4 +1925,21 @@ lib.callback.register('ox_inventory:getVehicleData', function(netid)
 	if entity then
 		return GetEntityModel(entity), GetVehicleClass(entity)
 	end
+end)
+
+-- Cor de destaque da suite MRI (compartilhada com mri_Qmultichar, mri_Qspawn,
+-- mri_Qadmin, mri_Qloadscreen, mri_Qchat, ox_lib). Definida via
+-- `setr mri:color "#hex"` no server.cfg ou pelo painel admin do mri_Qadmin.
+-- Aqui o formato e RGB triplet (R, G, B) pra encaixar em `rgba(var(--primaryColor), N)`
+-- — diferente do shadcn HSL usado no resto da suite, mas e a convencao ja existente
+-- desse script (ver index.scss linha 35).
+RegisterNUICallback('getConfig', function(_, cb)
+	cb({ accentColor = GetConvar('mri:color', '#00E699') })
+end)
+
+-- Broadcast: convar `mri:color` mudou no server, propaga pra NUI ja aberta.
+-- Payload aninhado em `data` porque o useNuiEvent desestrutura `event.data.data`
+-- (mesmo padrao do showContext/refreshSlots/etc).
+RegisterNetEvent('ox_inventory:accentColorChanged', function(newColor)
+	SendNUIMessage({ action = 'updateAccentColor', data = { accentColor = newColor } })
 end)
