@@ -74,7 +74,7 @@ const UsefulControls: React.FC<Props> = ({ infoVisible, setInfoVisible }) => {
                     <span>by mri Qbox</span>
                     <img
                       className="w-6 p-1"
-                      src="https://mri-Qbox-Brasil.github.io/mri_assets/branding/logo96.png"
+                      src="https://avatars.githubusercontent.com/u/164149697?s=200&v=4"
                       alt="Logo"
                     />
                   </div>

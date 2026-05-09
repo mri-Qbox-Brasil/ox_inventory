@@ -44,7 +44,6 @@ const Inventory: React.FC = () => {
     <>
       <Fade in={inventoryVisible}>
         <div className="h-full">
-          <div className="inventory-background" />
           <div className="inventory-wrapper relative">
             <LeftInventory />
             <InventoryControl />

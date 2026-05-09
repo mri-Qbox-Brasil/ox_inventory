@@ -347,11 +347,6 @@ button:active {
   }
 }
 
-.inventory-background {
-  @apply absolute h-screen w-full top-0 left-0;
-  background: linear-gradient(to left, rgba(var(--primaryColor), 1), rgba(0, 0, 0, 0.3));
-}
-
 .item-slot-wrapper {
   display: flex;
   flex-direction: column;
