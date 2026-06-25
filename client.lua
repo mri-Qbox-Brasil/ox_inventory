@@ -30,7 +30,6 @@ local invBusy = true
 
 ---@type boolean?
 local invOpen = false
-local plyState = LocalPlayer.state
 local IsPedCuffed = IsPedCuffed
 local playerPed = cache.ped
 
@@ -39,18 +38,18 @@ lib.onCache('ped', function(ped)
 	Utils.WeaponWheel()
 end)
 
-plyState:set('invBusy', true, true)
-plyState:set('invHotkeys', false, false)
-plyState:set('canUseWeapons', false, false)
+client.player:set('invBusy', true)
+client.player:set('invHotkeys', false)
+client.player:set('canUseWeapons', false)
 
 local function canOpenInventory()
     if not PlayerData.loaded then
         return shared.info('cannot open inventory', '(player inventory has not loaded)')
     end
 
-    if IsPauseMenuActive() then return end
+    if IsPauseMenuActive() or invOpen == nil then return end
 
-    if invBusy or invOpen == nil or (currentWeapon?.timer or 0) > 0 then
+    if invBusy or (currentWeapon?.timer or 0) > 0 then
         return shared.info('cannot open inventory', '(is busy)')
     end
 
@@ -128,6 +127,8 @@ local Inventory = require 'modules.inventory.client'
 ---@param data any?
 ---@return boolean?
 function client.openInventory(inv, data)
+	if invOpen == nil then return end
+
 	if invOpen then
 		if not inv and currentInventory.type == 'newdrop' then
 			return client.closeInventory()
@@ -273,7 +274,7 @@ function client.openInventory(inv, data)
         end
     end
 
-    plyState.invOpen = true
+	client.player:set('invOpen', true)
 
     SetInterval(client.interval, 100)
     SetNuiFocus(true, true)
@@ -294,7 +295,7 @@ function client.openInventory(inv, data)
         }
     })
 
-    if not currentInventory.coords and inv ~= 'container' then
+    if inv and not currentInventory.coords and inv ~= 'container' and inv ~= 'glovebox' then
         currentInventory.coords = GetEntityCoords(playerPed)
     end
 
@@ -330,7 +331,7 @@ exports('openInventory', client.openInventory)
 RegisterNetEvent('ox_inventory:forceOpenInventory', function(left, right)
 	if source == '' then return end
 
-	plyState.invOpen = true
+	client.player:set('invOpen', true)
 
 	SetInterval(client.interval, 100)
 	SetNuiFocus(true, true)
@@ -524,7 +525,7 @@ local function useSlot(slot, noAnim)
 		if data.effect then
 			data:effect({name = item.name, slot = item.slot, metadata = item.metadata})
 		elseif data.weapon then
-			if EnableWeaponWheel or not plyState.canUseWeapons then return end
+			if EnableWeaponWheel or not client.player:get('canUseWeapons') then return end
 
 			if IsCinematicCamRendering() then SetCinematicModeActive(false) end
 
@@ -905,7 +906,7 @@ function client.closeInventory()
 		TriggerServerEvent('ox_inventory:closeInventory')
 
 		currentInventory = defaultInventory
-		plyState.invOpen = false
+		client.player:set('invOpen', false)
 		defaultInventory.coords = nil
 	end
 end
@@ -1174,6 +1175,12 @@ local function setStateBagHandler(stateId)
 	setStateBagHandler = nil
 end
 
+RegisterNetEvent('txcl:heal', function()
+    if source == '' then return end
+
+    PlayerData.dead = false
+end)
+
 lib.onCache('seat', function(seat)
 	if seat then
 		local hasWeapon = GetCurrentPedVehicleWeapon(cache.ped)
@@ -1360,8 +1367,8 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 	client.interval = SetInterval(function()
         local canSteal = canOpenTarget(playerPed)
 
-        if canSteal ~= plyState.canSteal then
-            plyState:set('canSteal', canSteal, true)
+        if canSteal ~= client.player:get('canSteal') then
+            client.player:setr('canSteal', canSteal)
         end
 
 		if invOpen == false then
@@ -1381,7 +1388,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
                     local maxDistance = (currentInventory.distance or currentInventory.type == 'stash' and 4.8 or 1.8) + 0.2
 
 					if currentInventory.type == 'otherplayer' then
-						local id = GetPlayerFromServerId(currentInventory.id)
+						local id = GetPlayerFromServerId(currentInventory.id --[[@as number]])
 						local ped = GetPlayerPed(id)
 						local pedCoords = GetEntityCoords(ped)
 
@@ -1458,7 +1465,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 				EnableControlAction(0, EnableKeys[i], true)
 			end
 
-			if currentInventory.type == 'newdrop' then
+			if currentInventory.type == 'drop' or currentInventory.type == 'newdrop' then
 				EnableControlAction(0, 30, true)
 				EnableControlAction(0, 31, true)
 			end
@@ -1554,7 +1561,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 							while IsPedPlantingBomb(playerPed) do Wait(0) end
 
 							TriggerServerEvent('ox_inventory:updateWeapon', 'throw', nil, weapon.slot)
-							plyState:set('invBusy', false, true)
+							client.player:setr('invBusy', false)
 
 							currentWeapon = nil
 
@@ -1570,10 +1577,10 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 		end
 	end)
 
-	plyState:set('invBusy', false, true)
-	plyState:set('invOpen', false, false)
-	plyState:set('invHotkeys', true, false)
-	plyState:set('canUseWeapons', true, false)
+	client.player:setr('invBusy', false)
+	client.player:set('invOpen', false)
+	client.player:set('invHotkeys', true)
+	client.player:set('canUseWeapons', true)
 	collectgarbage('collect')
 end)
 
@@ -1586,8 +1593,7 @@ end)
 RegisterNetEvent('ox_inventory:viewInventory', function(left, right)
 	if source == '' then return end
 
-	plyState.invOpen = true
-
+	client.player:set('invOpen', true)
 	SetInterval(client.interval, 100)
 	SetNuiFocus(true, true)
 	SetNuiFocusKeepInput(true)
@@ -1726,8 +1732,8 @@ RegisterNUICallback('giveItem', function(data, cb)
 			local option = nearbyPlayers[i]
 
             if isGiveTargetValid(option.ped, option.coords) then
-				local playerName = Utils.getPlayerName(option.id)
 				option.id = GetPlayerServerId(option.id)
+				local playerName = Utils.getPlayerName(option.id)
                 ---@diagnostic disable-next-line: inject-field
 				option.label = playerName
 				n += 1

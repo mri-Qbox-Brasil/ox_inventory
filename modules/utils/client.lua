@@ -118,8 +118,8 @@ local weaponWheelOverride = false
 
 ---Enables the weapon wheel, but disables the use of inventory weapons.
 ---Mostly used for weaponised vehicles, though could be called for "minigames"
----@param state boolean
----@param override boolean
+---@param state? boolean
+---@param override? boolean
 function Utils.WeaponWheel(state, override)
     if not override and weaponWheelOverride and state == false then
         return
@@ -128,7 +128,7 @@ function Utils.WeaponWheel(state, override)
     if state == nil then state = EnableWeaponWheel end
 
     if override then
-        weaponWheelOverride = state
+        weaponWheelOverride = state or false
     end
 
     EnableWeaponWheel = state
@@ -241,9 +241,10 @@ end
 
 ---@param serverID number
 ---@return string
-local function defaultGetPlayerName(serverID)
-    local playerName = GetPlayerName(serverID)
-    return ('[%d] %s'):format(serverID, playerName)
+local function defaultGetPlayerName(serverId)
+    local playerId = GetPlayerFromServerId(serverId)
+    local playerName = GetPlayerName(playerId)
+    return ('[%d] %s'):format(serverId, playerName)
 end
 
 local getPlayerName = defaultGetPlayerName

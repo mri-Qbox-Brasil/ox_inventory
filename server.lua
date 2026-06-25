@@ -77,7 +77,7 @@ AddEventHandler('ox_inventory:setPlayerInventory', server.setPlayerInventory)
 local registeredDumpsters = {}
 
 ---@param coords vector3
----@return string?
+---@return number?
 local function getDumpsterFromCoords(coords)
     local found
 
@@ -120,7 +120,7 @@ end
 
 ---@param source number
 ---@param invType string
----@param data? string|number|table
+---@param data? string | number | table | vector3
 ---@param ignoreSecurityChecks boolean?
 ---@return table | false | nil, table | false | nil, string?
 local function openInventory(source, invType, data, ignoreSecurityChecks)
@@ -203,7 +203,7 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
             end
         elseif invType == 'dumpster' then
             if shared.networkdumpsters then
-                local dumpsterId = getDumpsterFromCoords(data)
+                local dumpsterId = getDumpsterFromCoords(data --[[@as vector3]])
                 right = dumpsterId and Inventory(('dumpster-%s'):format(dumpsterId))
 
                 if not right then
@@ -265,9 +265,8 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
         }
 
         if invType == 'container' then hookPayload.slot = left.containerSlot end
-        if isDataTable and data.netid then hookPayload.netId = data.netid end
 
-        if not TriggerEventHooks('openInventory', hookPayload) then return end
+        if isDataTable and data.netid then hookPayload.netId = data.netid end
 
         if left == right then return end
 
@@ -283,10 +282,12 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
             if not closestCoords then return end
         end
 
-        left:openInventory(right)
-    else
-        left:openInventory(left)
+        local hooks <close> = TriggerEventHooks('openInventory', hookPayload)
+
+        if not hooks.success then return end
     end
+
+    left:openInventory(right)
 
     return {
         id = left.id,
@@ -501,14 +502,14 @@ lib.callback.register('ox_inventory:useItem', function(source, itemName, slot, m
 
             data.consume = consume
 
-            if not TriggerEventHooks('usingItem', {
-                    source = source,
-                    inventoryId = inventory and inventory.id,
-                    item = inventory.items[slot],
-                    consume = consume
-                }) then
-                return false
-            end
+            local hooks <close> = TriggerEventHooks('usingItem', {
+                source = source,
+                inventoryId = inventory and inventory.id,
+                item = inventory.items[slot],
+                consume = consume
+            })
+
+            if not hooks.success then return false end
 
             ---@type boolean
             local success = lib.callback.await('ox_inventory:usingItem', source, data, noAnim)
@@ -517,14 +518,14 @@ lib.callback.register('ox_inventory:useItem', function(source, itemName, slot, m
                 inventory.weapon = success and slot or nil
             end
 
-            if not success then return end
+            if not success then hooks.success = false return end
 
             inventory.usingItem = data
 
             if consume and consume ~= 0 and not data.component then
                 data = inventory.items[data.slot]
 
-                if not data then return end
+                if not data then hooks.success = false return end
 
                 durability = consume ~= 0 and consume < 1 and data.metadata.durability --[[@as number | false]]
 
@@ -540,11 +541,11 @@ lib.callback.register('ox_inventory:useItem', function(source, itemName, slot, m
                         local emptySlot = Inventory.GetEmptySlot(inventory)
 
                         if emptySlot then
-                            local newItem = Inventory.SetSlot(inventory, item, 1, table.deepclone(data.metadata),
+                            local ok, newItem = Inventory.SetSlot(inventory, item, 1, table.deepclone(data.metadata),
                                 emptySlot)
 
-                            if newItem then
-                                Items.UpdateDurability(inventory, newItem, item, durability)
+                            if ok and newItem then
+                                Items.UpdateDurability(inventory, newItem --[[@as SlotWithItem]], item, durability)
                             end
                         end
 
@@ -768,6 +769,14 @@ lib.addCommand('viewinv', {
 }, function(source, args)
     Inventory.InspectInventory(source, tonumber(args.invId) or args.invId)
 end)
+
+lib.registerHook('ox_lib:setPlayerState', nil, {
+    key = 'invBusy'
+})
+
+lib.registerHook('ox_lib:setPlayerState', nil, {
+    key = 'canSteal'
+})
 
 -- Broadcast em runtime quando a convar `mri:color` muda (admin via painel
 -- mri_Qadmin ou `setr mri:color` no console). Mesmo padrao do
