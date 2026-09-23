@@ -63,7 +63,14 @@ function server.setPlayerInventory(player, data)
 
     if inv then
         inv.player = server.setPlayerData(player)
-        inv.player.ped = GetPlayerPed(player.source)
+
+        repeat
+            inv.player.ped = GetPlayerPed(player.source)
+
+            if inv.player.ped == 0 then
+                Wait(0)
+            end
+        until inv.player.ped ~= 0
 
         if server.syncInventory then server.syncInventory(inv) end
         TriggerClientEvent('ox_inventory:setPlayerInventory', player.source, Inventory.Drops, inventory, totalWeight,
@@ -176,9 +183,7 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
                 if plate then
                     if server.trimplate then plate = string.strtrim(plate) end
 
-                    if not data.id then
-                        data.id = (invType == 'glovebox' and 'glove' or 'trunk') .. plate
-                    end
+                    data.id = (invType == 'glovebox' and 'glove' or 'trunk') .. plate
                 end
 
                 data.type = invType

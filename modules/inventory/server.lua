@@ -254,6 +254,27 @@ end
 exports('Inventory', getInventory)
 exports('GetInventory', getInventory)
 
+---@param invType string
+---@param detailed? boolean return the full inventory instead of only the id
+---@return (string|number)[] | OxInventory[]
+function Inventory.GetInventories(invType, detailed)
+	if type(invType) ~= 'string' then
+		return error(('expected invType to be a string (received %s)'):format(type(invType)))
+	end
+
+	local returnData = {}
+
+	for _, inv in pairs(Inventories) do
+		if inv.type == invType then
+			returnData[#returnData + 1] = detailed and inv or inv.id
+		end
+	end
+
+	return returnData
+end
+
+exports('GetInventories', Inventory.GetInventories)
+
 ---@param inv inventory
 ---@param owner? string | number
 ---@return table?

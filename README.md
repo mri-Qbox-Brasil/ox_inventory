@@ -11,11 +11,14 @@ A complete and modern inventory system for FiveM, providing a flexible slot-base
 [![](https://badges.5metrics.dev/ox_inventory/servers.svg?style=for-the-badge)](https://5metrics.dev/resource/ox_inventory)
 [![](https://badges.5metrics.dev/ox_inventory/players.svg?style=for-the-badge)](https://5metrics.dev/resource/ox_inventory)
 
+Refer to [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines and to see our Contributor License Agreement.\
+Refer to [NOTICE.md](./NOTICE.md) for additional information and legal notices.
+
 </div>
 
 ## 📚 Documentation
 
-https://overextended.dev/ox_inventory
+https://overextended.dev/docs/ox_inventory
 
 ## 💾 Download
 
@@ -59,13 +62,3 @@ We do not guarantee compatibility or support for third-party resources.
 - Containers allow access to stashes when using an item, like a paperbag or backpack.
 - Access gloveboxes and trunks for any vehicle.
 - Random item generation inside dumpsters and unowned vehicles.
-
-## Copyright
-
-Copyright © 2024 Overextended <https://github.com/overextended>
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
