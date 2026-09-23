@@ -13,6 +13,7 @@ import { fetchNui } from './utils/fetchNui';
 import { useDragDropManager } from 'react-dnd';
 import KeyPress from './components/utils/KeyPress';
 import { applyAccentColor, isValidHex } from './lib/accentColor';
+import { setPlayerOwner } from './lib/playerOwner';
 
 debugData([
   {
@@ -120,6 +121,8 @@ const App: React.FC = () => {
   useNuiEvent<{ accentColor: string }>('updateAccentColor', (data) => {
     if (data?.accentColor && isValidHex(data.accentColor)) applyAccentColor(data.accentColor);
   });
+
+  useNuiEvent<string | undefined>('mriSetOwner', setPlayerOwner);
 
   useNuiEvent('closeInventory', () => {
     manager.dispatch({ type: 'dnd-core/END_DRAG' });

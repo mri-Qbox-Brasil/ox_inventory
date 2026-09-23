@@ -11,11 +11,13 @@ import ToolsIcon from '../utils/icons/TooltsIcon';
 import BoxIcon from '../utils/icons/BoxIcon';
 import VehicleIcon from '../utils/icons/VehicleIcon';
 import GroundIcon from '../utils/icons/GroundIcon';
+import { usePlayerOwner } from '../../lib/playerOwner';
 
 
 const PAGE_SIZE = 30;
 
 const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
+  const playerOwner = usePlayerOwner();
   const weight = React.useMemo(
     () => (inventory.maxWeight !== undefined ? Math.floor(getTotalWeight(inventory.items) * 1000) / 1000 : 0),
     [inventory.maxWeight, inventory.items]
@@ -65,7 +67,7 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
             {inventory.type === 'player' && inventory.label && (
               <span>
                 {inventory.id && <span className="text-gray-400">[{inventory.id}] </span>}
-                {inventory.owner && <span className="text-gray-400">[{inventory.owner}] </span>}
+                {playerOwner && <span className="text-gray-400">[{playerOwner}] </span>}
                 {inventory.label}
               </span>
             )}

@@ -25,10 +25,17 @@ ox_libs {
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
-    'init.lua'
+    'init.lua',
+    -- MRI: modificacoes isoladas em mri/ (ver mri/README.md).
+    'mri/server.lua',
 }
 
-client_script 'init.lua'
+client_scripts {
+    -- MRI: antes do init.lua de proposito (intercepta o lib.addKeybind).
+    'mri/keybinds.lua',
+    'init.lua',
+    'mri/client.lua',
+}
 
 ui_page 'web/build/index.html'
 

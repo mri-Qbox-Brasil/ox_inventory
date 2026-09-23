@@ -773,7 +773,7 @@ local function registerCommands()
 	end
 
 	local primary = lib.addKeybind({
-		name = 'mriQ_inv',
+		name = 'inv',
 		description = locale('open_player_inventory'),
 		defaultKey = client.keys[1],
 		onPressed = function()
@@ -800,7 +800,7 @@ local function registerCommands()
 	})
 
 	lib.addKeybind({
-		name = 'mriQ_inv2',
+		name = 'inv2',
 		description = locale('open_secondary_inventory'),
 		defaultKey = client.keys[2],
 		onPressed = function(self)
@@ -864,7 +864,7 @@ local function registerCommands()
 	})
 
 	lib.addKeybind({
-		name = 'mriQ_hotbar',
+		name = 'hotbar',
 		description = locale('disable_hotbar'),
 		defaultKey = client.keys[3],
 		onPressed = function()
@@ -1346,7 +1346,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 				items = PlayerData.inventory,
 				maxWeight = shared.playerweight,
 			},
-			imagepath = client.imagepath,
+			imagepath = client.imagepath
 		}
 	})
 
@@ -1931,21 +1931,4 @@ lib.callback.register('ox_inventory:getVehicleData', function(netid)
 	if entity then
 		return GetEntityModel(entity), GetVehicleClass(entity)
 	end
-end)
-
--- Cor de destaque da suite MRI (compartilhada com mri_Qmultichar, mri_Qspawn,
--- mri_Qadmin, mri_Qloadscreen, mri_Qchat, ox_lib). Definida via
--- `setr mri:color "#hex"` no server.cfg ou pelo painel admin do mri_Qadmin.
--- Aqui o formato e RGB triplet (R, G, B) pra encaixar em `rgba(var(--primaryColor), N)`
--- — diferente do shadcn HSL usado no resto da suite, mas e a convencao ja existente
--- desse script (ver index.scss linha 35).
-RegisterNUICallback('getConfig', function(_, cb)
-	cb({ accentColor = GetConvar('mri:color', '#00E699') })
-end)
-
--- Broadcast: convar `mri:color` mudou no server, propaga pra NUI ja aberta.
--- Payload aninhado em `data` porque o useNuiEvent desestrutura `event.data.data`
--- (mesmo padrao do showContext/refreshSlots/etc).
-RegisterNetEvent('ox_inventory:accentColorChanged', function(newColor)
-	SendNUIMessage({ action = 'updateAccentColor', data = { accentColor = newColor } })
 end)

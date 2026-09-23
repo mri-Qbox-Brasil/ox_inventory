@@ -300,8 +300,7 @@ local function openInventory(source, invType, data, ignoreSecurityChecks)
         type = left.type,
         slots = left.slots,
         weight = left.weight,
-        maxWeight = left.maxWeight,
-        owner = left.owner,
+        maxWeight = left.maxWeight
     }, right and {
         id = right.id,
         label = right.player and '' or right.label,
@@ -782,14 +781,3 @@ lib.registerHook('ox_lib:setPlayerState', nil, {
 lib.registerHook('ox_lib:setPlayerState', nil, {
     key = 'canSteal'
 })
-
--- Broadcast em runtime quando a convar `mri:color` muda (admin via painel
--- mri_Qadmin ou `setr mri:color` no console). Mesmo padrao do
--- mri_Qmultichar/mri_Qspawn/mri_Qadmin/mri_Qchat/ox_lib — toda a suite MRI
--- compartilha a mesma cor de destaque.
-AddConvarChangeListener('mri:color', function(name)
-    if name ~= 'mri:color' then return end
-    local color = GetConvar('mri:color', '#00E699')
-    if not color:match('^#%x%x%x%x%x%x$') then return end
-    TriggerClientEvent('ox_inventory:accentColorChanged', -1, color)
-end)

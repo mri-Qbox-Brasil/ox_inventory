@@ -14,6 +14,5 @@ export type Inventory = {
   items: Slot[];
   maxWeight?: number;
   label?: string;
-  owner?: string;
   groups?: Record<string, number>;
 };
