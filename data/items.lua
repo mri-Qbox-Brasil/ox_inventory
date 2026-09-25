@@ -570,28 +570,150 @@ return {
 		},
 	},
 -- eletrônicos
-	["phone"] = {
-		label = "Celular",
+-- sd-phone / sd-tablet
+	["phone_black"] = {
+		label = "Celular Preto",
 		weight = 190,
 		stack = false,
 		consume = 0,
-		client = {
-			add = function(total)
-				if total > 0 then
-					pcall(function()
-						return exports.npwd:setPhoneDisabled(false)
-					end)
-				end
-			end,
-
-			remove = function(total)
-				if total < 1 then
-					pcall(function()
-						return exports.npwd:setPhoneDisabled(true)
-					end)
-				end
-			end,
-		},
+		close = true,
+		client = { image = "phone_black.png" },
+		server = { export = "sd-phone.usePhone_black" },
+	},
+	["phone_blue"] = {
+		label = "Celular Azul",
+		weight = 190,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "phone_blue.png" },
+		server = { export = "sd-phone.usePhone_blue" },
+	},
+	["phone_green"] = {
+		label = "Celular Verde",
+		weight = 190,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "phone_green.png" },
+		server = { export = "sd-phone.usePhone_green" },
+	},
+	["phone_orange"] = {
+		label = "Celular Laranja",
+		weight = 190,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "phone_orange.png" },
+		server = { export = "sd-phone.usePhone_orange" },
+	},
+	["phone_pink"] = {
+		label = "Celular Rosa",
+		weight = 190,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "phone_pink.png" },
+		server = { export = "sd-phone.usePhone_pink" },
+	},
+	["phone_purple"] = {
+		label = "Celular Roxo",
+		weight = 190,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "phone_purple.png" },
+		server = { export = "sd-phone.usePhone_purple" },
+	},
+	["phone_red"] = {
+		label = "Celular Vermelho",
+		weight = 190,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "phone_red.png" },
+		server = { export = "sd-phone.usePhone_red" },
+	},
+	["phone_yellow"] = {
+		label = "Celular Amarelo",
+		weight = 190,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "phone_yellow.png" },
+		server = { export = "sd-phone.usePhone_yellow" },
+	},
+	["tablet_black"] = {
+		label = "Tablet Preto",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_black.png" },
+		server = { export = "sd-tablet.useTablet_black" },
+	},
+	["tablet_blue"] = {
+		label = "Tablet Azul",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_blue.png" },
+		server = { export = "sd-tablet.useTablet_blue" },
+	},
+	["tablet_green"] = {
+		label = "Tablet Verde",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_green.png" },
+		server = { export = "sd-tablet.useTablet_green" },
+	},
+	["tablet_orange"] = {
+		label = "Tablet Laranja",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_orange.png" },
+		server = { export = "sd-tablet.useTablet_orange" },
+	},
+	["tablet_pink"] = {
+		label = "Tablet Rosa",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_pink.png" },
+		server = { export = "sd-tablet.useTablet_pink" },
+	},
+	["tablet_purple"] = {
+		label = "Tablet Roxo",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_purple.png" },
+		server = { export = "sd-tablet.useTablet_purple" },
+	},
+	["tablet_red"] = {
+		label = "Tablet Vermelho",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_red.png" },
+		server = { export = "sd-tablet.useTablet_red" },
+	},
+	["tablet_yellow"] = {
+		label = "Tablet Amarelo",
+		weight = 700,
+		stack = false,
+		consume = 0,
+		close = true,
+		client = { image = "tablet_yellow.png" },
+		server = { export = "sd-tablet.useTablet_yellow" },
 	},
 	["radio"] = {
 		label = "Rádio",
