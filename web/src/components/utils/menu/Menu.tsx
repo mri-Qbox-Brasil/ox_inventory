@@ -30,6 +30,7 @@ import {
 } from '@floating-ui/react';
 import * as React from 'react';
 import { useAppSelector } from '../../../store';
+import { ChevronRightIcon } from '../icons/MenuIcons';
 
 const MenuContext = React.createContext<{
   getItemProps: (userProps?: React.HTMLProps<HTMLElement>) => Record<string, unknown>;
@@ -48,11 +49,13 @@ const MenuContext = React.createContext<{
 interface MenuProps {
   label?: string;
   nested?: boolean;
+  icon?: React.ReactNode;
+  header?: React.ReactNode;
   children?: React.ReactNode;
 }
 
 export const MenuComponent = React.forwardRef<HTMLButtonElement, MenuProps & React.HTMLProps<HTMLButtonElement>>(
-  ({ children, label, ...props }, forwardedRef) => {
+  ({ children, label, icon, header, ...props }, forwardedRef) => {
     const menu = useAppSelector((state) => state.contextMenu);
     const [isOpen, setIsOpen] = React.useState(false);
     const [hasFocusInside, setHasFocusInside] = React.useState(false);
@@ -180,7 +183,7 @@ export const MenuComponent = React.forwardRef<HTMLButtonElement, MenuProps & Rea
             data-open={isOpen ? '' : undefined}
             data-nested={isNested ? '' : undefined}
             data-focus-inside={hasFocusInside ? '' : undefined}
-            className={isNested ? 'context-menu-item' : 'context-menu-list'}
+            className={isNested ? 'context-menu-item mri-surface-card' : 'context-menu-list mri-surface'}
             {...getReferenceProps(
               parent.getItemProps({
                 ...props,
@@ -192,12 +195,11 @@ export const MenuComponent = React.forwardRef<HTMLButtonElement, MenuProps & Rea
               })
             )}
           >
-            {label}
-            {isNested && (
-              <span aria-hidden style={{ marginLeft: 10, fontSize: 10 }}>
-                ▶
-              </span>
-            )}
+            <span className="context-menu-item-label">
+              {icon}
+              {label}
+            </span>
+            {isNested && <ChevronRightIcon />}
           </button>
         )}
         <MenuContext.Provider
@@ -212,14 +214,15 @@ export const MenuComponent = React.forwardRef<HTMLButtonElement, MenuProps & Rea
           <FloatingList elementsRef={elementsRef} labelsRef={labelsRef}>
             {isMounted && (
               <FloatingPortal>
-                <FloatingOverlay lockScroll>
+                <FloatingOverlay lockScroll className="context-menu-overlay">
                   <FloatingFocusManager context={context} modal={true} initialFocus={refs.floating}>
                     <div
                       ref={refs.setFloating}
-                      className="context-menu-list"
+                      className="context-menu-list mri-surface"
                       style={{ ...floatingStyles, ...styles }}
                       {...getFloatingProps()}
                     >
+                      {header}
                       {children}
                     </div>
                   </FloatingFocusManager>
@@ -236,12 +239,14 @@ export const MenuComponent = React.forwardRef<HTMLButtonElement, MenuProps & Rea
 interface MenuItemProps {
   label: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
+  variant?: 'row' | 'tile';
 }
 
 export const MenuItem = React.forwardRef<
   HTMLButtonElement,
   MenuItemProps & React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ label, disabled, ...props }, forwardedRef) => {
+>(({ label, disabled, icon, variant = 'row', ...props }, forwardedRef) => {
   const menu = React.useContext(MenuContext);
   const item = useListItem({ label: disabled ? null : label });
   const tree = useFloatingTree();
@@ -253,7 +258,7 @@ export const MenuItem = React.forwardRef<
       ref={useMergeRefs([item.ref, forwardedRef])}
       type="button"
       role="menuitem"
-      className="context-menu-item"
+      className={`context-menu-item mri-surface-card ${variant === 'tile' ? 'context-menu-item--tile' : ''}`}
       tabIndex={isActive ? 0 : -1}
       disabled={disabled}
       {...menu.getItemProps({
@@ -267,7 +272,10 @@ export const MenuItem = React.forwardRef<
         },
       })}
     >
-      {label}
+      <span className="context-menu-item-label">
+        {icon}
+        {label}
+      </span>
     </button>
   );
 });

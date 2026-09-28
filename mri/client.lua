@@ -2,17 +2,31 @@
     Modificacoes MRI no client do ox_inventory (carregado depois do init.lua).
 ]]
 
--- Cor de destaque da suite MRI (compartilhada com mri_Qmultichar, mri_Qspawn,
--- mri_Qadmin, mri_Qloadscreen, mri_Qchat, ox_lib). Definida via
--- `setr mri:color "#hex"` no server.cfg ou pelo painel admin do mri_Qadmin.
 RegisterNUICallback('getConfig', function(_, cb)
-    cb({ accentColor = GetConvar('mri:color', '#00E699') })
+    cb({
+        accentColor = GetConvar('mri:color', '#00E699'),
+        backgroundColor = GetConvar('mri:backgroundColor', ''),
+        categories = lib.load('data.categories') or {},
+    })
 end)
 
--- Broadcast: convar `mri:color` mudou no server, propaga pra NUI ja aberta.
--- Payload aninhado em `data` porque o useNuiEvent desestrutura `event.data.data`.
+RegisterNUICallback('mriGetUiConfig', function(_, cb)
+    local uiConfig = lib.callback.await('ox_lib:getUiConfig', false)
+
+    cb(type(uiConfig) == 'table' and uiConfig or false)
+end)
+
 RegisterNetEvent('ox_inventory:accentColorChanged', function(newColor)
     SendNUIMessage({ action = 'updateAccentColor', data = { accentColor = newColor } })
+end)
+
+RegisterNetEvent('ox_inventory:backgroundColorChanged', function(newColor)
+    SendNUIMessage({ action = 'updateBackgroundColor', data = { backgroundColor = newColor or '' } })
+end)
+
+RegisterNetEvent('ox_lib:uiConfigChanged', function(newConfig)
+    if type(newConfig) ~= 'table' then return end
+    SendNUIMessage({ action = 'applyUiConfig', data = newConfig })
 end)
 
 -- Owner (citizenid) do inventario do player, exibido no cabecalho da NUI antes

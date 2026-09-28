@@ -8,6 +8,9 @@ import { onGive } from '../../dnd/onGive';
 import { fetchNui } from '../../utils/fetchNui';
 import { Locale } from '../../store/locale';
 import UsefulControls from './UsefulControls';
+import { GiveBoxIcon, UseHandIcon } from '../utils/icons/InventoryIcons';
+import { closeTooltip } from '../../store/tooltip';
+import { closeContextMenu } from '../../store/contextMenu';
 
 const formatAmount = (n: number) => (n > 0 ? n.toLocaleString('en-US') : '0');
 const digitsOnly = (s: string) => s.replace(/\D/g, '');
@@ -77,27 +80,43 @@ const InventoryControl: React.FC = () => {
     cursorRef.current = null;
   }, [value]);
 
+  const closeInventory = () => {
+    dispatch(closeTooltip());
+    dispatch(closeContextMenu());
+    fetchNui('exit');
+  };
+
   return (
     <>
       <UsefulControls infoVisible={infoVisible} setInfoVisible={setInfoVisible} />
-      <div className="inventory-control flex items-start justify-center px-3">
-        <div className="grid grid-cols-1 gap-2.5">
-          <input
-            className="w-50 2k:w-50 4k:w-100 px-1 py-2.5 2k:py-4 4k:py-6 2k:text-xl 4k:text-3xl bg-dark bg-opacity-40 rounded-md text-center mb-8 focus:outline-none hover:border-gray-400/20 border border-transparent focus:border-gray-400 transition-colors duration-300"
-            type="text"
-            ref={inputRef}
-            value={value}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            min={0}
-          />
-        </div>
+      <div className="inventory-control">
+        <button type="button" className="inventory-control-button" ref={use}>
+          <UseHandIcon />
+          <span>{Locale.ui_use || 'Usar'}</span>
+        </button>
+        <input
+          className="inventory-control-input mri-surface-card"
+          type="text"
+          ref={inputRef}
+          value={value}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          min={0}
+        />
+        <button type="button" className="inventory-control-button" ref={give}>
+          <GiveBoxIcon />
+          <span>{Locale.ui_give || 'Enviar'}</span>
+        </button>
       </div>
-      <button className="useful-controls-button" onClick={() => setInfoVisible(true)}>
-        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 524 524">
-          <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z" />
-        </svg>
-      </button>
+      <div className="inventory-footer">
+        <button type="button" className="inventory-footer-link" onClick={() => setInfoVisible(true)}>
+          {Locale.ui_usefulcontrols || 'Controles'}
+        </button>
+        <button type="button" className="inventory-footer-close" onClick={closeInventory}>
+          <span>{Locale.ui_mri_close || 'Fechar inventário'}</span>
+          <kbd>ESC</kbd>
+        </button>
+      </div>
     </>
   );
 };

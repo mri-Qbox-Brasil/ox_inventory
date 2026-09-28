@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
-import { Inventory } from '../../typings';
-import WeightBar from '../utils/WeightBar';
+import { Inventory, Slot } from '../../typings';
 import InventorySlot from './InventorySlot';
 import { getTotalWeight } from '../../helpers';
 import { useAppSelector } from '../../store';
@@ -11,45 +10,96 @@ import ToolsIcon from '../utils/icons/TooltsIcon';
 import BoxIcon from '../utils/icons/BoxIcon';
 import VehicleIcon from '../utils/icons/VehicleIcon';
 import GroundIcon from '../utils/icons/GroundIcon';
+import { FilterIcon, GridIcon, LayersIcon, WeightIcon } from '../utils/icons/InventoryIcons';
 import { usePlayerOwner } from '../../lib/playerOwner';
-
+import { itemInCategory, setActiveCategory, useItemCategories } from '../../lib/itemCategories';
+import { Locale } from '../../store/locale';
 
 const PAGE_SIZE = 30;
+const FAST_SLOTS = 5;
+const RING_RADIUS = 15;
+const RING_LENGTH = 2 * Math.PI * RING_RADIUS;
 
-const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
+const WeightRing: React.FC<{ percent: number }> = ({ percent }) => (
+  <div className="weight-ring">
+    <svg viewBox="0 0 36 36">
+      <circle className="weight-ring-track" cx="18" cy="18" r={RING_RADIUS} />
+      <circle
+        className={`weight-ring-value ${percent >= 90 ? 'weight-ring-value--full' : ''}`}
+        cx="18"
+        cy="18"
+        r={RING_RADIUS}
+        strokeDasharray={RING_LENGTH}
+        strokeDashoffset={RING_LENGTH * (1 - Math.min(percent, 100) / 100)}
+      />
+    </svg>
+    <WeightIcon />
+  </div>
+);
+
+const TypeIcon: React.FC<{ type?: string }> = ({ type }) => {
+  switch (type) {
+    case 'player':
+    case 'otherplayer':
+      return <UserIcon />;
+    case 'shop':
+      return <StoreIcon />;
+    case 'crafting':
+      return <ToolsIcon />;
+    case 'stash':
+    case 'container':
+    case 'policeevidence':
+      return <BoxIcon />;
+    case 'trunk':
+    case 'glovebox':
+      return <VehicleIcon />;
+    default:
+      return <GroundIcon />;
+  }
+};
+
+const describe = (inventory: Inventory) =>
+  Locale[`ui_mri_desc_${inventory.type || 'drop'}`] || 'Veículos, jogadores ou baús próximos';
+
+const useScrollFade = (deps: unknown[]) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [fade, setFade] = React.useState({ top: false, bottom: false });
+
+  const update = React.useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    const top = el.scrollTop > 2;
+    const bottom = el.scrollTop + el.clientHeight < el.scrollHeight - 2;
+    setFade((prev) => (prev.top === top && prev.bottom === bottom ? prev : { top, bottom }));
+  }, []);
+
+  React.useEffect(update, deps);
+
+  return { ref, fade, update };
+};
+
+const formatKg = (grams: number) => Number((grams / 1000).toFixed(2)).toLocaleString('pt-BR');
+
+const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> = ({ inventory, side }) => {
   const playerOwner = usePlayerOwner();
+  const { categories, active } = useItemCategories();
+  const isOwn = side === 'left' && inventory.type === 'player';
+
   const weight = React.useMemo(
     () => (inventory.maxWeight !== undefined ? Math.floor(getTotalWeight(inventory.items) * 1000) / 1000 : 0),
     [inventory.maxWeight, inventory.items]
   );
 
-  const weightPercent = React.useMemo(() => (inventory.maxWeight ? (weight / inventory.maxWeight) * 100 : 0), [weight]);
+  const weightPercent = inventory.maxWeight ? (weight / inventory.maxWeight) * 100 : 0;
 
-  const inventoryIcon = React.useMemo(() => {
-    switch (inventory.type) {
-      case 'player':
-        return <UserIcon />;
-      case 'shop':
-        return <StoreIcon />;
-      case 'crafting':
-        return <ToolsIcon />;
-      case 'stash':
-        return <BoxIcon />;
-      case 'drop':
-        return <GroundIcon />;
-      case 'vehicle':
-        return <VehicleIcon />;
-      case 'ground':
-        return <GroundIcon />;
-      case null:
-        return <GroundIcon />;
-      default:
-        return <GroundIcon />;
-    }
-  }, [inventory.type]);
+  const activeCategory = isOwn ? categories.find((category) => category.name === active) : undefined;
+  const isDimmed = (item: Slot) => !!activeCategory && !(item.name && itemInCategory(item.name, activeCategory));
+
+  const fastSlots = isOwn ? inventory.items.slice(0, FAST_SLOTS) : [];
+  const gridItems = isOwn ? inventory.items.slice(FAST_SLOTS) : inventory.items;
 
   const [page, setPage] = React.useState(0);
-  const containerRef = useRef(null);
+  const { ref: containerRef, fade, update: updateFade } = useScrollFade([gridItems.length, page]);
   const { ref, entry } = useIntersection({ threshold: 0.5 });
   const isBusy = useAppSelector((state) => state.inventory.isBusy);
 
@@ -58,61 +108,112 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
       setPage((prev) => ++prev);
     }
   }, [entry]);
+
+  const title = isOwn ? Locale.ui_mri_own_title || 'Inventário' : inventory.label || Locale.ui_mri_ground || 'Chão';
+  const owner = [inventory.type === 'player' && inventory.id ? `[${inventory.id}]` : null, isOwn ? playerOwner : null]
+    .filter(Boolean)
+    .join(' ');
+  const description = isOwn
+    ? [owner, inventory.label].filter(Boolean).join(' · ') || Locale.ui_mri_desc_own || 'Seu inventário pessoal'
+    : describe(inventory);
+
   return (
-    <>
-      <div className="inventory-grid-wrapper col-span-3" style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
-        <div className={`flex items-center ${inventory.label ? 'justify-between' : 'justify-between'}`}>
-          <div className="flex items-center space-x-1 pl-2 pr-4 py-2">
-            <div className="">{inventoryIcon}</div>
-            {inventory.type === 'player' && inventory.label && (
-              <span>
-                {inventory.id && <span className="text-gray-400">[{inventory.id}] </span>}
-                {playerOwner && <span className="text-gray-400">[{playerOwner}] </span>}
-                {inventory.label}
-              </span>
-            )}
-            {inventory.type && inventory.type !== 'player' && inventory.label && <span>{inventory.label}</span>}
-            {inventory.type && !inventory.label && <span>Chão</span>}
-          </div>
-
-          {inventory.maxWeight && (
-            <div className="inline-flex items-center bg-green-50/0 bg-opacity-60 rounded-md float-right">
-              <div className="px-2 py-2 bg-gray-300/0 bg-opacity-20 rounded-md">
-                <div className="overflow-hidden rounded-md bg-zinc-900 h-1 w-10">
-                  <div
-                    className={`h-full transition-all duration-150 rounded-md ${
-                      weightPercent >= 90 ? 'bg-red-400' : 'bg-green-500'
-                    }`}
-                    style={{
-                      width: `${weightPercent}%`,
-                    }}
-                  />
-                </div>
-              </div>
-
-              <div className="text-sm text-gray-300">
-                <p>{`${Number((weight / 1000).toFixed(2))}/${inventory.maxWeight / 1000} KG`}</p>
-              </div>
-            </div>
-          )}
+    <div className={`inventory-panel ${isOwn ? 'inventory-panel--own' : ''}`} style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
+      <div className="inventory-header">
+        <div className={`inventory-header-icon mri-surface-card ${isOwn ? 'inventory-header-icon--accent' : ''}`}>
+          {isOwn ? <GridIcon /> : <TypeIcon type={inventory.type} />}
+        </div>
+        <div className="inventory-header-text">
+          <p className="inventory-header-title">{title}</p>
+          <p className="inventory-header-description">{description}</p>
         </div>
 
-        <div className="inventory-grid-container" ref={containerRef}>
-          <>
-            {inventory.items.slice(0, (page + 1) * PAGE_SIZE).map((item, index) => (
+        {inventory.maxWeight ? (
+          <div className="inventory-weight-info">
+            <div className="inventory-weight-text">
+              <span className="inventory-weight-label">{Locale.ui_mri_weight || 'Peso'}</span>
+              <span className="inventory-weight-value">
+                {formatKg(weight)}
+                <span className="inventory-weight-max"> / {formatKg(inventory.maxWeight)}kg</span>
+              </span>
+            </div>
+            <WeightRing percent={weightPercent} />
+          </div>
+        ) : null}
+      </div>
+
+      <div
+        className={`inventory-grid ${isOwn ? 'inventory-grid--own' : ''} ${fade.top ? 'inventory-grid--fade-top' : ''} ${fade.bottom ? 'inventory-grid--fade-bottom' : ''}`}
+        ref={containerRef}
+        onScroll={updateFade}
+      >
+        {gridItems.slice(0, (page + 1) * PAGE_SIZE).map((item, index) => (
+          <InventorySlot
+            key={`${inventory.type}-${inventory.id}-${item.slot}`}
+            item={item}
+            dimmed={isDimmed(item)}
+            ref={index === (page + 1) * PAGE_SIZE - 1 ? ref : null}
+            inventoryType={inventory.type}
+            inventoryGroups={inventory.groups}
+            inventoryId={inventory.id}
+          />
+        ))}
+      </div>
+
+      {isOwn && (
+        <div className="inventory-fast">
+          <div className="inventory-header inventory-header--section">
+            <div className="inventory-header-icon inventory-header-icon--accent mri-surface-card">
+              <LayersIcon />
+            </div>
+            <div className="inventory-header-text">
+              <p className="inventory-header-title">{Locale.ui_mri_fastslots || 'Atalhos rápidos'}</p>
+              <p className="inventory-header-description">
+                {Locale.ui_mri_fastslots_hint || 'Use as teclas 1 a 5 para usar rapidamente'}
+              </p>
+            </div>
+
+            {categories.length > 0 && (
+              <div className="inventory-filters">
+                <button
+                  type="button"
+                  className={`inventory-filter inventory-filter--text mri-surface-card ${active === null ? 'inventory-filter--active' : ''}`}
+                  onClick={() => setActiveCategory(null)}
+                >
+                  {Locale.ui_mri_filter_all || 'Todos'}
+                </button>
+                {categories.map((category) => (
+                  <button
+                    key={category.name}
+                    type="button"
+                    title={category.label}
+                    className={`inventory-filter mri-surface-card ${category.icon ? '' : 'inventory-filter--text'} ${
+                      active === category.name ? 'inventory-filter--active' : ''
+                    }`}
+                    onClick={() => setActiveCategory(category.name)}
+                  >
+                    {category.icon ? <FilterIcon name={category.icon} /> : category.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="inventory-fast-grid">
+            {fastSlots.map((item) => (
               <InventorySlot
                 key={`${inventory.type}-${inventory.id}-${item.slot}`}
                 item={item}
-                ref={index === (page + 1) * PAGE_SIZE - 1 ? ref : null}
+                dimmed={isDimmed(item)}
                 inventoryType={inventory.type}
                 inventoryGroups={inventory.groups}
                 inventoryId={inventory.id}
               />
             ))}
-          </>
+          </div>
         </div>
-      </div>
-    </>
+      )}
+    </div>
   );
 };
 

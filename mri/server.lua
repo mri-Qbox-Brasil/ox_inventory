@@ -12,6 +12,13 @@ AddConvarChangeListener('mri:color', function(name)
     TriggerClientEvent('ox_inventory:accentColorChanged', -1, color)
 end)
 
+AddConvarChangeListener('mri:backgroundColor', function(name)
+    if name ~= 'mri:backgroundColor' then return end
+    local color = GetConvar('mri:backgroundColor', '')
+    if color ~= '' and not color:match('^#%x%x%x%x%x%x$') then return end
+    TriggerClientEvent('ox_inventory:backgroundColorChanged', -1, color)
+end)
+
 -- Owner (citizenid) do inventario do proprio player, pro cabecalho da NUI.
 -- require dentro do callback: o modulo ja esta em cache (carregado pelo
 -- init.lua) e, se o init abortou, este arquivo nao quebra no load.

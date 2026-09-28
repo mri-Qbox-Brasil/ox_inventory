@@ -12,8 +12,10 @@ import DragPreview from './components/utils/DragPreview';
 import { fetchNui } from './utils/fetchNui';
 import { useDragDropManager } from 'react-dnd';
 import KeyPress from './components/utils/KeyPress';
-import { applyAccentColor, isValidHex } from './lib/accentColor';
+import { isHexColor, setSuiteAccent, setSuiteBackground } from '@mriqbox/ui-kit';
+import { applySuiteUiConfig, type SuiteUiConfig } from './lib/uiConfig';
 import { setPlayerOwner } from './lib/playerOwner';
+import { setItemCategories } from './lib/itemCategories';
 
 debugData([
   {
@@ -109,18 +111,23 @@ const App: React.FC = () => {
 
   fetchNui('uiLoaded', {});
 
-  // Boot: pega cor da convar `mri:color` via getConfig callback Lua e aplica
-  // no --primaryColor. Suite MRI compartilha a mesma cor de destaque.
   useEffect(() => {
-    fetchNui<{ accentColor?: string }>('getConfig').then((data) => {
-      if (data?.accentColor && isValidHex(data.accentColor)) applyAccentColor(data.accentColor);
+    fetchNui<{ accentColor?: string; backgroundColor?: string; categories?: unknown }>('getConfig').then((data) => {
+      if (isHexColor(data?.accentColor)) setSuiteAccent(data.accentColor);
+      setSuiteBackground(data?.backgroundColor);
+      setItemCategories(data?.categories);
     });
+
+    fetchNui<SuiteUiConfig>('mriGetUiConfig').then(applySuiteUiConfig);
   }, []);
 
-  // Runtime: server dispara TriggerClientEvent quando admin troca a convar.
   useNuiEvent<{ accentColor: string }>('updateAccentColor', (data) => {
-    if (data?.accentColor && isValidHex(data.accentColor)) applyAccentColor(data.accentColor);
+    if (isHexColor(data?.accentColor)) setSuiteAccent(data.accentColor);
   });
+
+  useNuiEvent<{ backgroundColor: string }>('updateBackgroundColor', (data) => setSuiteBackground(data?.backgroundColor));
+
+  useNuiEvent<SuiteUiConfig>('applyUiConfig', applySuiteUiConfig);
 
   useNuiEvent<string | undefined>('mriSetOwner', setPlayerOwner);
 

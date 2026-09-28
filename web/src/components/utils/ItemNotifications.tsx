@@ -39,11 +39,9 @@ const ItemNotification = React.forwardRef(
       >
         <div className="item-slot-wrapper">
           <div className="item-notification-action-box">
-            <p className='text-gray-100'>{props.item.text}</p>
+            <p>{props.item.text}</p>
           </div>
-          <div className="inventory-slot-label-box">
-            <div className="inventory-slot-label-text">{slotItem.metadata?.label || Items[slotItem.name]?.label}</div>
-          </div>
+          <div className="item-slot-label">{slotItem.metadata?.label || Items[slotItem.name]?.label}</div>
         </div>
       </div>
     );

@@ -35,7 +35,7 @@ const UsefulControls: React.FC<Props> = ({ infoVisible, setInfoVisible }) => {
         <FloatingPortal>
           <FloatingOverlay lockScroll className="useful-controls-dialog-overlay" data-open={infoVisible} style={styles}>
             <FloatingFocusManager context={context}>
-              <div ref={refs.setFloating} {...getFloatingProps()} className="useful-controls-dialog" style={styles}>
+              <div ref={refs.setFloating} {...getFloatingProps()} className="useful-controls-dialog mri-surface" style={styles}>
                 <div className="useful-controls-dialog-title">
                   <p>{Locale.ui_usefulcontrols || 'Useful controls'}</p>
                   <div className="useful-controls-dialog-close" onClick={() => setInfoVisible(false)}>

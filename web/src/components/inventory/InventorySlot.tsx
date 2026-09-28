@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { DragSource, Inventory, InventoryType, Slot, SlotWithItem } from '../../typings';
 import { useDrag, useDragDropManager, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../store';
-import WeightBar from '../utils/WeightBar';
 import { onDrop } from '../../dnd/onDrop';
 import { onBuy } from '../../dnd/onBuy';
 import { Items } from '../../store/items';
@@ -15,16 +14,18 @@ import { ItemsPayload } from '../../reducers/refreshSlots';
 import { closeTooltip, openTooltip } from '../../store/tooltip';
 import { openContextMenu } from '../../store/contextMenu';
 import { useMergeRefs } from '@floating-ui/react';
+import { durabilityLevel, formatWeight } from '../../lib/itemFormat';
 
 interface SlotProps {
   inventoryId: Inventory['id'];
   inventoryType: Inventory['type'];
   inventoryGroups: Inventory['groups'];
   item: Slot;
+  dimmed?: boolean;
 }
 
 const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> = (
-  { item, inventoryId, inventoryType, inventoryGroups },
+  { item, inventoryId, inventoryType, inventoryGroups, dimmed },
   ref
 ) => {
   const manager = useDragDropManager();
@@ -118,27 +119,29 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
   };
 
   const refs = useMergeRefs([connectRef, ref]);
+  const isHotkey = inventoryType === 'player' && item.slot <= 5;
+  const hasItem = isSlotWithItem(item);
+  const durability = hasItem ? durabilityLevel(item.durability, inventoryType) : null;
+  const locked =
+    !canPurchaseItem(item, { type: inventoryType, groups: inventoryGroups }) || !canCraftItem(item, inventoryType);
 
   return (
     <div
       ref={refs}
       onContextMenu={handleContext}
       onClick={handleClick}
-      className={`inventory-slot ${!isSlotWithItem(item) && 'inventory-slot--empty'}`}
+      className={`inventory-slot mri-surface-card ${hasItem ? 'inventory-slot--filled' : ''} ${dimmed ? 'inventory-slot--dimmed' : ''}`}
       style={{
-        filter:
-          !canPurchaseItem(item, { type: inventoryType, groups: inventoryGroups }) || !canCraftItem(item, inventoryType)
-            ? 'brightness(80%) grayscale(100%)'
-            : undefined,
-        opacity: isDragging ? 0.4 : 1.0,
-        backgroundImage: `url(${item?.name ? getItemUrl(item as SlotWithItem) : 'none'}`,
-        border: isOver ? '1px solid rgb(var(--primaryColor))' : '',
+        filter: locked ? 'brightness(80%) grayscale(100%)' : undefined,
+        opacity: isDragging ? 0.4 : dimmed ? 0.25 : 1.0,
+        borderColor: isOver ? 'hsl(var(--primary) / 0.8)' : undefined,
       }}
     >
-    
-    {!isSlotWithItem(item) && item.slot <= 5 && inventoryType == 'player' && (
-      <div className="hotbar-slot-number">{item.slot}</div>
-    )}
+      {durability && <span className={`item-slot-durability item-slot-durability--${durability}`} />}
+      {hasItem && (
+        <span className="item-slot-image" style={{ backgroundImage: `url(${getItemUrl(item as SlotWithItem)})` }} />
+      )}
+      {isHotkey && <span className="inventory-slot-hotkey">{item.slot}</span>}
 
       {isSlotWithItem(item) && (
         <div
@@ -156,79 +159,35 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
             }
           }}
         >
-          <div className={`px-1 pt-1 flex items-start justify-between flex-wrap gap-1`}>
-            {item.weight > 0 && (
-              <span className="inventory-weight">
-                {item.weight >= 1000
-                  ? `${(item.weight / 1000).toLocaleString('en-us', {
-                      maximumFractionDigits: 1,
-                    })} kg `
-                  : `${item.weight.toLocaleString('en-us', {
-                      minimumFractionDigits: 0,
-                      maximumFractionDigits: 1,
-                    })} g `}
+          <div className={`item-slot-top ${isHotkey ? 'item-slot-top--hotkey' : ''}`}>
+            <span className="item-slot-weight">{item.weight > 0 ? formatWeight(item.weight) : ''}</span>
+            {item.count ? (
+              <span className={`item-slot-count ${item.name === 'money' ? 'item-slot-count--money' : ''}`}>
+                {item.name === 'money'
+                  ? `${Locale.$ || 'R$'}${item.count.toLocaleString('pt-BR')}`
+                  : `${item.count.toLocaleString('pt-BR')}x`}
               </span>
-            )}
+            ) : null}
+          </div>
 
-            <div className="flex flex-col items-end gap-1">
-              {inventoryType === 'shop' && item?.price !== undefined && (
+          {inventoryType === 'shop' && item.price !== undefined && item.price > 0 && (
+            <div className="item-slot-price">
+              {item.currency && item.currency !== 'money' && item.currency !== 'black_money' ? (
                 <>
-                  {item?.currency !== 'money' && item.currency !== 'black_money' && item.price > 0 && item.currency ? (
-                    <div className="item-slot-currency-wrapper">
-                      <img
-                        src={item.currency ? getItemUrl(item.currency) : 'none'}
-                        alt="item-image"
-                        style={{
-                          imageRendering: '-webkit-optimize-contrast',
-                          height: 'auto',
-                          width: '2vh',
-                          backfaceVisibility: 'hidden',
-                          transform: 'translateZ(0)',
-                        }}
-                      />
-                      <p>{item.price.toLocaleString('en-us')}</p>
-                    </div>
-                  ) : (
-                    <>
-                      {item.price > 0 && (
-                        <div
-                          className={`item-slot-price-wrapper ${
-                            item.currency === 'money' || !item.currency ? 'text-green-400' : 'text-red-400'
-                          }`}
-                        >
-                          <p>
-                            {Locale.$ || 'R$'}
-                            {item.price.toLocaleString('en-us')}
-                          </p>
-                        </div>
-                      )}
-                    </>
-                  )}
+                  <img src={getItemUrl(item.currency)} alt="" />
+                  <span>{item.price.toLocaleString('pt-BR')}</span>
                 </>
-              )}
-
-              {item.count && (
-                <span
-                  className={`inventory-weight ${
-                    item.name == 'money' ? 'inventory-weight--money' : 'inventory-weight--amount'
-                  }`}
-                >
-                  {item.count.toLocaleString('en-us') + ` ${item.name == 'money' ? 'R$' : 'x'}`}
+              ) : (
+                <span className={item.currency === 'black_money' ? 'item-slot-price--dirty' : 'item-slot-price--clean'}>
+                  {Locale.$ || 'R$'}
+                  {item.price.toLocaleString('pt-BR')}
                 </span>
               )}
             </div>
-          </div>
+          )}
 
-          <div>
-            <div className="px-1 pb-2 flex items-center justify-between flex-wrap gap-1">
-              <div className="inventory-slot-label-text">
-                {item.metadata?.label ? item.metadata.label : Items[item.name]?.label || item.name}
-              </div>
-            </div>
-
-            {inventoryType !== 'shop' && item?.durability !== undefined && (
-              <WeightBar percent={item.durability} durability />
-            )}
+          <div className="item-slot-label">
+            {item.metadata?.label ? item.metadata.label : Items[item.name]?.label || item.name}
           </div>
         </div>
       )}
