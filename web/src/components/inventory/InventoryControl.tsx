@@ -25,15 +25,17 @@ const InventoryControl: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const cursorRef = useRef<number | null>(null);
 
-  const [, use] = useDrop<DragSource, void, any>(() => ({
+  const [{ isOver: overUse }, use] = useDrop<DragSource, void, { isOver: boolean }>(() => ({
     accept: 'SLOT',
+    collect: (monitor) => ({ isOver: monitor.isOver() && monitor.getItem()?.inventory === 'player' }),
     drop: (source) => {
       source.inventory === 'player' && onUse(source.item);
     },
   }));
 
-  const [, give] = useDrop<DragSource, void, any>(() => ({
+  const [{ isOver: overGive }, give] = useDrop<DragSource, void, { isOver: boolean }>(() => ({
     accept: 'SLOT',
+    collect: (monitor) => ({ isOver: monitor.isOver() && monitor.getItem()?.inventory === 'player' }),
     drop: (source) => {
       source.inventory === 'player' && onGive(source.item);
     },
@@ -90,7 +92,11 @@ const InventoryControl: React.FC = () => {
     <>
       <UsefulControls infoVisible={infoVisible} setInfoVisible={setInfoVisible} />
       <div className="inventory-control">
-        <button type="button" className="inventory-control-button" ref={use}>
+        <button
+          type="button"
+          className={`inventory-control-button ${overUse ? 'inventory-control-button--over' : ''}`}
+          ref={use}
+        >
           <UseHandIcon />
           <span>{Locale.ui_use || 'Usar'}</span>
         </button>
@@ -103,7 +109,11 @@ const InventoryControl: React.FC = () => {
           onKeyDown={handleKeyDown}
           min={0}
         />
-        <button type="button" className="inventory-control-button" ref={give}>
+        <button
+          type="button"
+          className={`inventory-control-button ${overGive ? 'inventory-control-button--over' : ''}`}
+          ref={give}
+        >
           <GiveBoxIcon />
           <span>{Locale.ui_give || 'Enviar'}</span>
         </button>

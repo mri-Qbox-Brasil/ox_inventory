@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DragSource, Inventory, InventoryType, Slot, SlotWithItem } from '../../typings';
 import { useDrag, useDragDropManager, useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../store';
@@ -15,6 +15,7 @@ import { closeTooltip, openTooltip } from '../../store/tooltip';
 import { openContextMenu } from '../../store/contextMenu';
 import { useMergeRefs } from '@floating-ui/react';
 import { durabilityLevel, formatWeight } from '../../lib/itemFormat';
+type Impact = { type: 'land' | 'stack' | 'consume'; id: number };
 
 interface SlotProps {
   inventoryId: Inventory['id'];
@@ -58,11 +59,12 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
     [inventoryType, item]
   );
 
-  const [{ isOver }, drop] = useDrop<DragSource, void, { isOver: boolean }>(
+  const [{ isOver, canDrop }, drop] = useDrop<DragSource, void, { isOver: boolean; canDrop: boolean }>(
     () => ({
       accept: 'SLOT',
       collect: (monitor) => ({
         isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
       }),
       drop: (source) => {
         dispatch(closeTooltip());
@@ -99,6 +101,20 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
     manager.dispatch({ type: 'dnd-core/END_DRAG' });
   });
 
+  const [impact, setImpact] = useState<Impact | null>(null);
+  const previous = useRef<{ name?: string; count: number } | null>(null);
+
+  useEffect(() => {
+    const prev = previous.current;
+    const count = item.count ?? 0;
+    previous.current = { name: item.name, count };
+
+    if (!prev || !item.name) return;
+
+    const type = prev.name !== item.name ? 'land' : count > prev.count ? 'stack' : count < prev.count ? 'consume' : null;
+    if (type) setImpact((current) => ({ type, id: (current?.id ?? 0) + 1 }));
+  }, [item.name, item.count]);
+
   const connectRef = (element: HTMLDivElement) => drag(drop(element));
 
   const handleContext = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -130,16 +146,22 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
       ref={refs}
       onContextMenu={handleContext}
       onClick={handleClick}
-      className={`inventory-slot mri-surface-card ${hasItem ? 'inventory-slot--filled' : ''} ${dimmed ? 'inventory-slot--dimmed' : ''}`}
+      className={`inventory-slot mri-surface-card ${hasItem ? 'inventory-slot--filled' : ''} ${dimmed ? 'inventory-slot--dimmed' : ''} ${
+        isDragging ? 'inventory-slot--dragging' : ''
+      } ${isOver && canDrop ? 'inventory-slot--over' : ''}`}
       style={{
         filter: locked ? 'brightness(80%) grayscale(100%)' : undefined,
         opacity: isDragging ? 0.4 : dimmed ? 0.25 : 1.0,
-        borderColor: isOver ? 'hsl(var(--primary) / 0.8)' : undefined,
       }}
     >
       {durability && <span className={`item-slot-durability item-slot-durability--${durability}`} />}
+      {impact && <span key={`flash-${impact.id}`} className={`item-slot-flash item-slot-flash--${impact.type}`} />}
       {hasItem && (
-        <span className="item-slot-image" style={{ backgroundImage: `url(${getItemUrl(item as SlotWithItem)})` }} />
+        <span
+          key={`image-${impact?.id ?? 0}`}
+          className={`item-slot-image ${impact ? `item-slot-image--${impact.type}` : ''}`}
+          style={{ backgroundImage: `url(${getItemUrl(item as SlotWithItem)})` }}
+        />
       )}
       {isHotkey && <span className="inventory-slot-hotkey">{item.slot}</span>}
 
@@ -162,7 +184,12 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
           <div className={`item-slot-top ${isHotkey ? 'item-slot-top--hotkey' : ''}`}>
             <span className="item-slot-weight">{item.weight > 0 ? formatWeight(item.weight) : ''}</span>
             {item.count ? (
-              <span className={`item-slot-count ${item.name === 'money' ? 'item-slot-count--money' : ''}`}>
+              <span
+                key={`count-${impact?.id ?? 0}`}
+                className={`item-slot-count ${item.name === 'money' ? 'item-slot-count--money' : ''} ${
+                  impact?.type === 'stack' ? 'item-slot-count--bump' : ''
+                }`}
+              >
                 {item.name === 'money'
                   ? `${Locale.$ || 'R$'}${item.count.toLocaleString('pt-BR')}`
                   : `${item.count.toLocaleString('pt-BR')}x`}

@@ -15,6 +15,8 @@ mri/
 │                  getConfig + evento accentColorChanged), categorias do
 │                  filtro (data/categories.lua, também no getConfig) e o
 │                  owner (citizenid) do player mandado pra NUI (mriSetOwner).
+│                  Sons nativos do GTA: callback mriPlaySound e som de equipar
+│                  arma (liga/desliga pela convar mri:inventorySfx).
 ├── server.lua     Broadcast da mri:color quando ela muda e o callback
 │                  mri_inventory:getOwner.
 └── README.md      Este arquivo.
@@ -72,6 +74,83 @@ A fonte Saira é auto-hospedada em `web/src/fonts` (o `@import` do Google Fonts
 trava a renderização no CEF). Se o `/uiconfig` escolher outra fonte, ela precisa
 estar disponível no cliente; senão cai na Saira. Os `.woff2` saem em
 `web/build/assets` e estão liberados no `files` do `fxmanifest.lua`.
+
+## Notificação de itens
+
+O `itemNotify` (`web/src/components/utils/ItemNotifications.tsx`) não mostra
+mais um slot no meio da tela: é uma pilha de cards no canto direito no estilo
+"arena" (Apex / jogos da EA). O card tem o lado esquerdo em diagonal com uma
+faixa na cor da ação, o ícone grande saindo por cima do card, o nome em fonte
+condensada bold, a ação embaixo e a quantidade (`+3` / `−1`) numa etiqueta
+sólida. Na entrada o card é revelado da direita pra esquerda, o ícone cai com
+quique e um brilho passa por cima; quando a quantidade soma, a etiqueta pulsa.
+
+Sem verde/vermelho: tudo em branco (`--foreground`). Removido usa um branco
+mais apagado (e o sinal `−`) e guardado usa `--muted-foreground`; o degradê
+branco do card fica em 14% pra não estourar.
+
+A fonte é a Barlow Condensed, carregada do Google Fonts no `web/index.html`
+com `media="print"` + `onload` pra não travar a renderização no CEF. Se não
+carregar (servidor sem internet), cai na fonte da suíte (`$notifyFont`).
+
+- Avisos do mesmo item + ação (+ `metadata.label`) enquanto um ainda está na
+  tela se somam no mesmo card (`+3` → `+5`) e o tempo reinicia, em vez de
+  empilhar vários cards iguais (ex.: pegar item por item de um baú);
+- no máximo `NOTIFY_MAX` (5) ao mesmo tempo; o mais antigo sai primeiro;
+- `NOTIFY_DURATION` e `NOTIFY_EXIT` ficam no componente, e o `$notifyExit` do
+  SCSS precisa bater com o `NOTIFY_EXIT`;
+- as cores usam só `var(--tone)` sem alpha (o degradê do card é uma camada
+  com `opacity`) para não depender de `color-mix` no CEF do FiveM.
+
+A API continua a mesma: `ox_inventory:itemNotify`, `Utils.ItemNotify` e o
+`suppressItemNotifications`.
+
+## Sons e animações
+
+Poucos sons, todos nativos do GTA (`PlaySoundFrontend`), o mesmo conjunto do
+`tetris_oxinventory`. Os da NUI ficam em `web/src/lib/sfx.ts` (`SOUNDS`: som,
+soundset e throttle opcional) e tocam pelo callback `mriPlaySound` do
+`mri/client.lua`; o de arma fica direto no `mri/client.lua`.
+
+| Momento | Som do GTA |
+|---|---|
+| Abrir / fechar o inventário | `Clothes_On` / `Clothes_Off` (`GTAO_Hot_Tub_Sounds`) |
+| Soltar um item (mover, trocar ou empilhar) | `Grab_Parachute` (`BASEJUMPS_SOUNDS`) |
+| Item adicionado com o inventário fechado | `sports_bag` (`dlc_xm_pickup_sweetener_sounds`) |
+| Equipar uma arma nova | `PICK_UP_WEAPON` (`HUD_FRONTEND_CUSTOM_SOUNDSET`) |
+
+O de arma escuta `ox_inventory:currentWeapon` e só toca quando o hash muda pra
+uma arma diferente: desarmar (`nil`) e updates de munição/durabilidade da mesma
+arma também disparam esse evento.
+
+Hover, filtro, menu, usar, dar, erro etc. ficam sem som de propósito: muito
+som de UI soa barato. Houve uma versão com `.ogg` do pack Kenney e outra com
+sons de menu do GTA em tudo; as duas saíram por isso. Pra achar outros sons, o
+dump [`soundNames.json`](https://github.com/DurtyFree/gta-v-data-dumps) do
+DurtyFree lista todos (`AudioName` + `AudioRef`, que é o soundset).
+
+`PlaySoundFrontend` não tem volume, então a convar `mri:inventorySfx` só liga
+e desliga (`0` desliga, padrão ligado).
+
+Animações (todas em CSS, no fim do `index.scss`):
+
+- **Abrir**: os painéis entram dos lados, o centro dá um pop e os slots
+  aparecem em onda na diagonal (só os 30 primeiros da grade, os 5 atalhos e a
+  hotbar, via `nth-child`);
+- **Slot**: o item sobe um pouco no hover e o slot afunda ao clicar; o alvo do
+  drag cresce com brilho na cor da suíte;
+- **Drag**: o item arrastado cresce ao ser pego e inclina conforme a velocidade
+  do mouse (`DRAG_MAX_TILT`), com amortecimento num `requestAnimationFrame`. A
+  inclinação fica num elemento interno (`.item-drag-preview-tilt`): se girar o
+  elemento de fora, o `getBoundingClientRect` que o react-dnd usa pra posição
+  muda e entra em loop de render;
+- **Impacto**: o `InventorySlot` compara nome/quantidade com o render anterior.
+  Item novo no slot faz `land` (cai com quique e brilho), quantidade subindo faz
+  `stack` (pulso + número pulando) e descendo faz `consume` (encolhe). O slot
+  ser montado não conta, então abrir o inventário não anima tudo;
+- **Usar/Enviar**: crescem e balançam quando um item do jogador passa por cima;
+- **Menu de contexto**: pop elástico a partir do cursor (`transform: false` no
+  `useFloating` pra posição não brigar com a escala).
 
 ## Convenção de licença
 

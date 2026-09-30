@@ -4,6 +4,7 @@ import { store } from '../store';
 import { DragSource, DropTarget, InventoryType, SlotWithItem } from '../typings';
 import { moveSlots, stackSlots, swapSlots } from '../store/inventory';
 import { Items } from '../store/items';
+import { playSfx } from '../lib/sfx';
 
 export const onDrop = (source: DragSource, target?: DropTarget) => {
   const { inventory: state } = store.getState();
@@ -59,6 +60,8 @@ export const onDrop = (source: DragSource, target?: DropTarget) => {
       toSlot: targetSlot.slot,
     })
   );
+
+  playSfx('move');
 
   isSlotWithItem(targetSlot, true)
     ? sourceData.stack && canStack(sourceSlot, targetSlot)

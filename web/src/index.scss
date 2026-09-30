@@ -42,6 +42,8 @@ $cardHover: hsl(var(--secondary) / var(--ui-surface-alpha-card, 1));
 $accent: hsl(var(--primary));
 $radiusSm: calc(var(--radius) * 0.5);
 $radiusMd: calc(var(--radius) * 0.75);
+$notifyExit: 360ms;
+$notifyFont: 'Barlow Condensed', $font;
 
 $slotWidth: 9.15vh;
 $slotHeight: 10vh;
@@ -248,7 +250,7 @@ input[type='number']::-webkit-outer-spin-button {
   stroke: $accent;
   stroke-width: 3;
   stroke-linecap: round;
-  transition: stroke-dashoffset 0.5s ease;
+  transition: stroke-dashoffset 700ms cubic-bezier(0.34, 1.3, 0.64, 1);
 
   &--full {
     stroke: var(--ui-error);
@@ -311,7 +313,15 @@ input[type='number']::-webkit-outer-spin-button {
   border: 0.05vh solid $line;
   background-color: $card;
   color: hsl(var(--foreground) / 0.55);
-  transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background-color 0.2s,
+    transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  &:active {
+    transform: scale(0.9);
+  }
 
   svg {
     width: 1.35vh;
@@ -354,7 +364,12 @@ input[type='number']::-webkit-outer-spin-button {
   background-color: $card;
   image-rendering: -webkit-optimize-contrast;
   overflow: hidden;
-  transition: background-color 0.25s, border-color 0.2s, opacity 0.2s;
+  transition:
+    background-color 0.25s,
+    border-color 0.2s,
+    opacity 0.2s,
+    box-shadow 0.2s,
+    transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
   &:hover {
     background-color: $cardHover;
@@ -1034,10 +1049,24 @@ input[type='number']::-webkit-outer-spin-button {
   width: 7.7vh;
   height: 7.7vh;
   pointer-events: none;
+  will-change: transform;
+}
+
+.item-drag-preview-tilt {
+  position: absolute;
+  inset: 0;
+  transform: rotate(var(--drag-tilt, 0deg));
+}
+
+.item-drag-preview-image {
+  position: absolute;
+  inset: 0;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 5.2vh;
+  background-size: 5.6vh;
   image-rendering: -webkit-optimize-contrast;
+  filter: drop-shadow(0 1.2vh 1vh hsl(0 0% 0% / 0.55));
+  animation: drag-lift 260ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .useful-controls-dialog {
@@ -1119,45 +1148,221 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
-.item-notification-container {
-  position: absolute;
-  bottom: 20vh;
-  left: 50%;
+.item-notify-stack {
+  position: fixed;
+  right: 2.6vh;
+  bottom: 26vh;
+  z-index: 50;
   display: flex;
-  flex-wrap: nowrap;
-  gap: 0.4vh;
-  width: 100%;
-  margin-left: calc(50% - #{$slotWidth} / 2);
-  overflow-x: scroll;
-  transform: translate(-50%);
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
 }
 
-.item-notification-item-box {
+.item-notify {
+  --tone: hsl(var(--foreground));
+
+  max-height: 7vh;
+  margin-top: 0.8vh;
+  transition:
+    max-height 260ms cubic-bezier(0.4, 0, 0.2, 1) 60ms,
+    margin-top 260ms cubic-bezier(0.4, 0, 0.2, 1) 60ms;
+
+  &--loss {
+    --tone: hsl(var(--foreground) / 0.55);
+  }
+
+  &--holster {
+    --tone: hsl(var(--muted-foreground));
+  }
+
+  &--leaving {
+    max-height: 0;
+    margin-top: 0;
+
+    .item-notify-inner {
+      animation: item-notify-out $notifyExit cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+  }
+}
+
+.item-notify-inner {
   position: relative;
-  width: $slotWidth;
-  height: $slotHeight;
-  border-radius: $radiusSm;
-  border: 0.05vh solid $line;
-  background-color: $card;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 5.2vh;
-  image-rendering: -webkit-optimize-contrast;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 1.2vh;
+  height: 5.8vh;
+  min-width: 30vh;
+  padding-left: 8.4vh;
+  font-family: $notifyFont;
+  animation: item-notify-in 480ms cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  &--plain {
+    padding-right: 2.4vh;
+  }
 }
 
-.item-notification-action-box {
-  width: 100%;
-  background-color: hsl(var(--background) / 0.55);
-  text-align: center;
-  text-transform: uppercase;
+.item-notify-panel {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: hsl(var(--background) / 0.92);
+  clip-path: polygon(1.8vh 0, 100% 0, 100% 100%, 0 100%);
+  animation: item-notify-wipe 420ms cubic-bezier(0.7, 0, 0.2, 1) both;
 
-  p {
-    padding: 0.3vh;
-    color: hsl(var(--foreground) / 0.75);
-    font-size: 0.95vh;
-    font-weight: 600;
-    letter-spacing: 0.03vh;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, var(--tone) 0%, transparent 45%);
+    opacity: 0.14;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, hsl(var(--foreground) / 0.16), transparent);
+    transform: skewX(-20deg) translateX(-150%);
+    animation: item-notify-sheen 800ms ease 380ms;
+  }
+}
+
+.item-notify-stripe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2.4vh;
+  background: var(--tone);
+  clip-path: polygon(1.8vh 0, 2.4vh 0, 0.6vh 100%, 0 100%);
+}
+
+.item-notify-image,
+.item-notify-fallback {
+  position: absolute;
+  bottom: 0.2vh;
+  left: 1.8vh;
+  width: 6.8vh;
+  height: 6.8vh;
+  animation: item-notify-drop 520ms cubic-bezier(0.34, 1.56, 0.64, 1) 160ms both;
+}
+
+.item-notify-image {
+  object-fit: contain;
+  filter: drop-shadow(0 0.5vh 0.6vh hsl(var(--background) / 0.8));
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.item-notify-fallback {
+  display: grid;
+  place-items: center;
+  color: var(--tone);
+  font-size: 3.4vh;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.item-notify-body {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 26vh;
+  animation: item-notify-text 420ms cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
+}
+
+.item-notify-label {
+  overflow: hidden;
+  color: $text;
+  font-family: $notifyFont;
+  font-size: 2.1vh;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.item-notify-action {
+  margin-top: 0.3vh;
+  color: hsl(var(--foreground) / 0.55);
+  font-family: $notifyFont;
+  font-size: 1.15vh;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.item-notify-count {
+  position: relative;
+  display: grid;
+  align-self: stretch;
+  place-items: center;
+  min-width: 6vh;
+  padding: 0 1.4vh 0 2vh;
+  background: var(--tone);
+  color: hsl(var(--background));
+  font-family: $notifyFont;
+  font-size: 2.2vh;
+  font-style: italic;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  clip-path: polygon(1.2vh 0, 100% 0, 100% 100%, 0 100%);
+  animation: item-notify-text 420ms cubic-bezier(0.16, 1, 0.3, 1) 260ms both;
+
+  &--bump {
+    animation: item-notify-bump 320ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+}
+
+@keyframes item-notify-in {
+  from {
+    transform: translateX(4vh);
+  }
+}
+
+@keyframes item-notify-out {
+  to {
+    opacity: 0;
+    transform: translateX(5vh);
+  }
+}
+
+@keyframes item-notify-wipe {
+  from {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  }
+}
+
+@keyframes item-notify-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-2.5vh) scale(1.3) rotate(-8deg);
+  }
+}
+
+@keyframes item-notify-text {
+  from {
+    opacity: 0;
+    transform: translateX(1.6vh);
+  }
+}
+
+@keyframes item-notify-sheen {
+  to {
+    transform: skewX(-20deg) translateX(350%);
+  }
+}
+
+@keyframes item-notify-bump {
+  from {
+    filter: brightness(1.6);
+    transform: scale(1.35);
   }
 }
 
@@ -1172,6 +1377,199 @@ input[type='number']::-webkit-outer-spin-button {
   border-radius: $radiusSm;
   background: hsl(var(--background) / 0.4);
   overflow: hidden;
+}
+
+.inventory-wrapper {
+  .inventory-panel {
+    --inv-from: 4vh;
+
+    animation: inv-panel-in 520ms cubic-bezier(0.16, 1, 0.3, 1) 60ms backwards;
+  }
+
+  .inventory-panel--own {
+    --inv-from: -4vh;
+
+    animation-delay: 0ms;
+  }
+
+  .inventory-control {
+    animation: inv-control-in 480ms cubic-bezier(0.34, 1.56, 0.64, 1) 140ms backwards;
+  }
+}
+
+.transition-fade-exit-active .inventory-wrapper {
+  transform: scale(0.985);
+  transition: transform 200ms ease-in;
+}
+
+@for $i from 1 through 30 {
+  .inventory-grid .inventory-slot:nth-child(#{$i}) {
+    animation: slot-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) #{120 + (floor(($i - 1) / 5) + ($i - 1) % 5) * 22}ms backwards;
+  }
+}
+
+@for $i from 1 through 5 {
+  .inventory-fast-grid .inventory-slot:nth-child(#{$i}) {
+    animation: slot-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) #{280 + ($i - 1) * 30}ms backwards;
+  }
+
+  .hotbar-container .inventory-slot:nth-child(#{$i}) {
+    animation: slot-in 380ms cubic-bezier(0.34, 1.56, 0.64, 1) #{($i - 1) * 35}ms backwards;
+  }
+}
+
+.inventory-slot--filled {
+  .item-slot-image {
+    transition:
+      transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      filter 0.2s;
+  }
+
+  &:hover .item-slot-image {
+    filter: drop-shadow(0 0.6vh 0.5vh hsl(var(--background) / 0.6));
+    transform: translateY(-0.4vh) scale(1.08);
+  }
+
+  &:active {
+    transform: scale(0.96);
+  }
+}
+
+.inventory-slot--over {
+  border-color: hsl(var(--primary) / 0.8);
+  box-shadow: inset 0 0 1.6vh hsl(var(--primary) / 0.25);
+  transform: scale(1.04);
+}
+
+.inventory-slot--dragging .item-slot-image {
+  filter: grayscale(1);
+  transform: scale(0.82);
+}
+
+.item-slot-image--land {
+  animation: slot-land 480ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.item-slot-image--stack {
+  animation: slot-stack 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.item-slot-image--consume {
+  animation: slot-consume 320ms ease-out;
+}
+
+.item-slot-flash {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 45%, hsl(var(--primary) / 0.35), transparent 70%);
+  box-shadow: inset 0 0 0 0.15vh hsl(var(--primary) / 0.9);
+  pointer-events: none;
+  animation: slot-flash 520ms ease-out forwards;
+
+  &--consume {
+    background: radial-gradient(circle at 50% 45%, hsl(var(--foreground) / 0.14), transparent 70%);
+    box-shadow: none;
+  }
+}
+
+.item-slot-count--bump {
+  animation: count-bump 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.inventory-control-button--over {
+  color: $accent;
+  opacity: 1;
+  transform: scale(1.14);
+
+  svg {
+    animation: control-wiggle 600ms ease-in-out infinite;
+  }
+}
+
+@keyframes inv-panel-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--inv-from));
+  }
+}
+
+@keyframes inv-control-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes slot-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.2vh) scale(0.9);
+  }
+}
+
+@keyframes slot-land {
+  0% {
+    opacity: 0.3;
+    transform: translateY(-1.4vh) scale(0.7);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(0) scale(1.14);
+  }
+  75% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes slot-stack {
+  40% {
+    transform: scale(1.18);
+  }
+}
+
+@keyframes slot-consume {
+  35% {
+    transform: scale(0.86);
+  }
+}
+
+@keyframes slot-flash {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes count-bump {
+  from {
+    filter: brightness(1.8);
+    transform: scale(1.5);
+  }
+}
+
+@keyframes drag-lift {
+  from {
+    transform: scale(0.75);
+  }
+  to {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes control-wiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(8deg);
+  }
 }
 
 .transition-fade-enter {

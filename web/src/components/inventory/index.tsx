@@ -13,6 +13,7 @@ import { closeTooltip } from '../../store/tooltip';
 import InventoryContext from './InventoryContext';
 import { closeContextMenu } from '../../store/contextMenu';
 import Fade from '../utils/transitions/Fade';
+import { playSfx, setInventoryOpen } from '../../lib/sfx';
 
 const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = React.useState(false);
@@ -25,6 +26,15 @@ const Inventory: React.FC = () => {
     dispatch(closeTooltip());
   });
   useExitListener(setInventoryVisible);
+
+  const wasVisible = React.useRef(false);
+  React.useEffect(() => {
+    setInventoryOpen(inventoryVisible);
+    if (inventoryVisible === wasVisible.current) return;
+
+    wasVisible.current = inventoryVisible;
+    playSfx(inventoryVisible ? 'open' : 'close');
+  }, [inventoryVisible]);
 
   useNuiEvent<{
     leftInventory?: InventoryProps;

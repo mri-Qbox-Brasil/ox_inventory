@@ -10,6 +10,32 @@ RegisterNUICallback('getConfig', function(_, cb)
     })
 end)
 
+local function playSound(name, set)
+    if GetConvarInt('mri:inventorySfx', 1) == 0 then return end
+
+    PlaySoundFrontend(-1, name, set, true)
+end
+
+RegisterNUICallback('mriPlaySound', function(data, cb)
+    cb(1)
+
+    if type(data) ~= 'table' or type(data.name) ~= 'string' or type(data.set) ~= 'string' then return end
+
+    playSound(data.name, data.set)
+end)
+
+local lastWeaponHash
+
+AddEventHandler('ox_inventory:currentWeapon', function(weapon)
+    local hash = weapon and weapon.hash
+
+    if hash and hash ~= lastWeaponHash then
+        playSound('PICK_UP_WEAPON', 'HUD_FRONTEND_CUSTOM_SOUNDSET')
+    end
+
+    lastWeaponHash = hash
+end)
+
 RegisterNUICallback('mriGetUiConfig', function(_, cb)
     local uiConfig = lib.callback.await('ox_lib:getUiConfig', false)
 

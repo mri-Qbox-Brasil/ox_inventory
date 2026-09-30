@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@floating-ui/react": "^0.25.4",
-    "@mriqbox/ui-kit": "^4.28.2",
+    "@mriqbox/ui-kit": "^4.31.0",
     "@types/lodash": "^4.17.1",
     "@types/node": "^18.19.33",
     "@types/react": "^18.3.1",
