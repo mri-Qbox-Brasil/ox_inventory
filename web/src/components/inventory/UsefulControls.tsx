@@ -1,5 +1,6 @@
 import { Locale } from '../../store/locale';
 import React from 'react';
+import { ControlCombo, MouseAction } from '../utils/icons/ControlGlyphs';
 import {
   FloatingFocusManager,
   FloatingOverlay,
@@ -9,6 +10,21 @@ import {
   useInteractions,
   useTransitionStyles,
 } from '@floating-ui/react';
+
+const CONTROLS: { keys?: string[]; mouse?: MouseAction; text: string; fallback: string }[] = [
+  { mouse: 'right', text: 'ui_rmb', fallback: 'Abrir menu de contexto do item' },
+  { mouse: 'right', text: 'ui_mri_rmb_ground', fallback: 'Nos itens do chão, pega o item direto para o inventário' },
+  { keys: ['ALT'], mouse: 'left', text: 'ui_alt_lmb', fallback: 'Usar rapidamente um item' },
+  { keys: ['CTRL'], mouse: 'left', text: 'ui_ctrl_lmb', fallback: 'Mover rapidamente uma pilha para outro inventário' },
+  { keys: ['SHIFT'], mouse: 'drag', text: 'ui_shift_drag', fallback: 'Dividir quantidade do item pela metade' },
+  {
+    keys: ['CTRL', 'SHIFT'],
+    mouse: 'left',
+    text: 'ui_ctrl_shift_lmb',
+    fallback: 'Mover rapidamente metade de uma pilha para outro inventário',
+  },
+  { keys: ['CTRL', 'C'], text: 'ui_ctrl_c', fallback: 'Ao passar o mouse sobre uma arma, copia seu número de série' },
+];
 
 interface Props {
   infoVisible: boolean;
@@ -45,31 +61,12 @@ const UsefulControls: React.FC<Props> = ({ infoVisible, setInfoVisible }) => {
                   </div>
                 </div>
                 <div className="useful-controls-content-wrapper">
-                  <p>
-                    <kbd>RMB</kbd>
-                    <br />
-                    {Locale.ui_rmb}
-                  </p>
-                  <p>
-                    <kbd>ALT + LMB</kbd>
-                    <br />
-                    {Locale.ui_alt_lmb}
-                  </p>
-                  <p>
-                    <kbd>CTRL + LMB</kbd>
-                    <br />
-                    {Locale.ui_ctrl_lmb}
-                  </p>
-                  <p>
-                    <kbd>SHIFT + Drag</kbd>
-                    <br />
-                    {Locale.ui_shift_drag}
-                  </p>
-                  <p>
-                    <kbd>CTRL + SHIFT + LMB</kbd>
-                    <br />
-                    {Locale.ui_ctrl_shift_lmb}
-                  </p>
+                  {CONTROLS.map((control) => (
+                    <div className="control-row" key={control.text}>
+                      <ControlCombo keys={control.keys} mouse={control.mouse} />
+                      <span className="control-description">{Locale[control.text] || control.fallback}</span>
+                    </div>
+                  ))}
                   <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', fontSize: '0.6rem' }}>
                     <span>by mri Qbox</span>
                     <img

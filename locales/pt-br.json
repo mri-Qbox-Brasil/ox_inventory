@@ -41,6 +41,7 @@
   "ui_mri_desc_drop": "Itens no chão perto de você",
   "ui_mri_desc_newdrop": "Itens no chão perto de você",
   "ui_mri_desc_policeevidence": "Armário de evidências",
+  "ui_mri_rmb_ground": "Nos itens do chão, pega o item direto para o inventário",
   "ammo_type": "Tipo de munição",
   "$": "R$",
   "male": "Masculino",

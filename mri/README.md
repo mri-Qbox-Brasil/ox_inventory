@@ -74,6 +74,16 @@ como o mesmo chão: o título fica "Chão" (só `CustomDrop` com prefixo própri
 mostra o nome) e a key dos slots não usa o id, então os slots não são
 recriados e só o que recebeu o item anima.
 
+Botão direito num item do chão (`drop`) pega o item direto pro inventário do
+jogador (mesmo `onDrop` sem destino do CTRL + clique). No inventário do jogador
+continua abrindo o menu de contexto; nos outros tipos não faz nada.
+
+A aba "Controles" (`UsefulControls.tsx`) mostra os controles como glifos em vez
+de siglas: teclas físicas (`KeyCap`) e mouse em SVG com o botão usado aceso
+(`MouseGlyph`, em `web/src/components/utils/icons/ControlGlyphs.tsx`). A lista
+fica no `CONTROLS` do componente; cada linha usa uma chave do locale
+(`ui_rmb`, `ui_alt_lmb`..., mais a `ui_mri_rmb_ground`).
+
 A cor da durabilidade no slot também segue o tema: 75+ usa `--ui-success`,
 50 a 74 o accent, 15 a 49 `--ui-warning` e abaixo de 15 `--ui-error`.
 
