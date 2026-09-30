@@ -67,6 +67,13 @@ tiver a pasta `mri/`, só esse pedido fica pendente e as cores continuam
 chegando. Os broadcasts mandam o payload dentro de `data` porque o
 `useNuiEvent` lê `event.data.data`.
 
+Soltar um item no chão vazio faz o servidor criar um drop e o client mandar um
+novo `setupInventory` com ele (`newdrop` → `drop-123456`, label `Drop 123456`).
+Pra isso não parecer um "recarregar", o `InventoryGrid` trata `drop`/`newdrop`
+como o mesmo chão: o título fica "Chão" (só `CustomDrop` com prefixo próprio
+mostra o nome) e a key dos slots não usa o id, então os slots não são
+recriados e só o que recebeu o item anima.
+
 A cor da durabilidade no slot também segue o tema: 75+ usa `--ui-success`,
 50 a 74 o accent, 15 a 49 `--ui-warning` e abaixo de 15 `--ui-error`.
 

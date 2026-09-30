@@ -61,6 +61,11 @@ const TypeIcon: React.FC<{ type?: string }> = ({ type }) => {
 const describe = (inventory: Inventory) =>
   Locale[`ui_mri_desc_${inventory.type || 'drop'}`] || 'Veículos, jogadores ou baús próximos';
 
+const isGround = (inventory: Inventory) => inventory.type === 'drop' || inventory.type === 'newdrop';
+
+/** Nome que o servidor dá aos drops comuns (`Drop 123456`); CustomDrop com prefixo próprio mantém o nome. */
+const GENERATED_DROP_LABEL = /^Drop \d+$/;
+
 const useScrollFade = (deps: unknown[]) => {
   const ref = useRef<HTMLDivElement>(null);
   const [fade, setFade] = React.useState({ top: false, bottom: false });
@@ -109,7 +114,14 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
     }
   }, [entry]);
 
-  const title = isOwn ? Locale.ui_mri_own_title || 'Inventário' : inventory.label || Locale.ui_mri_ground || 'Chão';
+  const ground = isGround(inventory);
+  const groundLabel = Locale.ui_mri_ground || 'Chão';
+  const title = isOwn
+    ? Locale.ui_mri_own_title || 'Inventário'
+    : ground && (!inventory.label || GENERATED_DROP_LABEL.test(inventory.label))
+    ? groundLabel
+    : inventory.label || groundLabel;
+  const slotKey = ground ? 'ground' : `${inventory.type}-${inventory.id}`;
   const owner = [inventory.type === 'player' && inventory.id ? `[${inventory.id}]` : null, isOwn ? playerOwner : null]
     .filter(Boolean)
     .join(' ');
@@ -149,7 +161,7 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
       >
         {gridItems.slice(0, (page + 1) * PAGE_SIZE).map((item, index) => (
           <InventorySlot
-            key={`${inventory.type}-${inventory.id}-${item.slot}`}
+            key={`${slotKey}-${item.slot}`}
             item={item}
             dimmed={isDimmed(item)}
             ref={index === (page + 1) * PAGE_SIZE - 1 ? ref : null}
