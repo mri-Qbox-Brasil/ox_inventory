@@ -1,0 +1,6 @@
+# Arquivos de desenvolvimento que não vão pro zip da release
+.editorconfig
+.luarc.default.jsonc
+.vscode
+CONTRIBUTING.md
+.releaseignore

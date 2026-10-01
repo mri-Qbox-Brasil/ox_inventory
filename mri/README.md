@@ -217,6 +217,30 @@ Animações (todas em CSS, no fim do `index.scss`):
 - **Menu de contexto**: pop elástico a partir do cursor (`transform: false` no
   `useFloating` pra posição não brigar com a escala).
 
+## Release
+
+Mesmo modelo do `mri_Qspawn`, com uma diferença por causa da GPL:
+
+- O trabalho acontece no **`mri-Qbox-Brasil/ox_inventory-source`** (privado). A
+  cada push na `main`, o `.github/workflows/release.yml` chama o
+  `callable-mirror-release` da org: o semantic-release calcula a versão pelos
+  commits (`feat` sobe minor, `fix` sobe patch, `feat!`/`BREAKING CHANGE` sobe
+  major), grava no `fxmanifest.lua`, builda a NUI com npm (lockfile:
+  `web/package-lock.json`) e monta o zip.
+- O **`mri-Qbox-Brasil/ox_inventory`** (público) é o espelho. Com
+  `public-source: true` ele recebe o **código completo**, inclusive `web/src`
+  (a GPL-3.0 do ox_inventory e do ox_inv_redesign exige o fonte público), e é
+  lá que fica a release com o zip.
+- O **zip** da release é só o que o servidor precisa: sem `web/src` e sem os
+  arquivos do `.releaseignore`, com `web/build` e `web/images` (as imagens dos
+  itens; o `build.sh` da org copia `web/images` quando existe).
+- A numeração é nossa, a partir da **3.0.0** (a base foi a tag `v2.47.9`, a
+  versão do upstream no fork). Não segue a numeração do overextended.
+- Merges do upstream entram no `-source` (remote `upstream`); o público é
+  sobrescrito a cada release, então nada deve ser commitado direto nele.
+- A receita (`mriTxRecipe`) baixa
+  `releases/latest/download/ox_inventory.zip` do repo público.
+
 ## Convenção de licença
 
 ox_inventory é GPL-3.0. As modificações MRI nesta pasta seguem a mesma licença.
