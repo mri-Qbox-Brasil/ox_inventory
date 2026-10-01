@@ -102,7 +102,7 @@ input[type='number']::-webkit-outer-spin-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3.2vh;
+  gap: 7vh;
   height: 100%;
   background: radial-gradient(
     120% 90% at 50% 45%,
@@ -497,66 +497,6 @@ input[type='number']::-webkit-outer-spin-button {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.inventory-control {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.85vh;
-  width: 10vh;
-}
-
-.inventory-control-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9vh;
-  border: none;
-  background: transparent;
-  color: $text;
-  opacity: 0.5;
-  transition: opacity 0.2s, transform 0.2s, color 0.2s;
-
-  svg {
-    width: 3.7vh;
-    height: 4.26vh;
-  }
-
-  span {
-    font-size: 1.45vh;
-    font-weight: 500;
-  }
-
-  &:hover {
-    opacity: 1;
-    color: $accent;
-    transform: scale(1.06);
-    cursor: pointer;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
-}
-
-.inventory-control-input {
-  width: 8.5vh;
-  height: 2.8vh;
-  border: 0.05vh solid transparent;
-  border-radius: 999px;
-  outline: none;
-  background: $card;
-  border-color: $line;
-  color: hsl(var(--foreground) / 0.8);
-  font-size: 1.35vh;
-  text-align: center;
-  transition: border-color 0.2s;
-
-  &:focus {
-    border-color: hsl(var(--primary) / 0.6);
-  }
 }
 
 .inventory-footer {
@@ -1092,6 +1032,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .useful-controls-dialog-overlay {
+  z-index: 50;
   background-color: hsl(var(--background) / 0.5);
 }
 
@@ -1171,7 +1112,7 @@ input[type='number']::-webkit-outer-spin-button {
   font-weight: 600;
 }
 
-.useful-controls-dialog .control-key {
+.control-key {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1227,11 +1168,6 @@ input[type='number']::-webkit-outer-spin-button {
 .control-mouse-button {
   fill: $accent;
   filter: drop-shadow(0 0 0.35vh hsl(var(--primary) / 0.8));
-  animation: control-button-pulse 1.6s ease-in-out infinite;
-}
-
-.control-mouse--drag svg:first-child {
-  animation: control-mouse-drag 1.6s ease-in-out infinite;
 }
 
 .control-mouse-arrows {
@@ -1246,6 +1182,21 @@ input[type='number']::-webkit-outer-spin-button {
   stroke-linecap: round;
   stroke-linejoin: round;
   transform: translateX(-50%);
+}
+
+.useful-controls-dialog {
+  .control-mouse-button,
+  .control-mouse-wheel--active {
+    animation: control-button-pulse 1.6s ease-in-out 3;
+  }
+
+  .control-mouse--drag svg:first-child {
+    animation: control-mouse-drag 1.6s ease-in-out 3;
+  }
+
+  .control-mouse-scroll {
+    animation: control-scroll 1.2s ease-in-out 4;
+  }
 }
 
 @keyframes control-row-in {
@@ -1532,10 +1483,6 @@ input[type='number']::-webkit-outer-spin-button {
 
     animation-delay: 0ms;
   }
-
-  .inventory-control {
-    animation: inv-control-in 480ms cubic-bezier(0.34, 1.56, 0.64, 1) 140ms backwards;
-  }
 }
 
 .transition-fade-exit-active .inventory-wrapper {
@@ -1618,27 +1565,10 @@ input[type='number']::-webkit-outer-spin-button {
   animation: count-bump 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.inventory-control-button--over {
-  color: $accent;
-  opacity: 1;
-  transform: scale(1.14);
-
-  svg {
-    animation: control-wiggle 600ms ease-in-out infinite;
-  }
-}
-
 @keyframes inv-panel-in {
   from {
     opacity: 0;
     transform: translateX(var(--inv-from));
-  }
-}
-
-@keyframes inv-control-in {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
   }
 }
 
@@ -1700,18 +1630,332 @@ input[type='number']::-webkit-outer-spin-button {
   }
 }
 
-@keyframes control-wiggle {
-  0%,
-  100% {
-    transform: rotate(0);
+
+.hint-bar {
+  position: absolute;
+  bottom: 2.3vh;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 2.6vh;
+  padding: 0.8vh 1.8vh;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, hsl(var(--background) / 0.7) 15%, hsl(var(--background) / 0.7) 85%, transparent);
+  pointer-events: none;
+  transform: translateX(-50%);
+  animation: hint-bar-in 260ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &--idle {
+    opacity: 0.6;
   }
-  25% {
-    transform: rotate(-8deg);
+
+  .control-combo {
+    gap: 0.4vh;
   }
-  75% {
-    transform: rotate(8deg);
+
+  .control-key {
+    min-width: 2.7vh;
+    height: 2.6vh;
+    padding: 0 0.7vh;
+    font-size: 0.95vh;
+  }
+
+  .control-mouse {
+    width: 2.2vh;
+    height: 3.2vh;
+  }
+
+  .control-plus {
+    font-size: 1.2vh;
   }
 }
+
+.hint-bar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8vh;
+  white-space: nowrap;
+}
+
+.hint-bar-label {
+  color: hsl(var(--foreground) / 0.8);
+  font-size: 1.25vh;
+  font-weight: 500;
+}
+
+.control-mouse-wheel--active {
+  fill: $accent;
+  filter: drop-shadow(0 0 0.35vh hsl(var(--primary) / 0.8));
+}
+
+.control-mouse-scroll {
+  position: absolute;
+  top: 50%;
+  right: -0.9vh;
+  width: 0.8vh;
+  height: 2vh;
+  fill: none;
+  stroke: hsl(var(--primary) / 0.8);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transform: translateY(-60%);
+}
+
+.inventory-take-all {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.6vh;
+  height: 3vh;
+  margin-left: auto;
+  padding: 0 1.1vh;
+  border: 0.05vh solid $line;
+  border-radius: $radiusSm;
+  background-color: $card;
+  color: $text;
+  font-size: 1.2vh;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    transform 160ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  svg {
+    width: 1.4vh;
+    height: 1.4vh;
+  }
+
+  &:hover {
+    border-color: hsl(var(--primary) / 0.6);
+    color: $accent;
+  }
+
+  &:active {
+    transform: scale(0.94);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  + .inventory-weight-info {
+    margin-left: 1.4vh;
+  }
+}
+
+.item-drag-preview-count {
+  position: absolute;
+  right: -0.4vh;
+  bottom: -0.2vh;
+  padding: 0.2vh 0.7vh;
+  border-radius: 999px;
+  background: $accent;
+  color: hsl(var(--background));
+  font-size: 1.3vh;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  box-shadow: 0 0.4vh 1vh hsl(0 0% 0% / 0.45);
+  animation: count-bump 260ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  small {
+    margin-left: 0.1vh;
+    font-size: 0.95vh;
+    font-weight: 600;
+    opacity: 0.7;
+  }
+}
+
+.quantity-dialog-overlay {
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background-color: hsl(var(--background) / 0.55);
+}
+
+.quantity-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6vh;
+  width: 34vh;
+  padding: 2vh;
+  border: 0.05vh solid $line;
+  border-radius: $radiusMd;
+  background-color: $panel;
+  box-shadow: 0 2vh 5vh hsl(0 0% 0% / 0.5);
+  outline: none;
+  animation: quantity-dialog-in 240ms cubic-bezier(0.34, 1.4, 0.64, 1);
+
+  button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-family: $font;
+
+    &:focus-visible {
+      box-shadow: 0 0 0 0.15vh hsl(var(--primary) / 0.7);
+    }
+  }
+}
+
+.quantity-dialog-title {
+  color: $text;
+  font-size: 1.6vh;
+  font-weight: 600;
+}
+
+.quantity-dialog-value {
+  display: flex;
+  align-items: center;
+  gap: 1vh;
+
+  input {
+    flex: 1;
+    min-width: 0;
+    height: 5.2vh;
+    border: 0.05vh solid $line;
+    border-radius: $radiusSm;
+    outline: none;
+    background: $card;
+    color: $text;
+    font-family: $font;
+    font-size: 2.8vh;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+
+    &:focus {
+      border-color: hsl(var(--primary) / 0.6);
+    }
+  }
+
+  button {
+    width: 4.4vh;
+    height: 4.4vh;
+    border: 0.05vh solid $line !important;
+    border-radius: 50%;
+    background: $card;
+    color: $text;
+    font-size: 2vh;
+    transition: background-color 0.2s, transform 140ms;
+
+    &:hover {
+      background: $cardHover;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}
+
+.quantity-dialog-slider {
+  width: 100%;
+  height: 0.6vh;
+  border-radius: 999px;
+  background: linear-gradient(90deg, $accent var(--fill), hsl(var(--foreground) / 0.12) var(--fill));
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::-webkit-slider-thumb {
+    width: 1.8vh;
+    height: 1.8vh;
+    border: 0.3vh solid hsl(var(--background));
+    border-radius: 50%;
+    background: $accent;
+    box-shadow: 0 0 0 0.15vh hsl(var(--primary) / 0.5);
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+.quantity-dialog-presets {
+  display: flex;
+  gap: 0.8vh;
+
+  button {
+    flex: 1;
+    height: 3vh;
+    border: 0.05vh solid $line;
+    border-radius: $radiusSm;
+    background: transparent;
+    color: hsl(var(--foreground) / 0.75);
+    font-size: 1.2vh;
+    font-weight: 600;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+      border-color: hsl(var(--primary) / 0.6);
+      color: $text;
+    }
+  }
+}
+
+.quantity-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1vh;
+
+  button {
+    height: 3.6vh;
+    padding: 0 1.8vh;
+    border-radius: $radiusSm;
+    font-size: 1.3vh;
+    font-weight: 600;
+    transition: filter 0.2s, transform 140ms;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.quantity-dialog-cancel {
+  background: transparent;
+  color: hsl(var(--foreground) / 0.65);
+
+  &:hover {
+    color: $text;
+  }
+}
+
+.quantity-dialog-confirm {
+  background: $accent;
+  color: hsl(var(--primary-foreground));
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes hint-bar-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 0.6vh);
+  }
+}
+
+@keyframes control-scroll {
+  0%,
+  100% {
+    transform: translateY(-75%);
+  }
+  50% {
+    transform: translateY(-45%);
+  }
+}
+
+@keyframes quantity-dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
 
 .transition-fade-enter {
   opacity: 0;

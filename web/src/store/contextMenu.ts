@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SlotWithItem } from '../typings';
+import { Inventory, SlotWithItem } from '../typings';
 
 interface ContextMenuState {
   coords: {
@@ -7,20 +7,26 @@ interface ContextMenuState {
     y: number;
   } | null;
   item: SlotWithItem | null;
+  inventoryType: Inventory['type'];
 }
 
 const initialState: ContextMenuState = {
   coords: null,
   item: null,
+  inventoryType: 'player',
 };
 
 export const contextMenuSlice = createSlice({
   name: 'contextMenu',
   initialState,
   reducers: {
-    openContextMenu(state, action: PayloadAction<{ item: SlotWithItem; coords: { x: number; y: number } }>) {
+    openContextMenu(
+      state,
+      action: PayloadAction<{ item: SlotWithItem; coords: { x: number; y: number }; inventoryType?: Inventory['type'] }>
+    ) {
       state.coords = action.payload.coords;
       state.item = action.payload.item;
+      state.inventoryType = action.payload.inventoryType ?? 'player';
     },
     closeContextMenu(state) {
       state.coords = null;

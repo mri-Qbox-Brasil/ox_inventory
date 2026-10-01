@@ -14,6 +14,11 @@ import InventoryContext from './InventoryContext';
 import { closeContextMenu } from '../../store/contextMenu';
 import Fade from '../utils/transitions/Fade';
 import { playSfx, setInventoryOpen } from '../../lib/sfx';
+import { useDrop } from 'react-dnd';
+import type { DragSource } from '../../typings';
+import { onDrop } from '../../dnd/onDrop';
+import { useInventoryHotkeys } from '../../hooks/useInventoryHotkeys';
+import QuantityDialog from './QuantityDialog';
 
 const Inventory: React.FC = () => {
   const [inventoryVisible, setInventoryVisible] = React.useState(false);
@@ -44,6 +49,21 @@ const Inventory: React.FC = () => {
     !inventoryVisible && setInventoryVisible(true);
   });
 
+  useInventoryHotkeys(inventoryVisible);
+
+  const [, dropOutside] = useDrop<DragSource>(() => ({
+    accept: 'SLOT',
+    drop: (source, monitor) => {
+      if (monitor.didDrop() || source.inventory !== 'player') return;
+
+      const offset = monitor.getClientOffset();
+      const panel = offset && document.elementFromPoint(offset.x, offset.y)?.closest('.inventory-panel');
+      if (panel?.classList.contains('inventory-panel--own')) return;
+
+      onDrop(source);
+    },
+  }));
+
   useNuiEvent('refreshSlots', (data) => dispatch(refreshSlots(data)));
 
   useNuiEvent('displayMetadata', (data: Array<{ metadata: string; value: string }>) => {
@@ -53,12 +73,13 @@ const Inventory: React.FC = () => {
   return (
     <>
       <Fade in={inventoryVisible}>
-        <div className="inventory-wrapper">
+        <div className="inventory-wrapper" ref={dropOutside}>
           <LeftInventory />
-          <InventoryControl />
           <RightInventory />
+          <InventoryControl />
           <Tooltip />
           <InventoryContext />
+          <QuantityDialog />
         </div>
       </Fade>
       <InventoryHotbar />

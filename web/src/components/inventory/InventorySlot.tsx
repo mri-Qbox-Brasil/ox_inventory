@@ -15,6 +15,7 @@ import { closeTooltip, openTooltip } from '../../store/tooltip';
 import { openContextMenu } from '../../store/contextMenu';
 import { useMergeRefs } from '@floating-ui/react';
 import { durabilityLevel, formatWeight } from '../../lib/itemFormat';
+import { getHoveredSlot, setHoveredSlot } from '../../lib/inventoryUx';
 type Impact = { type: 'land' | 'stack' | 'consume'; id: number };
 
 interface SlotProps {
@@ -117,29 +118,33 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
 
   const connectRef = (element: HTMLDivElement) => drag(drop(element));
 
+  const tradable = inventoryType !== 'shop' && inventoryType !== 'crafting';
+
   const handleContext = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
-    if (!isSlotWithItem(item)) return;
+    if (!isSlotWithItem(item) || !tradable) return;
 
-    if (inventoryType === 'drop') {
-      dispatch(closeTooltip());
-      return onDrop({ item, inventory: inventoryType });
-    }
-
-    if (inventoryType !== 'player') return;
-
-    dispatch(openContextMenu({ item, coords: { x: event.clientX, y: event.clientY } }));
+    dispatch(closeTooltip());
+    dispatch(openContextMenu({ item, inventoryType, coords: { x: event.clientX, y: event.clientY } }));
   };
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     dispatch(closeTooltip());
     if (timerRef.current) clearTimeout(timerRef.current);
-    if (event.ctrlKey && isSlotWithItem(item) && inventoryType !== 'shop' && inventoryType !== 'crafting') {
-      onDrop({ item: item, inventory: inventoryType });
+    if ((event.shiftKey || event.ctrlKey) && isSlotWithItem(item) && tradable) {
+      onDrop({ item: item, inventory: inventoryType }, undefined, 0);
     } else if (event.altKey && isSlotWithItem(item) && inventoryType === 'player') {
       onUse(item);
     }
   };
+
+  useEffect(
+    () => () => {
+      if (getHoveredSlot()?.item.slot === item.slot && getHoveredSlot()?.inventoryType === inventoryType)
+        setHoveredSlot(null);
+    },
+    [item.slot, inventoryType]
+  );
 
   const refs = useMergeRefs([connectRef, ref]);
   const isHotkey = inventoryType === 'player' && item.slot <= 5;
@@ -176,11 +181,13 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
         <div
           className="item-slot-wrapper"
           onMouseEnter={() => {
+            setHoveredSlot({ item, inventoryType });
             timerRef.current = window.setTimeout(() => {
               dispatch(openTooltip({ item, inventoryType }));
             }, 500) as unknown as number;
           }}
           onMouseLeave={() => {
+            setHoveredSlot(null);
             dispatch(closeTooltip());
             if (timerRef.current) {
               clearTimeout(timerRef.current);

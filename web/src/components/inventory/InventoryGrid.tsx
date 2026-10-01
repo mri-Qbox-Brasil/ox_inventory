@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
 import { Inventory, Slot } from '../../typings';
 import InventorySlot from './InventorySlot';
-import { getTotalWeight } from '../../helpers';
-import { useAppSelector } from '../../store';
+import { getTotalWeight, isSlotWithItem } from '../../helpers';
+import { store, useAppSelector } from '../../store';
+import { onDrop } from '../../dnd/onDrop';
 import { useIntersection } from '../../hooks/useIntersection';
 import UserIcon from '../utils/icons/UserIcon';
 import StoreIcon from '../utils/icons/StoreIcon';
@@ -10,7 +11,7 @@ import ToolsIcon from '../utils/icons/TooltsIcon';
 import BoxIcon from '../utils/icons/BoxIcon';
 import VehicleIcon from '../utils/icons/VehicleIcon';
 import GroundIcon from '../utils/icons/GroundIcon';
-import { FilterIcon, GridIcon, LayersIcon, WeightIcon } from '../utils/icons/InventoryIcons';
+import { FilterIcon, GridIcon, LayersIcon, TakeAllIcon, WeightIcon } from '../utils/icons/InventoryIcons';
 import { usePlayerOwner } from '../../lib/playerOwner';
 import { itemInCategory, setActiveCategory, useItemCategories } from '../../lib/itemCategories';
 import { Locale } from '../../store/locale';
@@ -129,6 +130,24 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
     ? [owner, inventory.label].filter(Boolean).join(' · ') || Locale.ui_mri_desc_own || 'Seu inventário pessoal'
     : describe(inventory);
 
+  const [taking, setTaking] = React.useState(false);
+  const canTakeAll =
+    !isOwn && inventory.type !== 'shop' && inventory.type !== 'crafting' && inventory.items.some((slot) => isSlotWithItem(slot));
+
+  const takeAll = async () => {
+    setTaking(true);
+
+    for (const slot of inventory.items.map((entry) => entry.slot)) {
+      const current = store.getState().inventory.rightInventory.items[slot - 1];
+      if (!current || !isSlotWithItem(current)) continue;
+
+      const result = await onDrop({ item: current, inventory: inventory.type }, undefined, 0);
+      if (!result || result.meta.requestStatus === 'rejected') break;
+    }
+
+    setTaking(false);
+  };
+
   return (
     <div className={`inventory-panel ${isOwn ? 'inventory-panel--own' : ''}`} style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
       <div className="inventory-header">
@@ -139,6 +158,13 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
           <p className="inventory-header-title">{title}</p>
           <p className="inventory-header-description">{description}</p>
         </div>
+
+        {canTakeAll && (
+          <button type="button" className="inventory-take-all mri-surface-card" disabled={taking} onClick={takeAll}>
+            <TakeAllIcon />
+            {Locale.ui_mri_take_all || 'Pegar tudo'}
+          </button>
+        )}
 
         {inventory.maxWeight ? (
           <div className="inventory-weight-info">

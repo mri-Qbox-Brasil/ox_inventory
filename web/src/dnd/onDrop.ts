@@ -6,7 +6,7 @@ import { moveSlots, stackSlots, swapSlots } from '../store/inventory';
 import { Items } from '../store/items';
 import { playSfx } from '../lib/sfx';
 
-export const onDrop = (source: DragSource, target?: DropTarget) => {
+export const onDrop = (source: DragSource, target?: DropTarget, amount?: number) => {
   const { inventory: state } = store.getState();
 
   const { sourceInventory, targetInventory } = getTargetInventory(state, source.inventory, target?.inventory);
@@ -38,12 +38,9 @@ export const onDrop = (source: DragSource, target?: DropTarget) => {
   if (targetSlot.metadata?.container !== undefined && state.rightInventory.id === targetSlot.metadata.container)
     return console.log(`Cannot swap item ${sourceSlot.name} with container ${targetSlot.name} when opened`);
 
-  const count =
-    state.shiftPressed && sourceSlot.count > 1 && sourceInventory.type !== 'shop'
-      ? Math.floor(sourceSlot.count / 2)
-      : state.itemAmount === 0 || state.itemAmount > sourceSlot.count
-      ? sourceSlot.count
-      : state.itemAmount;
+  const half = state.shiftPressed && sourceSlot.count > 1 && sourceInventory.type !== 'shop';
+  const requested = amount ?? (state.itemAmount || (half ? Math.floor(sourceSlot.count / 2) : 0));
+  const count = requested === 0 || requested > sourceSlot.count ? sourceSlot.count : requested;
 
   const data = {
     fromSlot: sourceSlot,
@@ -53,7 +50,7 @@ export const onDrop = (source: DragSource, target?: DropTarget) => {
     count: count,
   };
 
-  store.dispatch(
+  const validation = store.dispatch(
     validateMove({
       ...data,
       fromSlot: sourceSlot.slot,
@@ -78,4 +75,6 @@ export const onDrop = (source: DragSource, target?: DropTarget) => {
           })
         )
     : store.dispatch(moveSlots(data));
+
+  return validation;
 };

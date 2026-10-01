@@ -38,6 +38,23 @@ export const DropIcon: React.FC = () => (
   </MenuIcon>
 );
 
+export const TakeIcon: React.FC = () => (
+  <MenuIcon>
+    <path d="M12 3v14" />
+    <path d="m18 9-6-6-6 6" />
+    <path d="M19 21H5" />
+  </MenuIcon>
+);
+
+export const SplitIcon: React.FC = () => (
+  <MenuIcon>
+    <path d="M16 3h5v5" />
+    <path d="M8 3H3v5" />
+    <path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3" />
+    <path d="m15 9 6-6" />
+  </MenuIcon>
+);
+
 export const CopyIcon: React.FC = () => (
   <MenuIcon>
     <rect width="14" height="14" x="8" y="8" rx="2" />

@@ -37,8 +37,9 @@ mri/
   fundo escuro em tela cheia, cabeçalhos com ícone e descrição, anel de peso,
   slots com gradiente de durabilidade, atalhos rápidos (slots 1 a 5) embaixo da
   grade com os filtros por categoria (itens fora da categoria ficam apagados,
-  sem sair do slot), botões Usar/Enviar no centro e menu de contexto com
-  ícones. Depois de mexer em `web/src`, rodar `npm run build` dentro de `web/`.
+  sem sair do slot), menu de contexto com ícones e os controles repensados
+  (ver "Controles" abaixo). Depois de mexer em `web/src`, rodar
+  `npm run build` dentro de `web/`.
 
 ## Tema da suíte
 
@@ -74,16 +75,6 @@ como o mesmo chão: o título fica "Chão" (só `CustomDrop` com prefixo própri
 mostra o nome) e a key dos slots não usa o id, então os slots não são
 recriados e só o que recebeu o item anima.
 
-Botão direito num item do chão (`drop`) pega o item direto pro inventário do
-jogador (mesmo `onDrop` sem destino do CTRL + clique). No inventário do jogador
-continua abrindo o menu de contexto; nos outros tipos não faz nada.
-
-A aba "Controles" (`UsefulControls.tsx`) mostra os controles como glifos em vez
-de siglas: teclas físicas (`KeyCap`) e mouse em SVG com o botão usado aceso
-(`MouseGlyph`, em `web/src/components/utils/icons/ControlGlyphs.tsx`). A lista
-fica no `CONTROLS` do componente; cada linha usa uma chave do locale
-(`ui_rmb`, `ui_alt_lmb`..., mais a `ui_mri_rmb_ground`).
-
 A cor da durabilidade no slot também segue o tema: 75+ usa `--ui-success`,
 50 a 74 o accent, 15 a 49 `--ui-warning` e abaixo de 15 `--ui-error`.
 
@@ -91,6 +82,55 @@ A fonte Saira é auto-hospedada em `web/src/fonts` (o `@import` do Google Fonts
 trava a renderização no CEF). Se o `/uiconfig` escolher outra fonte, ela precisa
 estar disponível no cliente; senão cai na Saira. Os `.woff2` saem em
 `web/build/assets` e estão liberados no `files` do `fxmanifest.lua`.
+
+## Controles
+
+Os controles do ox (siglas, campo de quantidade no meio onde 0 = tudo, botões
+Usar/Enviar pra arrastar em cima, SHIFT = metade) foram trocados pelas
+convenções que jogador já traz de outros jogos, sem precisar de legenda:
+
+| Ação | Como | Onde fica |
+|---|---|---|
+| Mover | Arrastar | `InventorySlot` |
+| Quantidade ao arrastar | Rodinha do mouse enquanto arrasta (SHIFT = 10 em 10); contador no item arrastado, começa na pilha inteira (1 em loja/craft) | `DragPreview` (usa o `itemAmount` do store e zera ao soltar) |
+| Dividir ao arrastar | Arrastar segurando SHIFT leva metade da pilha (o contador já mostra a metade); se mexeu a rodinha, vale a rodinha | `onDrop` (`shiftPressed`) + `DragPreview` |
+| Largar / guardar | Soltar fora dos painéis ou no fundo do painel da direita; soltar num vão do próprio painel não faz nada | `useDrop` no `.inventory-wrapper` (`inventory/index.tsx`) |
+| Transferir a pilha inteira | SHIFT + clique (CTRL + clique continua valendo) | `InventorySlot` |
+| Usar / equipar | Mouse em cima + E, ou "Usar" no menu (ALT + clique continua valendo) | `hooks/useInventoryHotkeys.ts` |
+| Ações | Botão direito em qualquer inventário menos loja/craft | `InventoryContext` |
+| Atalho rápido | Mouse em cima + 1 a 5 (do seu inventário ou do chão/baú) | `hooks/useInventoryHotkeys.ts` |
+| Largar / pegar rápido | Mouse em cima + F: num item seu larga (ou guarda, se a direita for baú); num item do chão/baú, pega | `hooks/useInventoryHotkeys.ts` |
+| Pegar tudo | Botão no cabeçalho do chão/baú/porta-malas | `InventoryGrid` |
+
+- **Menu**: no seu inventário, Usar, Enviar e Largar (vira "Guardar" quando a
+  direita não é o chão) + Dividir em "Mais ações"; nos outros, Pegar e Pegar
+  parte. Enviar, Dividir e Pegar parte abrem o `QuantityDialog` (número,
+  slider, 1 / ½ / Tudo, rodinha, Enter confirma, Esc fecha só ele). Dividir
+  manda a quantidade pro primeiro slot vazio.
+- **Enviar** usa o `giveItem` do ox: com a convar `inventory:giveplayerlist`
+  ligada ele mostra a lista de jogadores próximos (menu do ox_lib); sem ela,
+  manda pro jogador mais perto. Antes, com o campo em 0, o servidor dava 1 item
+  (`math.max(1, count)`); agora a quantidade vem do diálogo.
+- **Usar não é duplo clique** de propósito: item com `close = true` fecha o
+  inventário no meio dos cliques, a NUI perde o foco e os cliques que sobram
+  viram soco no jogo. O E é um toque só. (Também houve um "segurar e soltar"
+  com anel, que saiu por não combinar.) E e F não vazam pro jogo porque o ox
+  chama `DisableAllControlActions` enquanto o inventário está aberto.
+- **Pegar tudo** move um item por vez e espera o `swapItems` responder (o
+  client recusa movimentos simultâneos); para no primeiro recusado.
+- **Barra de dicas** (`HintBar.tsx`, no rodapé): mostra só as ações possíveis
+  pro que está debaixo do mouse (seu item, chão/baú, loja, craft) e enquanto
+  arrasta. O SHIFT + clique (transferir) não aparece nela de propósito, só na
+  aba "Controles". O item debaixo do mouse fica no `lib/inventoryUx.ts`, junto
+  com o pedido do seletor de quantidade.
+- **Aba "Controles"** (`UsefulControls.tsx`): a mesma lista em glifos — teclas
+  físicas (`KeyCap`) e mouse em SVG com o botão/rodinha aceso (`MouseGlyph`,
+  em `web/src/components/utils/icons/ControlGlyphs.tsx`). Textos nas chaves
+  `ui_mri_ctrl_*` e `ui_mri_hint_*` do `pt-br.json`.
+- O `onDrop` ganhou um terceiro parâmetro (`amount`, `0` = pilha inteira),
+  e devolve a promessa do `validateMove`. O `shiftPressed` (metade) só vale
+  quando `amount` não é passado, ou seja, nos arrastos; SHIFT + clique, menu,
+  atalhos e "Pegar tudo" passam a quantidade explícita.
 
 ## Notificação de itens
 
@@ -148,6 +188,14 @@ DurtyFree lista todos (`AudioName` + `AudioRef`, que é o soundset).
 
 `PlaySoundFrontend` não tem volume, então a convar `mri:inventorySfx` só liga
 e desliga (`0` desliga, padrão ligado).
+
+> **Performance: nada de animação infinita em elemento que fica na tela.** Uma
+> animação `infinite` (ainda mais com `filter: drop-shadow`) faz a NUI
+> redesenhar todo frame, e no FiveM isso obriga o jogo a reenviar a textura da
+> interface todo frame. A barra de dicas tinha os glifos pulsando: com o
+> inventário parado eram ~1.400 redesenhos em 9 s (~1,5 s de trabalho); sem
+> elas, zero. Os glifos só animam dentro da aba "Controles", e com número
+> fixo de repetições (3/4), não `infinite`.
 
 Animações (todas em CSS, no fim do `index.scss`):
 
