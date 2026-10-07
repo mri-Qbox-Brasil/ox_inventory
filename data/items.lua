@@ -1780,12 +1780,33 @@ return {
 		description = "Esta é uma chave do carro, cuide bem, se você a perder, provavelmente não poderá usar seu carro",
 		weight = 10,
 		stack = false,
+		buttons = {
+			{
+				label = 'Juntar chaves',
+				action = function()
+					client.closeInventory()
+					exports.mri_Qcarkeys:StackKeys()
+				end
+			},
+		},
 	},
-	["keybag"] = {
-		label = "Bolsa de Chaves",
-		description = "Esta é uma bolsa de chaves, você pode armazenar todas as suas chaves",
+	["keyring"] = {
+		label = "Molho de Chaves",
+		description = "Um molho com as suas chaves de veículo",
 		weight = 10,
 		stack = false,
+		client = {
+			image = "keys.png",
+		},
+		buttons = {
+			{
+				label = 'Juntar chaves soltas',
+				action = function(slot)
+					client.closeInventory()
+					exports.mri_Qcarkeys:StackKeys(slot)
+				end
+			},
+		},
 	},
 -- pescador
 	-- lunar_fishing

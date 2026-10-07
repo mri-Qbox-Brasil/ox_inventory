@@ -1,3 +1,12 @@
+# [3.1.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.0.0...v3.1.0) (2026-10-07)
+
+
+### Features
+
+* **items:** botões de juntar e separar chaves no vehiclekey e no keybag (mri_Qcarkeys) ([ff0fb01](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/ff0fb01b39fbde906efff29b684beafc2641003a))
+* **items:** botões do keybag passam a guardar as chaves soltas na bolsa (container) ([90983e0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/90983e0a6645aae490e426ae5acb7a97c072450b))
+* **items:** keybag vira keyring (molho de chaves) com botões de juntar chaves ([5084352](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/5084352cf1fd0db0743d3386a3c972073cb121a4))
+
 # [3.0.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v2.47.9...v3.0.0) (2026-10-01)
 
 
