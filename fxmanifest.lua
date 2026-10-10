@@ -4,7 +4,7 @@ lua54 'yes'
 game 'gta5'
 name 'ox_inventory'
 author 'Overextended'
-version '3.1.0'
+version '3.2.0'
 repository 'https://github.com/overextended/ox_inventory'
 description 'Slot-based inventory with item metadata support'
 
@@ -25,15 +25,20 @@ ox_libs {
 
 server_scripts {
     '@oxmysql/lib/MySQL.lua',
+    -- MRI: edicoes do editor do inventario do mri_Qbox por cima de data/ (ver mri/README.md).
+    'mri/data.lua',
     'init.lua',
     -- MRI: modificacoes isoladas em mri/ (ver mri/README.md).
+    'mri/live.lua',
     'mri/server.lua',
 }
 
 client_scripts {
     -- MRI: antes do init.lua de proposito (intercepta o lib.addKeybind).
     'mri/keybinds.lua',
+    'mri/data.lua',
     'init.lua',
+    'mri/live.lua',
     'mri/client.lua',
 }
 

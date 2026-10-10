@@ -1,3 +1,15 @@
+# [3.2.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.1.0...v3.2.0) (2026-10-10)
+
+
+### Features
+
+* **images:** remove a imagem dos sprays do mri_QexoticPaints ([6f270b4](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/6f270b4dbb517188611b317377a3a3ee9962ee79))
+* **items:** data/items.lua volta ao original; itens da MRI vêm do mri_Qbox ([78d6316](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/78d6316b951a75e49f45eeb88621be99fd04c993))
+* **items:** itens da MRI só substituem os do data/items.lua quando o arquivo é o original ([f630cb0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/f630cb0ecd99dbed44befd3a8b2e62057d27e29d))
+* **items:** troca os itens do ars_ambulancejob pelos do mri_Qmedical ([08514bc](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/08514bcf2af72e569409a6c34dcbb0e8d2c2c311))
+* **mri:** edições do editor do inventário do mri_Qbox por cima de data/, aplicadas na hora ([a2a6f86](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/a2a6f86e1a12941c72bb33e1352b87704f952ddd))
+* **shops:** data/shops.lua volta ao original; lojas da MRI vêm do mri_Qbox ([0f50caf](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/0f50caf3be6dbeaa89e993f18d1be0b31d54e939))
+
 # [3.1.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.0.0...v3.1.0) (2026-10-07)
 
 

@@ -11,6 +11,10 @@ mri/
 ├── keybinds.lua   Carrega ANTES do init.lua: intercepta o lib.addKeybind e
 │                  renomeia os binds inv/inv2/hotbar pra mriQ_*, mantendo as
 │                  teclas que os jogadores já configuraram.
+├── data.lua       Carrega ANTES do init.lua (server e client): edições do
+│                  editor do inventário do mri_Qbox por cima de data/*.lua,
+│                  sem gravar nada aqui (ver "Editor do inventário" abaixo).
+├── live.lua       Aplica na hora as edições que chegam pelo GlobalState.
 ├── client.lua     Cor de destaque da suite (convar mri:color, callback
 │                  getConfig + evento accentColorChanged), categorias do
 │                  filtro (data/categories.lua, também no getConfig) e o
@@ -22,11 +26,35 @@ mri/
 └── README.md      Este arquivo.
 ```
 
+## Editor do inventário (mri_Qbox)
+
+O módulo `inventory` do mri_Qbox guarda as edições em `mri_Qbox/data/inventory.json`
+(`{ <catálogo> = { <id> = patch | false } }`). Nada é gravado nos arquivos daqui.
+
+- `mri/data.lua` envolve o `lib.load('data.<catálogo>')`: devolve o arquivo com as edições
+  mescladas (mapas campo a campo, listas trocam inteiras, `false` remove, funções do original
+  ficam). No boot o server lê o json por `LoadResourceFile` e publica
+  `GlobalState['mri:inventory:<catálogo>']`; o client lê de lá.
+- O mri_Qbox publica o mesmo GlobalState ao salvar. `mri/live.lua` aplica na hora: itens e
+  armas (ItemList dos dois lados e evento `mriItems` na NUI), lojas (`RegisterShop`), baús
+  (`RegisterStash` e pontos do client), evidências, licenças (preço), veículos e animações
+  (tabelas trocadas no lugar). O que o upstream monta uma vez no start (pontos de loja,
+  crafting, pontos de licença) e item removido ficam pro próximo restart.
+- Catálogos: items, weapons, shops, crafting, licenses, stashes, evidence, vehicles, animations.
+- Itens e lojas da MRI: o `data/items.lua` e o `data/shops.lua` daqui são os do original. Os da
+  MRI vêm de `mri_Qbox/resources/modules/inventory/base/<catálogo>.lua` (`LAYERS`), que o
+  `mri/data.lua` lê nos dois lados (`LoadResourceFile`) antes das edições. Com o arquivo daqui
+  igual ao original (tamanho e FNV-1a em `ORIGINAL`, atualizar ao sincronizar esse arquivo), cada
+  entrada troca a do original inteira e `false` remove; com o arquivo mexido pelo dono, só entram
+  as entradas que faltam nele. O export server `MriOriginalFile(catalog)` diz qual dos dois casos
+  vale (o editor usa). Sem o arquivo do mri_Qbox, o console acusa e o catálogo sobe só com o original.
+  As imagens dos itens continuam em `web/images` (vários resources usam esse caminho direto).
+
 ## Fora desta pasta
 
 - `fxmanifest.lua`: carrega os arquivos de `mri/`;
-- `data/` e `locales/pt-br.json`: itens, lojas e traduções da MRI (config do
-  servidor, editável pelo dono);
+- `locales/pt-br.json`: traduções da MRI; os itens e as lojas ficam no
+  mri_Qbox (acima);
 - `data/categories.lua`: categorias dos filtros do inventário do jogador. Cada
   categoria tem `name`, `label` e casa um item por nome exato (`items`) ou por
   início do nome (`prefixes`, ex.: `WEAPON_`). Editável pelo dono;

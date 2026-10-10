@@ -109,6 +109,11 @@ const App: React.FC = () => {
     dispatch(setupInventory({ leftInventory }));
   });
 
+  // items changed by the mri_Qbox inventory editor (mri/live.lua)
+  useNuiEvent<typeof Items>('mriItems', (items) => {
+    for (const name in items) Items[name] = items[name];
+  });
+
   fetchNui('uiLoaded', {});
 
   useEffect(() => {
