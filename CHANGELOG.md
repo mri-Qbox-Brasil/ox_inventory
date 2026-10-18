@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.2.0...v3.2.1) (2026-10-18)
+
+
+### Bug Fixes
+
+* **images:** remove as imagens dos itens do kloud-farmjob ([89c8cd4](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/89c8cd43efe34e7e2384c6565f4d46ab1f58f7cb))
+
 # [3.2.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.1.0...v3.2.0) (2026-10-10)
 
 
