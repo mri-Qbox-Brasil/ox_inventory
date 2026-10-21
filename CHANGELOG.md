@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.2.1...v3.3.0) (2026-10-21)
+
+
+### Features
+
+* imagem do item printed_document (folha impressa do sd-computers) ([bb8f95c](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/bb8f95c832368da875c3fed0b6ee20681d74538a))
+
 ## [3.2.1](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.2.0...v3.2.1) (2026-10-18)
 
 
