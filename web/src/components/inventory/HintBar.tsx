@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDragLayer } from 'react-dnd';
 import { useAppSelector } from '../../store';
 import { Locale } from '../../store/locale';
 import { DragSource } from '../../typings';
-import { useHoveredSlot } from '../../lib/inventoryUx';
+import { HoveredSlot, useHoveredSlot } from '../../lib/inventoryUx';
 import { ControlCombo, MouseAction } from '../utils/icons/ControlGlyphs';
 
 type Hint = { keys?: string[]; mouse?: MouseAction; label: string };
 
 const t = (key: string, fallback: string) => Locale[key] || fallback;
 
-const HintBar: React.FC = () => {
+// Keeps the last hovered slot briefly so crossing the gap between slots doesn't flash the idle hints.
+const useSettledHover = (delay = 180) => {
   const hovered = useHoveredSlot();
+  const [settled, setSettled] = useState<HoveredSlot>(hovered);
+
+  useEffect(() => {
+    if (hovered) return setSettled(hovered);
+    const timer = window.setTimeout(() => setSettled(null), delay);
+    return () => window.clearTimeout(timer);
+  }, [hovered, delay]);
+
+  return settled;
+};
+
+const HintBar: React.FC = () => {
+  const hovered = useSettledHover();
   const rightType = useAppSelector((state) => state.inventory.rightInventory.type);
   const { dragging, source } = useDragLayer((monitor) => ({
     dragging: monitor.isDragging(),
@@ -70,7 +84,7 @@ const HintBar: React.FC = () => {
   }
 
   return (
-    <div key={context} className={`hint-bar ${context === 'idle' ? 'hint-bar--idle' : ''}`}>
+    <div className={`hint-bar ${context === 'idle' ? 'hint-bar--idle' : ''}`}>
       {hints.map((hint, index) => (
         <span className="hint-bar-item" key={index}>
           {(hint.keys || hint.mouse) && <ControlCombo keys={hint.keys} mouse={hint.mouse} />}

@@ -24,6 +24,45 @@ RegisterNUICallback('mriPlaySound', function(data, cb)
     playSound(data.name, data.set)
 end)
 
+-- Item notifications go to our ox_lib (its own stack) while it publishes mri:itemNotify; otherwise the NUI here draws them.
+local Items = require 'modules.items.client'
+local ITEM_TONES = { ui_removed = 'loss', ui_equipped = 'equip', ui_holstered = 'holster' }
+local sendNuiMessage = SendNUIMessage
+local lastCollect = 0
+
+local function itemImage(item)
+    local metadata = item.metadata
+
+    if metadata?.imageurl then return metadata.imageurl end
+    if metadata?.image then return ('%s/%s.png'):format(client.imagepath, metadata.image) end
+
+    return Items[item.name]?.client?.image or ('%s/%s.png'):format(client.imagepath, item.name)
+end
+
+function SendNUIMessage(message)
+    if message.action ~= 'itemNotify' or not GlobalState['mri:itemNotify'] then
+        return sendNuiMessage(message)
+    end
+
+    local item, text, count = message.data[1], message.data[2], message.data[3]
+    local tone = ITEM_TONES[text] or 'gain'
+
+    -- Same sound and throttle as the collect sfx in web/src/lib/sfx.ts.
+    if tone == 'gain' and not LocalPlayer.state.invOpen and GetGameTimer() - lastCollect >= 120 then
+        lastCollect = GetGameTimer()
+        playSound('sports_bag', 'dlc_xm_pickup_sweetener_sounds')
+    end
+
+    exports.ox_lib:itemNotify({
+        key = ('%s|%s|%s'):format(item.name, text, item.metadata?.label or ''),
+        label = item.metadata?.label or Items[item.name]?.label or item.name,
+        action = locale(text),
+        image = itemImage(item),
+        count = count or 0,
+        tone = tone,
+    })
+end
+
 local lastWeaponHash
 
 AddEventHandler('ox_inventory:currentWeapon', function(weapon)

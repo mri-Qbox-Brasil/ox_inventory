@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { DndProvider } from 'react-dnd';
-import { TouchBackend } from 'react-dnd-touch-backend';
+import { InventoryBackend } from './lib/dragBackend';
 import { store } from './store';
 import App from './App';
 import '@mriqbox/ui-kit/themes.css';
@@ -23,7 +23,7 @@ if (isEnvBrowser()) {
 createRoot(root!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <DndProvider backend={TouchBackend} options={{ enableMouseEvents: true }}>
+      <DndProvider backend={InventoryBackend} options={{ enableMouseEvents: true }}>
         <ItemNotificationsProvider>
           <App />
         </ItemNotificationsProvider>

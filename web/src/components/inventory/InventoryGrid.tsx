@@ -15,6 +15,7 @@ import { FilterIcon, GridIcon, LayersIcon, TakeAllIcon, WeightIcon } from '../ut
 import { usePlayerOwner } from '../../lib/playerOwner';
 import { itemInCategory, setActiveCategory, useItemCategories } from '../../lib/itemCategories';
 import { Locale } from '../../store/locale';
+import { useInventoryLook } from '../../lib/uiConfig';
 
 const PAGE_SIZE = 30;
 const FAST_SLOTS = 5;
@@ -98,7 +99,9 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
 
   const weightPercent = inventory.maxWeight ? (weight / inventory.maxWeight) * 100 : 0;
 
-  const activeCategory = isOwn ? categories.find((category) => category.name === active) : undefined;
+  const look = useInventoryLook();
+  const showFilters = look.inventoryFilters === 'show' && categories.length > 0;
+  const activeCategory = isOwn && showFilters ? categories.find((category) => category.name === active) : undefined;
   const isDimmed = (item: Slot) => !!activeCategory && !(item.name && itemInCategory(item.name, activeCategory));
 
   const fastSlots = isOwn ? inventory.items.slice(0, FAST_SLOTS) : [];
@@ -151,7 +154,7 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
   return (
     <div className={`inventory-panel ${isOwn ? 'inventory-panel--own' : ''}`} style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
       <div className="inventory-header">
-        <div className={`inventory-header-icon mri-surface-card ${isOwn ? 'inventory-header-icon--accent' : ''}`}>
+        <div className="inventory-header-icon inventory-header-icon--accent mri-surface-card">
           {isOwn ? <GridIcon /> : <TypeIcon type={inventory.type} />}
         </div>
         <div className="inventory-header-text">
@@ -174,8 +177,13 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
                 {formatKg(weight)}
                 <span className="inventory-weight-max"> / {formatKg(inventory.maxWeight)}kg</span>
               </span>
+              {look.inventoryWeight === 'bar' && (
+                <span className={`weight-line ${weightPercent >= 90 ? 'weight-line--full' : ''}`}>
+                  <span style={{ width: `${Math.min(weightPercent, 100)}%` }} />
+                </span>
+              )}
             </div>
-            <WeightRing percent={weightPercent} />
+            {look.inventoryWeight === 'ring' && <WeightRing percent={weightPercent} />}
           </div>
         ) : null}
       </div>
@@ -211,7 +219,7 @@ const InventoryGrid: React.FC<{ inventory: Inventory; side: 'left' | 'right' }> 
               </p>
             </div>
 
-            {categories.length > 0 && (
+            {showFilters && (
               <div className="inventory-filters">
                 <button
                   type="button"

@@ -44,8 +44,10 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
       }),
-      item: () =>
-        isSlotWithItem(item, inventoryType !== InventoryType.SHOP)
+      item: () => {
+        if (timerRef.current) clearTimeout(timerRef.current);
+        dispatch(closeTooltip());
+        return isSlotWithItem(item, inventoryType !== InventoryType.SHOP)
           ? {
               inventory: inventoryType,
               item: {
@@ -54,18 +56,19 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
               },
               image: item?.name && `url(${getItemUrl(item) || 'none'}`,
             }
-          : null,
+          : null;
+      },
       canDrag,
     }),
     [inventoryType, item]
   );
 
-  const [{ isOver, canDrop }, drop] = useDrop<DragSource, void, { isOver: boolean; canDrop: boolean }>(
+  // One combined flag: collecting canDrop alone re-renders every slot when a drag starts.
+  const [{ isTarget }, drop] = useDrop<DragSource, void, { isTarget: boolean }>(
     () => ({
       accept: 'SLOT',
       collect: (monitor) => ({
-        isOver: monitor.isOver(),
-        canDrop: monitor.canDrop(),
+        isTarget: monitor.isOver() && monitor.canDrop(),
       }),
       drop: (source) => {
         dispatch(closeTooltip());
@@ -160,7 +163,7 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
       onClick={handleClick}
       className={`inventory-slot mri-surface-card ${hasItem ? 'inventory-slot--filled' : ''} ${dimmed ? 'inventory-slot--dimmed' : ''} ${
         isDragging ? 'inventory-slot--dragging' : ''
-      } ${isOver && canDrop ? 'inventory-slot--over' : ''}`}
+      } ${isTarget ? 'inventory-slot--over' : ''}`}
       style={{
         filter: locked ? 'brightness(80%) grayscale(100%)' : undefined,
         opacity: isDragging ? 0.4 : dimmed ? 0.25 : 1.0,
@@ -182,6 +185,7 @@ const InventorySlot: React.ForwardRefRenderFunction<HTMLDivElement, SlotProps> =
           className="item-slot-wrapper"
           onMouseEnter={() => {
             setHoveredSlot({ item, inventoryType });
+            if (manager.getMonitor().isDragging()) return;
             timerRef.current = window.setTimeout(() => {
               dispatch(openTooltip({ item, inventoryType }));
             }, 500) as unknown as number;

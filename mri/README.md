@@ -14,13 +14,18 @@ mri/
 ├── data.lua       Carrega ANTES do init.lua (server e client): edições do
 │                  editor do inventário do mri_Qbox por cima de data/*.lua,
 │                  sem gravar nada aqui (ver "Editor do inventário" abaixo).
+├── settings.lua   Carrega ANTES do init.lua (server): aba Ajustes do editor
+│                  vira as convars inventory:* (ver "Ajustes" abaixo).
 ├── live.lua       Aplica na hora as edições que chegam pelo GlobalState.
+├── convars.lua    Relê na hora as convars inventory:* que o upstream consulta
+│                  a cada uso, quando mudam (painel ou console).
 ├── client.lua     Cor de destaque da suite (convar mri:color, callback
 │                  getConfig + evento accentColorChanged), categorias do
 │                  filtro (data/categories.lua, também no getConfig) e o
 │                  owner (citizenid) do player mandado pra NUI (mriSetOwner).
 │                  Sons nativos do GTA: callback mriPlaySound e som de equipar
 │                  arma (liga/desliga pela convar mri:inventorySfx).
+│                  Aviso de item pelo ox_lib (ver "Notificação de itens").
 ├── server.lua     Broadcast da mri:color quando ela muda e o callback
 │                  mri_inventory:getOwner.
 └── README.md      Este arquivo.
@@ -49,6 +54,24 @@ O módulo `inventory` do mri_Qbox guarda as edições em `mri_Qbox/data/inventor
   as entradas que faltam nele. O export server `MriOriginalFile(catalog)` diz qual dos dois casos
   vale (o editor usa). Sem o arquivo do mri_Qbox, o console acusa e o catálogo sobe só com o original.
   As imagens dos itens continuam em `web/images` (vários resources usam esse caminho direto).
+
+## Ajustes (convars pelo painel)
+
+A aba Ajustes do editor grava em `mri_Qbox/data/inventory.json`, chave `settings`
+(`{ <convar sem o prefixo inventory:> = valor }`), só o que o dono mudou.
+
+- `mri/settings.lua` (server, antes do init.lua) guarda o valor de cada convar como veio do
+  `ox.cfg`/`server.cfg` (ou o padrão do ox_inventory) e aplica os do painel com `SetConvar`
+  (`SetConvarReplicated` nas que o client lê). Assim o init.lua já sobe com eles. Ao salvar, o
+  mri_Qbox publica `GlobalState['mri:inventory:settings']` e o mesmo arquivo reaplica; convar
+  tirada do painel volta ao valor original. Export server `MriSettingsOriginal()`: esses originais.
+- `mri/convars.lua` (server e client, depois do init.lua) escuta `inventory:*` e atualiza na
+  hora o que o upstream lê a cada uso (`client.*`, `server.*`, `shared.police` trocado no lugar,
+  porque lojas e baús guardam essa tabela). O resto (espaços e peso do jogador, imagens,
+  marcadores de loja, evidência e crafting, `/steal`, olhinho, preço variável, limpeza de baú)
+  vale quando o jogador entra de novo ou no restart, e a aba diz qual.
+- Ficam fora do painel: `framework`, `accounts`, `keys`, `enablekeys`, `webhook`, `validhosts`
+  e `versioncheck`.
 
 ## Fora desta pasta
 
@@ -81,6 +104,18 @@ visual usa os tokens do `@mriqbox/ui-kit` (`--primary`, `--background`,
 | Cor de destaque | convar `mri:color` (callback `getConfig`) | `ox_inventory:accentColorChanged` |
 | Cor de fundo | convar `mri:backgroundColor` (callback `getConfig`) | `ox_inventory:backgroundColorChanged` |
 | Tema dark/glass, fonte, radius, cores de status, opacidade do glass, override de accent/fundo | painel `/uiconfig` do ox_lib (`ox_lib:getUiConfig`, pedido pelo callback `mriGetUiConfig`) | `ox_lib:uiConfigChanged` |
+| Visual do inventário (tamanho, colunas, formato e opacidade do slot, nome do item, peso, desgaste, filtros, dicas, posição dos atalhos, fundo atrás da grade) | aba **Inventário** do `/uiconfig` | `ox_lib:uiConfigChanged` |
+
+O visual vem no mesmo config do `/uiconfig` (chaves `inventory*`, validadas no
+`mri/server.lua` do ox_lib). O `web/src/lib/uiConfig.ts` passa tamanho e
+colunas pras variáveis `--inv-scale` e `--inv-cols` (o SCSS calcula slot e grade
+com elas) e o formato do slot, o nome, o desgaste e os atalhos pra
+`data-inv-*` no `<html>`. O fundo (`data-inv-backdrop`: tela toda, bordas, embaixo
+ou nenhum; `data-inv-backdrop-color`: tema, preto ou a cor da cidade) e as
+opacidades (`--inv-backdrop-alpha`, `--inv-slot-alpha`) também; opacidade
+"Do tema" tira a variável e volta à opacidade do `/uiconfig`. Peso, filtros e dicas o React lê do
+`useInventoryLook`. Sem o nosso ox_lib, fica tudo no padrão (o visual de
+sempre). Mínimo de 5 colunas por causa dos 5 atalhos.
 
 Accent e fundo usam o `suiteColors` do `@mriqbox/ui-kit` (a mesma conta de
 toda a suíte). Fundo vazio significa `#09090B`, que derivado dá a paleta dark
@@ -162,30 +197,30 @@ convenções que jogador já traz de outros jogos, sem precisar de legenda:
 
 ## Notificação de itens
 
-O `itemNotify` (`web/src/components/utils/ItemNotifications.tsx`) não mostra
-mais um slot no meio da tela: é uma pilha de cards no canto direito no estilo
-"arena" (Apex / jogos da EA). O card tem o lado esquerdo em diagonal com uma
-faixa na cor da ação, o ícone grande saindo por cima do card, o nome em fonte
-condensada bold, a ação embaixo e a quantidade (`+3` / `−1`) numa etiqueta
-sólida. Na entrada o card é revelado da direita pra esquerda, o ícone cai com
-quique e um brilho passa por cima; quando a quantidade soma, a etiqueta pulsa.
+O aviso de item é o do ox_inventory original: o slot do item aparecendo
+embaixo, no meio da tela, com a ação em cima (`Adicionado +3`) e o nome
+embaixo, em fila quando chegam vários. Separado da pilha do `lib.notify`.
 
-Sem verde/vermelho: tudo em branco (`--foreground`). Removido usa um branco
-mais apagado (e o sinal `−`) e guardado usa `--muted-foreground`; o degradê
-branco do card fica em 14% pra não estourar.
+### Pelo ox_lib
 
-A fonte é a Barlow Condensed, carregada do Google Fonts no `web/index.html`
-com `media="print"` + `onload` pra não travar a renderização no CEF. Se não
-carregar (servidor sem internet), cai na fonte da suíte (`$notifyFont`).
+Com o nosso ox_lib rodando, ele publica `GlobalState['mri:itemNotify']` e
+desenha o aviso numa pilha só dele (`features/item-notify` do ox_lib), no
+formato escolhido no `/uiconfig` em **Inventário > Aviso de item**: **Slot**
+(padrão, o mesmo daqui), **Faixa** (cards no estilo "arena"), **Pílula**,
+**Ícone** ou **Linha**, com posição, distância da borda e tamanho. O `mri/client.lua` envolve o `SendNUIMessage`: a mensagem
+`itemNotify` vira o export `ox_lib:itemNotify`
+(`{ key, label, action, image, count, tone }`) e o som de pegar item toca no
+Lua. Sem a chave (ox_lib original ou parado), o slot daqui
+(`web/src/components/utils/ItemNotifications.tsx`) desenha o aviso.
 
-- Avisos do mesmo item + ação (+ `metadata.label`) enquanto um ainda está na
-  tela se somam no mesmo card (`+3` → `+5`) e o tempo reinicia, em vez de
-  empilhar vários cards iguais (ex.: pegar item por item de um baú);
-- no máximo `NOTIFY_MAX` (5) ao mesmo tempo; o mais antigo sai primeiro;
-- `NOTIFY_DURATION` e `NOTIFY_EXIT` ficam no componente, e o `$notifyExit` do
-  SCSS precisa bater com o `NOTIFY_EXIT`;
-- as cores usam só `var(--tone)` sem alpha (o degradê do card é uma camada
-  com `opacity`) para não depender de `color-mix` no CEF do FiveM.
+Nos dois lados:
+
+- avisos do mesmo item + ação (+ `metadata.label`) enquanto um ainda está na
+  tela se somam no mesmo slot (`+3` → `+5`) e o tempo reinicia, em vez de
+  empilhar vários iguais (ex.: pegar item por item de um baú);
+- no máximo 5 ao mesmo tempo; o mais antigo sai primeiro;
+- a quantidade usa `--ui-success` (ganhou), `--ui-error` (perdeu); equipar
+  usa o accent; `$notifyExit` do SCSS bate com o `NOTIFY_EXIT` do componente.
 
 A API continua a mesma: `ox_inventory:itemNotify`, `Utils.ItemNotify` e o
 `suppressItemNotifications`.

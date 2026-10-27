@@ -6,10 +6,12 @@ import UsefulControls from './UsefulControls';
 import HintBar from './HintBar';
 import { closeTooltip } from '../../store/tooltip';
 import { closeContextMenu } from '../../store/contextMenu';
+import { useInventoryLook } from '../../lib/uiConfig';
 
 const InventoryControl: React.FC = () => {
   const dispatch = useAppDispatch();
   const [infoVisible, setInfoVisible] = useState(false);
+  const { inventoryHints } = useInventoryLook();
 
   const closeInventory = () => {
     dispatch(closeTooltip());
@@ -20,7 +22,7 @@ const InventoryControl: React.FC = () => {
   return (
     <>
       <UsefulControls infoVisible={infoVisible} setInfoVisible={setInfoVisible} />
-      <HintBar />
+      {inventoryHints === 'show' && <HintBar />}
       <div className="inventory-footer">
         <button type="button" className="inventory-footer-link" onClick={() => setInfoVisible(true)}>
           {Locale.ui_usefulcontrols || 'Controles'}

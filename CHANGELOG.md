@@ -1,3 +1,19 @@
+# [3.4.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.3.0...v3.4.0) (2026-10-27)
+
+
+### Bug Fixes
+
+* **web:** ícone do cabeçalho do outro inventário com a cor da cidade, igual ao seu ([84c5537](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/84c5537dee89580005263b3c93f0b883162d984a))
+* **web:** legenda sem piscar no hover e arraste mais leve (backend com um teste de colisão por movimento, posição do item direto no DOM, tooltip parado quando fechado) ([0068002](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/00680028280124ff2428724a07b81c69d84222ff))
+
+
+### Features
+
+* **mri:** aviso de item pelo ox_lib quando ele publica mri:itemNotify; card próprio na fonte da suíte ([6fb8c65](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/6fb8c65b37e625aa7dc63cedd57786e1116176bf))
+* **mri:** convars inventory:* pela aba Ajustes do mri_Qbox, aplicadas no boot e na hora quando dá ([39c0f7d](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/39c0f7d1568c269783fb9a16bf3d9d15a32aa4d1))
+* **mri:** fundo atrás da grade (formato, cor e opacidade) e opacidade do slot pela aba Inventário do /uiconfig ([9c999f8](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/9c999f8f35e98e58c9e275653ed5b32ee8f2177d))
+* **mri:** visual do inventário pela aba Inventário do /uiconfig; aviso de item volta ao slot embaixo no meio ([c0fc73b](https://github.com/mri-Qbox-Brasil/ox_inventory-source/commit/c0fc73b8aa6544e8f5dd49bddc710b7c6cbe68ca))
+
 # [3.3.0](https://github.com/mri-Qbox-Brasil/ox_inventory-source/compare/v3.2.1...v3.3.0) (2026-10-21)
 
 

@@ -1,45 +1,16 @@
-import React, { RefObject, useEffect, useRef } from 'react';
-import { DragLayerMonitor, useDragLayer, XYCoord } from 'react-dnd';
+import React, { useEffect, useRef } from 'react';
+import { useDragDropManager, useDragLayer } from 'react-dnd';
 import { DragSource } from '../../typings';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { selectItemAmount, setItemAmount } from '../../store/inventory';
 
 interface DragLayerProps {
   data: DragSource;
-  currentOffset: XYCoord | null;
   isDragging: boolean;
 }
 
-const subtract = (a: XYCoord, b: XYCoord): XYCoord => {
-  return {
-    x: a.x - b.x,
-    y: a.y - b.y,
-  };
-};
-
-const calculateParentOffset = (monitor: DragLayerMonitor): XYCoord => {
-  const client = monitor.getInitialClientOffset();
-  const source = monitor.getInitialSourceClientOffset();
-  if (client === null || source === null || client.x === undefined || client.y === undefined) {
-    return { x: 0, y: 0 };
-  }
-  return subtract(client, source);
-};
-
-export const calculatePointerPosition = (monitor: DragLayerMonitor, childRef: RefObject<Element>): XYCoord | null => {
-  const offset = monitor.getClientOffset();
-  if (offset === null) {
-    return null;
-  }
-
-  if (!childRef.current || !childRef.current.getBoundingClientRect) {
-    return subtract(offset, calculateParentOffset(monitor));
-  }
-
-  const bb = childRef.current.getBoundingClientRect();
-  const middle = { x: bb.width / 2, y: bb.height / 2 };
-  return subtract(offset, middle);
-};
+/** Same as the 7.7vh box in index.scss, so the pointer sits in the middle without reading layout. */
+const previewHalf = () => (window.innerHeight * 0.077) / 2;
 
 /** Inclinação máxima (graus) do item arrastado conforme a velocidade do mouse. */
 export const DRAG_MAX_TILT = 14;
@@ -49,15 +20,14 @@ export const DRAG_PRICED_MAX = 100;
 
 const DragPreview: React.FC = () => {
   const element = useRef<HTMLDivElement>(null);
-  const pointer = useRef<XYCoord | null>(null);
+  const tiltElement = useRef<HTMLSpanElement>(null);
+  const monitor = useDragDropManager().getMonitor();
 
-  const { data, isDragging, currentOffset } = useDragLayer<DragLayerProps>((monitor) => ({
+  // Position is written straight to the DOM each frame; React only renders when the drag starts or ends.
+  const { data, isDragging } = useDragLayer<DragLayerProps>((monitor) => ({
     data: monitor.getItem(),
-    currentOffset: calculatePointerPosition(monitor, element),
     isDragging: monitor.isDragging(),
   }));
-
-  pointer.current = currentOffset;
 
   const dispatch = useAppDispatch();
   const amount = useAppSelector(selectItemAmount);
@@ -94,36 +64,49 @@ const DragPreview: React.FC = () => {
   }, [isDragging, dispatch]);
 
   useEffect(() => {
+    document.documentElement.classList.toggle('inv-dragging', isDragging);
     if (!isDragging) return;
 
     let frame = 0;
     let tilt = 0;
     let lastX: number | null = null;
+    let lastY: number | null = null;
+    const half = previewHalf();
 
     const tick = () => {
-      const x = pointer.current?.x ?? null;
-      const velocity = x !== null && lastX !== null ? x - lastX : 0;
-      const target = Math.max(-DRAG_MAX_TILT, Math.min(DRAG_MAX_TILT, velocity * 0.9));
-
-      lastX = x;
-      tilt += (target - tilt) * 0.18;
-      element.current?.style.setProperty('--drag-tilt', `${tilt.toFixed(2)}deg`);
       frame = requestAnimationFrame(tick);
+      const offset = monitor.getClientOffset();
+      if (!offset || !element.current || !tiltElement.current) return;
+
+      const velocity = lastX !== null ? offset.x - lastX : 0;
+      const target = Math.max(-DRAG_MAX_TILT, Math.min(DRAG_MAX_TILT, velocity * 0.9));
+      const moved = offset.x !== lastX || offset.y !== lastY;
+
+      lastX = offset.x;
+      lastY = offset.y;
+      if (!moved && Math.abs(tilt) < 0.05 && target === 0) return;
+
+      tilt += (target - tilt) * 0.18;
+      element.current.style.transform = `translate3d(${offset.x - half}px, ${offset.y - half}px, 0)`;
+      tiltElement.current.style.transform = `rotate(${tilt.toFixed(2)}deg)`;
     };
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [isDragging]);
+  }, [isDragging, monitor]);
+
+  const start = isDragging ? monitor.getClientOffset() : null;
+  const half = previewHalf();
 
   return (
     <>
-      {isDragging && currentOffset && data.item && (
+      {isDragging && start && data?.item && (
         <div
           className="item-drag-preview"
           ref={element}
-          style={{ transform: `translate(${currentOffset.x}px, ${currentOffset.y}px)` }}
+          style={{ transform: `translate3d(${start.x - half}px, ${start.y - half}px, 0)` }}
         >
-          <span className="item-drag-preview-tilt">
+          <span className="item-drag-preview-tilt" ref={tiltElement}>
             <span className="item-drag-preview-image" style={{ backgroundImage: data.image }} />
           </span>
           {max > 1 && (

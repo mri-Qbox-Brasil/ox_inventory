@@ -62,25 +62,22 @@ const ItemNotification = ({ notification }: { notification: Notification }) => {
 
   return (
     <div className={`item-notify item-notify--${tone}${leaving ? ' item-notify--leaving' : ''}`}>
-      <div className={`item-notify-inner${showCount ? '' : ' item-notify-inner--plain'}`}>
-        <div className="item-notify-panel">
-          <span className="item-notify-stripe" />
+      <div className="inventory-slot item-notify-slot mri-surface-card">
+        <div className="item-notify-action">
+          <span>{Locale[text] || text}</span>
+          {showCount && (
+            <span key={bump} className={`item-notify-count${bump ? ' item-notify-count--bump' : ''}`}>
+              {tone === 'loss' ? '−' : '+'}
+              {count}
+            </span>
+          )}
         </div>
         {image && !imageFailed ? (
           <img className="item-notify-image" src={image} alt="" onError={() => setImageFailed(true)} />
         ) : (
           <span className="item-notify-fallback">{label.charAt(0)}</span>
         )}
-        <div className="item-notify-body">
-          <p className="item-notify-label">{label}</p>
-          <p className="item-notify-action">{Locale[text] || text}</p>
-        </div>
-        {showCount && (
-          <span key={bump} className={`item-notify-count${bump ? ' item-notify-count--bump' : ''}`}>
-            {tone === 'loss' ? '−' : '+'}
-            {count}
-          </span>
-        )}
+        <div className="item-slot-label">{label}</div>
       </div>
     </div>
   );

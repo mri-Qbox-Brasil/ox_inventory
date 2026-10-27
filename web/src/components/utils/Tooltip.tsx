@@ -21,7 +21,11 @@ const Tooltip: React.FC = () => {
     duration: 200,
   });
 
-  const handleMouseMove = ({ clientX, clientY }: MouseEvent | React.MouseEvent<unknown, MouseEvent>) => {
+  const pointer = useRef({ x: 0, y: 0 });
+  const openRef = useRef(false);
+  openRef.current = hoverData.open;
+
+  const placeAt = (clientX: number, clientY: number) => {
     refs.setPositionReference({
       getBoundingClientRect() {
         return {
@@ -37,6 +41,16 @@ const Tooltip: React.FC = () => {
       },
     });
   };
+
+  // Only the open tooltip follows the mouse; updating it closed re-rendered on every move.
+  const handleMouseMove = ({ clientX, clientY }: MouseEvent) => {
+    pointer.current = { x: clientX, y: clientY };
+    if (openRef.current) placeAt(clientX, clientY);
+  };
+
+  React.useLayoutEffect(() => {
+    if (hoverData.open) placeAt(pointer.current.x, pointer.current.y);
+  }, [hoverData.open]);
 
   React.useEffect(() => {
     window.addEventListener('mousemove', handleMouseMove);
