@@ -64,12 +64,15 @@ local function canOpenInventory()
     return true
 end
 
----@param ped number
+---Used to set player.state.canSteal on the local player, so other players can steal from them.
 ---@return boolean
-local function canOpenTarget(ped)
-	return IsPedFatallyInjured(ped)
-	or IsEntityPlayingAnim(ped, 'dead', 'dead_a', 3)
+local function checkCanSteal()
+	local ped = client.player.handle
+
+	return PlayerData.dead
 	or IsPedCuffed(ped)
+	or IsPedFatallyInjured(ped)
+	or IsEntityPlayingAnim(ped, 'dead', 'dead_a', 3)
 	or IsEntityPlayingAnim(ped, 'mp_arresting', 'idle', 3)
 	or IsEntityPlayingAnim(ped, 'missminuteman_1ig_2', 'handsup_base', 3)
 	or IsEntityPlayingAnim(ped, 'missminuteman_1ig_2', 'handsup_enter', 3)
@@ -781,7 +784,8 @@ local function registerCommands()
 				return client.closeInventory()
 			end
 
-			if cache.vehicle then
+			local canOpenGlovebox = (not client.gloveboxseatrestriction and cache.vehicle) or (cache.vehicle and (cache.seat == -1 or cache.seat == 0))
+			if canOpenGlovebox then
 				return openGlovebox(cache.vehicle)
 			end
 
@@ -820,7 +824,8 @@ local function registerCommands()
 				return client.openInventory('stash', StashTarget)
 			end
 
-			if cache.vehicle then
+			local canOpenGlovebox = (not client.gloveboxseatrestriction and cache.vehicle) or (cache.vehicle and (cache.seat == -1 or cache.seat == 0))
+			if canOpenGlovebox then
 				return openGlovebox(cache.vehicle)
 			end
 
@@ -1365,7 +1370,7 @@ RegisterNetEvent('ox_inventory:setPlayerInventory', function(currentDrops, inven
 	TriggerEvent('ox_inventory:updateInventory', PlayerData.inventory)
 
 	client.interval = SetInterval(function()
-        local canSteal = canOpenTarget(playerPed)
+        local canSteal = checkCanSteal()
 
         if canSteal ~= client.player:get('canSteal') then
             client.player:setr('canSteal', canSteal)
@@ -1662,7 +1667,9 @@ RegisterNUICallback('removeAmmo', function(slot, cb)
 	cb(1)
 	local slotData = PlayerData.inventory[slot]
 
-	if not slotData or not slotData.metadata.ammo or slotData.metadata.ammo == 0 then return end
+	if usingItem or not slotData or not slotData.metadata.ammo or slotData.metadata.ammo == 0 then
+		return
+	end
 
 	local success = lib.callback.await('ox_inventory:removeAmmoFromWeapon', false, slot)
 
