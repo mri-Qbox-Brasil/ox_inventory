@@ -1,6 +1,7 @@
 if not lib then return end
 
 local Inventory = {}
+local db = require 'modules.mysql.server'
 
 ---@type table<any, OxInventory>
 local Inventories = {}
@@ -259,7 +260,7 @@ exports('GetInventory', getInventory)
 ---@return (string|number)[] | OxInventory[]
 function Inventory.GetInventories(invType, detailed)
 	if type(invType) ~= 'string' then
-		return error(('expected invType to be a string (received %s)'):format(type(invType)))
+		error(('expected invType to be a string (received %s)'):format(type(invType)))
 	end
 
 	local returnData = {}
@@ -2701,7 +2702,7 @@ end)
 lib.callback.register('ox_inventory:removeAmmoFromWeapon', function(source, slot)
 	local inventory = Inventory(source)
 
-	if not inventory then return end
+	if not inventory or inventory.usingItem then return end
 
 	local slotData = inventory.items[slot]
 
